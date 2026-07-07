@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dot Art Overhauled | پکیج آموزشی بهینه سازی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow-x: hidden; }
+        body { 
+            font-family: 'Vazirmatn', sans-serif; 
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a1a 100%);
+            color: #e5e7eb; 
+            min-height: 100vh;
+        }
+        
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        .animated-gradient-text { 
+            background: linear-gradient(45deg, #a855f7, #ec4899, #f59e0b, #ec4899, #a855f7); 
+            background-size: 400% 400%; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+            animation: gradient-wave 5s ease infinite; 
+        }
+        
+        @keyframes gradient-wave { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+        
+        .glass-card {
+            background: rgba(20, 10, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(168, 85, 247, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(168, 85, 247, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+            color: #e5e7eb;
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(168, 85, 247, 0.2);
+            color: #a855f7;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .highlight-line {
+            background: rgba(236, 72, 153, 0.15);
+            border-right: 3px solid #ec4899;
+            padding-right: 0.5rem;
+            margin-right: -1rem;
+            display: inline-block;
+            width: calc(100% + 1rem);
+        }
+        
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+            flex-shrink: 0;
+        }
+        
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .bad-example {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        
+        .good-example {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        
+        .chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 380px;
+            max-width: calc(100vw - 40px);
+            max-height: 500px;
+            background: rgba(20, 10, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 85, 247, 0.2);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-container.active {
+            display: flex;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+            padding: 1rem;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid rgba(168, 85, 247, 0.3);
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .chat-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem;
+            color: #e5e7eb;
+            font-family: 'Vazirmatn', sans-serif;
+            outline: none;
+            resize: none;
+        }
+        
+        .chat-input:focus {
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+        }
+        
+        .send-btn {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        }
+        
+        .chat-bubble {
+            max-width: 85%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .user-bubble {
+            align-self: flex-end;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
+        
+        .ai-bubble {
+            align-self: flex-start;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.5);
+            z-index: 999;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 50px rgba(168, 85, 247, 0.7);
+        }
+        
+        .particle-demo {
+            width: 100%;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #a855f7, #ec4899);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .toc-item {
+            padding: 0.75rem 1rem;
+            border-right: 3px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .toc-item:hover {
+            background: rgba(168, 85, 247, 0.1);
+            border-right-color: #a855f7;
+        }
+        
+        .toc-item.active {
+            background: rgba(168, 85, 247, 0.2);
+            border-right-color: #ec4899;
+        }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #a855f7, #ec4899); }
+    </style>
+</head>
+<body>
+    <canvas id="bgCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.3;"></canvas>
+    
+    <div class="relative z-10 min-h-screen">
+        <!-- Header -->
+        <header class="glass-card mx-4 mt-4 p-6">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-2xl">
+                        🎨
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-black animated-gradient-text font-orbitron">Dot Art Overhauled</h1>
+                        <p class="text-sm text-gray-400 mt-1">پکیج آموزشی حرفه‌ای برای ارتقای استودیو ASCII Art</p>
+                    </div>
+                </div>
+                <a href="https://aishervin.github.io/Bot" target="_blank" class="bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-all shadow-lg flex items-center gap-2">
+                    <i data-lucide="external-link"></i>
+                    کامپایلر SHΞN™ Core
+                </a>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 p-4">
+            <!-- Sidebar TOC -->
+            <aside class="lg:col-span-1">
+                <div class="glass-card p-6 sticky top-4">
+                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="list"></i>
+                        فهرست آموزش
+                    </h2>
+                    <nav class="flex flex-col gap-1">
+                        <div class="toc-item active" data-section="intro">
+                            <span class="font-bold">🎯 مقدمه و اهداف</span>
+                        </div>
+                        <div class="toc-item" data-section="issue1">
+                            <span class="font-bold">❌ ایراد ۱: فضای هدر رفته</span>
+                        </div>
+                        <div class="toc-item" data-section="issue2">
+                            <span class="font-bold">❌ ایراد ۲: UI/UX موبایل</span>
+                        </div>
+                        <div class="toc-item" data-section="issue3">
+                            <span class="font-bold">❌ ایراد ۳: Preset های غیرضروری</span>
+                        </div>
+                        <div class="toc-item" data-section="issue4">
+                            <span class="font-bold">❌ ایراد ۴: AI جعلی</span>
+                        </div>
+                        <div class="toc-item" data-section="solution1">
+                            <span class="font-bold">✅ راه‌حل ۱: Floating Panel</span>
+                        </div>
+                        <div class="toc-item" data-section="solution2">
+                            <span class="font-bold">✅ راه‌حل ۲: Particle Mode</span>
+                        </div>
+                        <div class="toc-item" data-section="solution3">
+                            <span class="font-bold">✅ راه‌حل ۳: AI واقعی</span>
+                        </div>
+                        <div class="toc-item" data-section="tools">
+                            <span class="font-bold">🛠️ ابزارها و API ها</span>
+                        </div>
+                        <div class="toc-item" data-section="conclusion">
+                            <span class="font-bold">🎓 جمع‌بندی</span>
+                        </div>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:col-span-3 space-y-6">
+                <!-- Introduction -->
+                <section id="intro" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">🎯</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">مقدمه و اهداف</h2>
+                            <p class="text-gray-400">چرا این پکیج آموزشی ایجاد شده؟</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            <strong class="text-purple-400">سلام همکار عزیز!</strong> 
+                            این پکیج آموزشی برای کمک به شما در ارتقای <strong>DotArt Studio</strong> طراحی شده است.
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 p-6 rounded-xl border border-purple-500/30">
+                            <h3 class="font-bold text-lg mb-3 flex items-center gap-2">
+                                <i data-lucide="target" class="text-purple-400"></i>
+                                اهداف این آموزش:
+                            </h3>
+                            <ul class="space-y-2 mr-6">
+                                <li>✓ شناسایی ایرادات UI/UX در طراحی فعلی</li>
+                                <li>✓ ارائه راه‌حل‌های حرفه‌ای برای تجربه کاربری بهتر</li>
+                                <li>✓ معرفی حالت Particle Mode برای ASCII Art پیشرفته</li>
+                                <li>✓ ادغام AI واقعی (puter.js و Pollinations)</li>
+                                <li>✓ ایجاد یک استودیو تعاملی و هوشمند</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-blue-900/20 p-4 rounded-xl border border-blue-500/30">
+                            <p class="flex items-start gap-2">
+                                <i data-lucide="info" class="text-blue-400 flex-shrink-0 mt-1"></i>
+                                <span>
+                                    <strong>نکته مهم:</strong> در خلال این آموزش، اگر سوالی داشتید، از دکمه شناور گوشه صفحه استفاده کنید تا با هوش مصنوعی صحبت کنید.
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Issue 1: Wasted Space -->
+                <section id="issue1" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">❌</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">ایراد ۱: فضای هدر رفته در UI</h2>
+                            <p class="text-gray-400">۲۷۰ پیکسل از ۸۰۰ پیکسل فقط برای دکوراتیو!</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            در طراحی فعلی، فضای بسیار زیادی صرف عناصر دکوراتیو شده که می‌توانست برای <strong class="text-purple-400">preview</strong> استفاده شود.
+                        </p>
+
+                        <div class="comparison-box">
+                            <div class="bad-example">
+                                <h4 class="font-bold text-red-400 mb-3 flex items-center gap-2">
+                                    <i data-lucide="x-circle"></i>
+                                    مشکل فعلی
+                                </h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>• Header با برند و دکمه‌ها → ~۸۰px</li>
+                                    <li>• Padding های داخلی → ~۶۰px</li>
+                                    <li>• Margin بین کارت‌ها → ~۸۰px</li>
+                                    <li>• Footer → ~۵۰px</li>
+                                    <li class="font-bold text-red-300">• مجموعاً ~۲۷۰px هدر رفته!</li>
+                                </ul>
+                            </div>
+                            <div class="good-example">
+                                <h4 class="font-bold text-green-400 mb-3 flex items-center gap-2">
+                                    <i data-lucide="check-circle"></i>
+                                    راه‌حل پیشنهادی
+                                </h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>• Header مینیمال → ~۴۰px</li>
+                                    <li>• Padding بهینه → ~۲۰px</li>
+                                    <li>• Margin کم → ~۳۰px</li>
+                                    <li>• Footer کوچک → ~۳۰px</li>
+                                    <li class="font-bold text-green-300">• مجموعاً ~۱۲۰px | ۱۵۰px صرفه‌جویی!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="code-block" data-lang="CSS">
+<pre><span class="highlight-line">/* ❌ کد فعلی - فضای زیاد */</span>
+.master-container { 
+    padding: 32px;  /* خیلی زیاد */
+    max-width: 1680px;
+}
+
+.studio-card { 
+    padding: 24px;  /* زیاد */
+    margin-bottom: 28px;  /* زیاد */
+}
+
+<span class="highlight-line">/* ✅ کد پیشنهادی - بهینه */</span>
+.master-container { 
+    padding: 16px;  /* بهینه */
+    max-width: 100%;
+}
+
+.studio-card { 
+    padding: 12px;  /* بهینه */
+    margin-bottom: 12px;  /* بهینه */
+}</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Issue 2: Mobile UX -->
+                <section id="issue2" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">❌</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">ایراد ۲: UI/UX موبایل دست و پاگیر</h2>
+                            <p class="text-gray-400">جابجایی بین تب‌ها تجربه کاربری را خراب می‌کند</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            در موبایل، کاربر باید مدام بین <strong>تب تنظیمات</strong> و <strong>تب خروجی</strong> جابجا شود تا نتیجه تغییرات را ببیند. این یک <strong class="text-red-400">ایراد UX اساسی</strong> است.
+                        </p>
+
+                        <div class="bg-red-900/20 p-6 rounded-xl border border-red-500/30">
+                            <h4 class="font-bold text-red-400 mb-3">چرخه معیوب فعلی:</h4>
+                            <div class="flex items-center justify-center gap-2 flex-wrap text-sm">
+                                <span class="bg-red-900/40 px-3 py-1 rounded-lg">تب تنظیمات</span>
+                                <i data-lucide="arrow-left" class="text-red-400"></i>
+                                <span class="bg-red-900/40 px-3 py-1 rounded-lg">تغییر پارامتر</span>
+                                <i data-lucide="arrow-left" class="text-red-400"></i>
+                                <span class="bg-red-900/40 px-3 py-1 rounded-lg">تب خروجی</span>
+                                <i data-lucide="arrow-left" class="text-red-400"></i>
+                                <span class="bg-red-900/40 px-3 py-1 rounded-lg">دیدن نتیجه</span>
+                                <i data-lucide="arrow-left" class="text-red-400"></i>
+                                <span class="bg-red-900/40 px-3 py-1 rounded-lg">برگشت...</span>
+                            </div>
+                            <p class="text-center text-red-300 mt-3 font-bold">این چرخه خسته‌کننده است!</p>
+                        </div>
+
+                        <div class="bg-green-900/20 p-6 rounded-xl border border-green-500/30">
+                            <h4 class="font-bold text-green-400 mb-3">راه‌حل: Floating Panel</h4>
+                            <p class="text-sm mb-3">یک پنل شناور که همیشه در دسترس است و با یک کلیک باز/بسته می‌شود:</p>
+                            <div class="bg-black/50 p-4 rounded-lg">
+                                <pre class="text-xs text-gray-400">
+┌─────────────────────────────────┐
+│                                 │
+│      Preview Area               │
+│      (حداکثر فضا)                │
+│                                 │
+│                                 │
+│                        [🎛️] ← دستگیره
+└─────────────────────────────────┘
+
+با کلیک روی دستگیره:
+┌─────────────────────────────────┐
+│      Preview (۴۰٪)              │
+├─────────────────────────────────┤
+│ ▼ تنظیمات (۶۰٪)                 │
+│   [اسلایدرها و پارامترها]       │
+└─────────────────────────────────┘
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Issue 3: Presets -->
+                <section id="issue3" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">❌</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">ایراد ۳: Preset های غیرضروری</h2>
+                            <p class="text-gray-400">اشغال فضای زیاد برای کاربرد محدود</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            بخش <strong class="text-purple-400">preset های شبکه‌های اجتماعی</strong> (تلگرام، اینستاگرام، واتساپ و...) فضای زیادی اشغال می‌کند اما کاربرد محدودی دارد.
+                        </p>
+
+                        <div class="code-block" data-lang="HTML">
+<pre><span class="highlight-line">&lt;!-- ❌ کد فعلی - ۸ دکمه در یک ردیف --&gt;</span>
+&lt;div class="preset-deck"&gt;
+    &lt;button class="preset-btn" data-w="40" data-h="40"&gt;تلگرام&lt;/button&gt;
+    &lt;button class="preset-btn" data-w="100" data-h="100"&gt;اینستاگرام&lt;/button&gt;
+    &lt;button class="preset-btn" data-w="60" data-h="60"&gt;واتساپ&lt;/button&gt;
+    &lt;button class="preset-btn" data-w="30" data-h="20"&gt;چت مینیمال&lt;/button&gt;
+    &lt;button class="preset-btn" data-w="80" data-h="80"&gt;توییتر (X)&lt;/button&gt;
+    &lt;button class="preset-btn" data-w="50" data-h="50"&gt;دیسکورد&lt;/button&gt;
+    &lt;button class="preset-btn" data-w="200" data-h="280"&gt;چاپ A4&lt;/button&gt;
+    &lt;button class="preset-btn" data-w="200" data-h="100"&gt;فوق عریض&lt;/button&gt;
+&lt;/div&gt;</pre>
+                        </div>
+
+                        <div class="bg-green-900/20 p-6 rounded-xl border border-green-500/30">
+                            <h4 class="font-bold text-green-400 mb-3">راه‌حل: انتقال به بخش Export</h4>
+                            <p class="text-sm mb-3">این preset ها را به بخش خروجی منتقل کنید، جایی که واقعاً نیاز هستند:</p>
+                            <div class="code-block" data-lang="HTML">
+<pre><span class="highlight-line">&lt;!-- ✅ کد پیشنهادی - Dropdown در Export --&gt;</span>
+&lt;div class="smart-exports"&gt;
+    &lt;!-- دکمه‌های خروجی --&gt;
+    &lt;button class="smart-btn"&gt;کپی&lt;/button&gt;
+    &lt;button class="smart-btn"&gt;TXT&lt;/button&gt;
+    &lt;button class="smart-btn"&gt;PNG&lt;/button&gt;
+    &lt;button class="smart-btn"&gt;HTML&lt;/button&gt;
+    
+    &lt;!-- Dropdown preset ها --&gt;
+    &lt;select class="preset-dropdown"&gt;
+        &lt;option&gt;ابعاد دلخواه&lt;/option&gt;
+        &lt;option&gt;تلگرام (40×40)&lt;/option&gt;
+        &lt;option&gt;اینستاگرام (100×100)&lt;/option&gt;
+        &lt;option&gt;واتساپ (60×60)&lt;/option&gt;
+        &lt;option&gt;چاپ A4 (200×280)&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Issue 4: Fake AI -->
+                <section id="issue4" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">❌</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">ایراد ۴: AI جعلی</h2>
+                            <p class="text-gray-400">فقط یک الگوریتم rule-based ساده، نه AI واقعی</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            سیستم <strong class="text-purple-400">"AI Auto Config"</strong> فعلی فقط یک الگوریتم ساده است که با if-else کار می‌کند، نه AI واقعی.
+                        </p>
+
+                        <div class="code-block" data-lang="JavaScript">
+<pre><span class="highlight-line">// ❌ کد فعلی - فقط rule-based ساده</span>
+let avgLum = lums.reduce((a,b)=&gt;a+b,0)/lums.length;
+let stdDev = Math.sqrt(variance/lums.length);
+
+if (avgLum &lt; 55) { aiB=140; aiG=1.25; }  // اگر تاریک
+else if (avgLum &gt; 175) { aiB=85; aiG=0.85; }  // اگر روشن
+
+if (stdDev &lt; 35) aiC = 130;  // کنتراست کم
+else if (stdDev &gt; 75) aiC = 95;  // کنتراست زیاد
+
+<span class="highlight-line">// این AI نیست! فقط چند قانون ساده است.</span></pre>
+                        </div>
+
+                        <div class="bg-yellow-900/20 p-6 rounded-xl border border-yellow-500/30">
+                            <h4 class="font-bold text-yellow-400 mb-3 flex items-center gap-2">
+                                <i data-lucide="alert-triangle"></i>
+                                چرا این مشکل است؟
+                            </h4>
+                            <ul class="space-y-2 text-sm mr-6">
+                                <li>• <strong>ناامیدکننده برای کاربران:</strong> انتظار AI واقعی دارند</li>
+                                <li>• <strong>محدودیت:</strong> فقط چند قانون ساده، نمی‌تواند محتوای تصویر را درک کند</li>
+                                <li>• <strong>رقابت:</strong> ابزارهای دیگر AI واقعی دارند</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Solution 1: Floating Panel -->
+                <section id="solution1" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">✅</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">راه‌حل ۱: Floating Panel</h2>
+                            <p class="text-gray-400">پنل شناور با دستگیره برای حداکثر فضای preview</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            به جای تب‌های جداگانه، یک <strong class="text-purple-400">پنل شناور</strong> در گوشه تصویر قرار دهید که با کلیک باز/بسته می‌شود.
+                        </p>
+
+                        <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 p-6 rounded-xl border border-purple-500/30">
+                            <h4 class="font-bold mb-3">ویژگی‌های Floating Panel:</h4>
+                            <ul class="space-y-2 text-sm mr-6">
+                                <li>✓ <strong>دستگیره کوچک</strong> در گوشه تصویر (🎛️)</li>
+                                <li>✓ <strong>باز/بسته شدن</strong> با یک کلیک</li>
+                                <li>✓ <strong>Swipe down</strong> برای بستن</li>
+                                <li>✓ <strong>Accordion</strong> برای دسته‌بندی تنظیمات</li>
+                                <li>✓ <strong>حداکثر فضا</strong> برای preview</li>
+                            </ul>
+                        </div>
+
+                        <div class="code-block" data-lang="JavaScript">
+<pre><span class="highlight-line">// ✅ پیاده‌سازی Floating Panel</span>
+const floatingPanel = document.createElement('div');
+floatingPanel.className = 'floating-panel';
+floatingPanel.innerHTML = `
+    &lt;div class="panel-handle"&gt;🎛️&lt;/div&gt;
+    &lt;div class="panel-content"&gt;
+        &lt;div class="accordion-section"&gt;
+            &lt;h3&gt;ابعاد ماتریکس&lt;/h3&gt;
+            &lt;div class="accordion-body"&gt;
+                &lt;input type="number" id="matrixW"&gt;
+                &lt;input type="number" id="matrixH"&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="accordion-section"&gt;
+            &lt;h3&gt;فیلترها&lt;/h3&gt;
+            &lt;div class="accordion-body"&gt;
+                &lt;input type="range" id="brightness"&gt;
+                &lt;input type="range" id="contrast"&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+`;
+
+document.body.appendChild(floatingPanel);
+
+// باز/بسته شدن
+floatingPanel.querySelector('.panel-handle').onclick = () =&gt; {
+    floatingPanel.classList.toggle('open');
+};</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Solution 2: Particle Mode -->
+                <section id="solution2" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">✅</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">راه‌حل ۲: Particle Mode</h2>
+                            <p class="text-gray-400">حالت پارتیکل با پیکسل‌های رنگی و فیزیک واقعی</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            به جای کاراکترهای متنی، از <strong class="text-purple-400">پارتیکل‌های رنگی</strong> استفاده کنید که:
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-purple-900/20 p-4 rounded-xl border border-purple-500/30">
+                                <h4 class="font-bold text-purple-400 mb-2">ویژگی‌ها:</h4>
+                                <ul class="space-y-1 text-sm mr-4">
+                                    <li>✓ پیکسل‌های رنگی واقعی</li>
+                                    <li>✓ فیزیک گرانش (Gravity)</li>
+                                    <li>✓ واکنش به لمس (Touch)</li>
+                                    <li>✓ اثر انگشت (Fingerprint)</li>
+                                    <li>✓ موج و نوسان (Wave)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-pink-900/20 p-4 rounded-xl border border-pink-500/30">
+                                <h4 class="font-bold text-pink-400 mb-2">مزایا:</h4>
+                                <ul class="space-y-1 text-sm mr-4">
+                                    <li>✓ تجربه بصری فوق‌العاده</li>
+                                    <li>✓ تعامل‌پذیری بالا</li>
+                                    <li>✓ مدرن و حرفه‌ای</li>
+                                    <li>✓ مناسب برای موبایل</li>
+                                    <li>✓ قابل export به GIF/Video</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="particle-demo" id="particleDemo">
+                            <div class="absolute inset-0 flex items-center justify-center text-gray-500">
+                                <span>دموی پارتیکل (در نسخه واقعی اجرا می‌شود)</span>
+                            </div>
+                        </div>
+
+                        <div class="code-block" data-lang="JavaScript">
+<pre><span class="highlight-line">// ✅ پیاده‌سازی Particle Mode</span>
+class Particle {
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.vx = 0;
+        this.vy = 0;
+        this.color = color;
+        this.size = 2;
+        this.gravity = 0.2;
+        this.friction = 0.98;
+    }
+    
+    update() {
+        this.vy += this.gravity;
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+    
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+    }
+}
+
+// تبدیل تصویر به پارتیکل
+function imageToParticles(imageData) {
+    const particles = [];
+    for (let y = 0; y &lt; imageData.height; y += 4) {
+        for (let x = 0; x &lt; imageData.width; x += 4) {
+            const i = (y * imageData.width + x) * 4;
+            const r = imageData.data[i];
+            const g = imageData.data[i+1];
+            const b = imageData.data[i+2];
+            const color = `rgb(${r},${g},${b})`;
+            particles.push(new Particle(x, y, color));
+        }
+    }
+    return particles;
+}</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Solution 3: Real AI -->
+                <section id="solution3" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">✅</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">راه‌حل ۳: AI واقعی</h2>
+                            <p class="text-gray-400">ادغام puter.js و Pollinations برای هوش واقعی</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            به جای AI جعلی، از <strong class="text-purple-400">API های واقعی</strong> استفاده کنید:
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-6 rounded-xl border border-purple-500/40">
+                                <h4 class="font-bold text-purple-400 mb-3 flex items-center gap-2">
+                                    <i data-lucide="cpu"></i>
+                                    puter.js
+                                </h4>
+                                <p class="text-sm mb-3">کتابخانه رایگان برای دسترسی به AI در مرورگر</p>
+                                <ul class="space-y-1 text-xs mr-4">
+                                    <li>✓ رایگان و بدون API key</li>
+                                    <li>✓ GPT-4, Claude, Gemini</li>
+                                    <li>✓ تحلیل تصویر (Vision)</li>
+                                    <li>✓ تولید کد</li>
+                                </ul>
+                                <a href="https://puter.com" target="_blank" class="text-purple-400 text-xs hover:underline mt-2 inline-block">
+                                    puter.com →
+                                </a>
+                            </div>
+                            <div class="bg-gradient-to-br from-pink-900/30 to-pink-800/20 p-6 rounded-xl border border-pink-500/40">
+                                <h4 class="font-bold text-pink-400 mb-3 flex items-center gap-2">
+                                    <i data-lucide="brain"></i>
+                                    Pollinations AI
+                                </h4>
+                                <p class="text-sm mb-3">API رایگان برای متن و تصویر</p>
+                                <ul class="space-y-1 text-xs mr-4">
+                                    <li>✓ کاملاً رایگان</li>
+                                    <li>✓ بدون نیاز به ثبت‌نام</li>
+                                    <li>✓ تولید تصویر از متن</li>
+                                    <li>✓ مدل‌های مختلف (Mistral, Llama)</li>
+                                </ul>
+                                <a href="https://pollinations.ai" target="_blank" class="text-pink-400 text-xs hover:underline mt-2 inline-block">
+                                    pollinations.ai →
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="code-block" data-lang="JavaScript">
+<pre><span class="highlight-line">// ✅ استفاده از puter.js برای تحلیل تصویر</span>
+async function analyzeImageWithAI(imageBase64) {
+    try {
+        const response = await puter.ai.chat({
+            model: 'gpt-4-vision',
+            messages: [{
+                role: 'user',
+                content: [
+                    {
+                        type: 'text',
+                        text: 'این تصویر را تحلیل کن و بهترین تنظیمات ASCII Art را پیشنهاد بده: روشنایی، کنتراست، پالت کاراکتر، فیلترها'
+                    },
+                    {
+                        type: 'image_url',
+                        image_url: { url: imageBase64 }
+                    }
+                ]
+            }]
+        });
+        
+        return response.message.content;
+    } catch (error) {
+        console.error('AI Error:', error);
+        return null;
+    }
+}
+
+<span class="highlight-line">// ✅ استفاده از Pollinations برای تولید تصویر مثلا لوگوتایپ یک اسم</span>
+async function generateImage(prompt) {
+    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`;
+    return url;
+}</pre>
+                        </div>
+
+                        <div class="bg-blue-900/20 p-6 rounded-xl border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3">سناریوی پیشنهادی:</h4>
+                            <ol class="space-y-2 text-sm mr-6 list-decimal">
+                                <li>کاربر تصویر آپلود می‌کند</li>
+                                <li>دکمه "🧠 AI Analysis" را می‌زند</li>
+                                <li>تصویر به puter.js ارسال می‌شود</li>
+                                <li>AI تحلیل می‌کند: "این یک پرتره است با نور کم"</li>
+                                <li>پیشنهاد: روشنایی +40، کنتراست +20، پالت dense</li>
+                                <li>تنظیمات خودکار اعمال می‌شوند</li>
+                                <li>کاربر می‌تواند دستی ویرایش کند</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tools and APIs -->
+                <section id="tools" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">🛠️</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">ابزارها و API های پیشنهادی</h2>
+                            <p class="text-gray-400">منابع رایگان برای پیاده‌سازی</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-purple-900/20 to-pink-900/20 p-6 rounded-xl border border-purple-500/30">
+                            <h4 class="font-bold text-lg mb-4">کتابخانه‌های JavaScript:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <h5 class="font-bold text-purple-400 mb-2">برای Particle Mode:</h5>
+                                    <ul class="space-y-1 text-sm mr-4">
+                                        <li>• <code class="bg-black/50 px-2 py-1 rounded">p5.js</code> - گرافیک و انیمیشن</li>
+                                        <li>• <code class="bg-black/50 px-2 py-1 rounded">matter.js</code> - فیزیک واقعی</li>
+                                        <li>• <code class="bg-black/50 px-2 py-1 rounded">three.js</code> - 3D (اختیاری)</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-pink-400 mb-2">برای AI:</h5>
+                                    <ul class="space-y-1 text-sm mr-4">
+                                        <li>• <code class="bg-black/50 px-2 py-1 rounded">puter.js</code> - AI رایگان</li>
+                                        <li>• <code class="bg-black/50 px-2 py-1 rounded">pollinations.ai</code> - متن و تصویر</li>
+                                        <li>• <code class="bg-black/50 px-2 py-1 rounded">tensorflow.js</code> - ML محلی</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-900/20 p-6 rounded-xl border border-green-500/30">
+                            <h4 class="font-bold text-green-400 mb-3">کامپایلر SHΞN™ Core:</h4>
+                            <p class="text-sm mb-3">
+                                برای دیدن یک نمونه عالی از ادغام پنل و مانیتور خروجی لایو AI و کامپایلر، حتماً به آدرس زیر سر بزنید:
+                            </p>
+                            <a href="https://aishervin.github.io/Bot" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-all shadow-lg">
+                                <i data-lucide="external-link"></i>
+                                https://aishervin.github.io/Bot
+                            </a>
+                            <p class="text-xs text-gray-400 mt-3">
+                                این کامپایلر از DeepSeek و Pollinations استفاده می‌کند و می‌توانید از الگوریتم آن برای طراحی استودیوی خود استفاده کنید.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <section id="conclusion" class="glass-card p-8">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="step-indicator">🎓</div>
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">جمع‌بندی و مراحل بعدی</h2>
+                            <p class="text-gray-400">چگونه شروع کنید؟</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 p-6 rounded-xl border border-purple-500/30">
+                            <h4 class="font-bold text-lg mb-4">مراحل پیاده‌سازی:</h4>
+                            <ol class="space-y-3 mr-6">
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</span>
+                                    <div>
+                                        <strong class="text-purple-400">بهینه‌سازی UI:</strong>
+                                        <p class="text-sm mt-1">حذف preset ها، کاهش padding/margin، استفاده از Floating Panel</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-content-center font-bold flex-shrink-0">2</span>
+                                    <div>
+                                        <strong class="text-purple-400">اضافه کردن Particle Mode:</strong>
+                                        <p class="text-sm mt-1">پیاده‌سازی سیستم پارتیکل با فیزیک و گرانش</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</span>
+                                    <div>
+                                        <strong class="text-purple-400">ادغام AI واقعی:</strong>
+                                        <p class="text-sm mt-1">استفاده از puter.js و Pollinations برای تحلیل تصویر</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">4</span>
+                                    <div>
+                                        <strong class="text-purple-400">تست و بهینه‌سازی:</strong>
+                                        <p class="text-sm mt-1">تست در دستگاه‌های مختلف، بهینه‌سازی performance</p>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="bg-blue-900/20 p-6 rounded-xl border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3">منابع بیشتر:</h4>
+                            <ul class="space-y-2 text-sm mr-6">
+                                <li>
+                                    <a href="https://puter.com" target="_blank" class="text-blue-400 hover:underline">
+                                        puter.com - مستندات puter.js
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://pollinations.ai" target="_blank" class="text-blue-400 hover:underline">
+                                        pollinations.ai - API رایگان
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://aishervin.github.io/Bot" target="_blank" class="text-blue-400 hover:underline">
+                                        SHΞN™ Core - نمونه کامپایلر لایو هوشمند
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="text-center py-8">
+                            <p class="text-2xl font-black animated-gradient-text mb-4">
+                                موفق باشید! 🚀
+                            </p>
+                            <p class="text-gray-400">
+                                اگر سوالی داشتید، از دکمه چت AI در گوشه صفحه استفاده کنید.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="glass-card mx-4 mb-4 p-6 text-center">
+            <p class="animated-gradient-text font-bold text-lg font-orbitron">
+                Exclusive SHΞN™ made☬
+            </p>
+            <p class="text-gray-500 text-sm mt-2">
+                  SHΞЯVIN™ Ai Learning Academy 
+            </p>
+        </footer>
+    </div>
+
+    <!-- Floating Chat Button -->
+    <button class="floating-btn" id="chatToggle">
+        <i data-lucide="message-circle"></i>
+    </button>
+
+    <!-- Chat Container -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center font-bold">
+                    🤖
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm">دستیار آموزشی</h3>
+                    <p class="text-xs text-gray-400">Pollinations AI</p>
+                </div>
+            </div>
+            <button id="chatClose" class="text-gray-400 hover:text-white">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-bubble ai-bubble">
+                سلام! من دستیار آموزشی شما هستم. اگر سوالی درباره DotArt Overhauled دارید، بپرسید!
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <textarea class="chat-input" id="chatInput" placeholder="سوال خود را بنویسید..." rows="1"></textarea>
+            <button class="send-btn" id="sendBtn">
+                <i data-lucide="send"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Background particles
+        const bgCanvas = document.getElementById('bgCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        let particles = [];
+
+        function resizeBg() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(80, Math.floor(bgCanvas.width * bgCanvas.height / 15000));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * bgCanvas.width,
+                    y: Math.random() * bgCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    r: Math.random() * 2 + 1,
+                    color: Math.random() > 0.5 ? 'rgba(168, 85, 247, 0.3)' : 'rgba(236, 72, 153, 0.3)'
+                });
+            }
+        }
+
+        function drawBg() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > bgCanvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > bgCanvas.height) p.vy *= -1;
+                bgCtx.beginPath();
+                bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                bgCtx.fillStyle = p.color;
+                bgCtx.fill();
+            });
+            requestAnimationFrame(drawBg);
+        }
+
+        window.addEventListener('resize', resizeBg);
+        resizeBg();
+        drawBg();
+
+        // TOC Navigation
+        document.querySelectorAll('.toc-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const section = item.dataset.section;
+                document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('.toc-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Update active TOC on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            document.querySelectorAll('.toc-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.section === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Chat functionality
+        const chatToggle = document.getElementById('chatToggle');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatClose = document.getElementById('chatClose');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        chatToggle.addEventListener('click', () => {
+            chatContainer.classList.toggle('active');
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatContainer.classList.remove('active');
+        });
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            // Add user message
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble user-bubble';
+            userBubble.textContent = text;
+            chatMessages.appendChild(userBubble);
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Add loading indicator
+            const loadingBubble = document.createElement('div');
+            loadingBubble.className = 'chat-bubble ai-bubble';
+            loadingBubble.innerHTML = '<span class="text-gray-400">در حال تایپ...</span>';
+            chatMessages.appendChild(loadingBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                // Call Pollinations API
+                const response = await fetch('https://text.pollinations.ai/openai', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'openai',
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'تو یک دستیار آموزشی برای پکیج DotArt Overhauled هستی. به سوالات درباره ارتقای DotArt Studio، Floating Panel، Particle Mode، و ادغام AI پاسخ بده. به زبان فارسی پاسخ بده.'
+                            },
+                            { role: 'user', content: text }
+                        ],
+                        stream: false
+                    })
+                });
+
+                const data = await response.json();
+                const aiText = data.choices[0].message.content;
+
+                // Remove loading and add AI response
+                loadingBubble.remove();
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'chat-bubble ai-bubble';
+                aiBubble.textContent = aiText;
+                chatMessages.appendChild(aiBubble);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                loadingBubble.remove();
+                const errorBubble = document.createElement('div');
+                errorBubble.className = 'chat-bubble ai-bubble';
+                errorBubble.innerHTML = '<span class="text-red-400">خطا در ارتباط با AI. لطفاً دوباره تلاش کنید.</span>';
+                chatMessages.appendChild(errorBubble);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Particle demo
+        const particleDemo = document.getElementById('particleDemo');
+        const demoParticles = [];
+        const demoCanvas = document.createElement('canvas');
+        demoCanvas.width = particleDemo.offsetWidth;
+        demoCanvas.height = 300;
+        demoCanvas.style.width = '100%';
+        demoCanvas.style.height = '100%';
+        particleDemo.appendChild(demoCanvas);
+        const demoCtx = demoCanvas.getContext('2d');
+
+        for (let i = 0; i < 50; i++) {
+            demoParticles.push({
+                x: Math.random() * demoCanvas.width,
+                y: Math.random() * demoCanvas.height,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                r: Math.random() * 3 + 2,
+                color: `hsl(${Math.random() * 60 + 270}, 70%, 60%)`
+            });
+        }
+
+        function animateDemo() {
+            demoCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            demoCtx.fillRect(0, 0, demoCanvas.width, demoCanvas.height);
+            demoParticles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > demoCanvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > demoCanvas.height) p.vy *= -1;
+                demoCtx.beginPath();
+                demoCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                demoCtx.fillStyle = p.color;
+                demoCtx.fill();
+            });
+            requestAnimationFrame(animateDemo);
+        }
+        animateDemo();
+    </script>
+</body>
+</html>
