@@ -3,27 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DotArt Overhauled | سند راهنمای ارتقا</title>
+    <title>Dot Art Overhauled | سند راهنمای ارتقا</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Vazirmatn:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root {
-            --primary: #ff8d00;
-            --primary-glow: rgba(255, 141, 0, 0.3);
-            --bg-base: #000000;
-            --bg-card: rgba(17, 17, 17, 0.8);
-            --text-main: #c9d1d9;
-            --border-color: rgba(255, 141, 0, 0.3);
-        }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; overflow: hidden; touch-action: pan-y; scroll-behavior: smooth; }
         body { 
             font-family: 'Vazirmatn', sans-serif; 
-            background: var(--bg-base); 
-            color: var(--text-main); 
+            background: #000; 
+            color: #c9d1d9; 
             display: flex; 
             flex-direction: column;
         }
@@ -66,175 +57,500 @@
             position: relative;
             z-index: 30;
             min-height: 64px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(255, 141, 0, 0.2);
         }
         
-        .header-logo { display: flex; align-items: center; gap: 0.75rem; }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
         
         .logo-icon {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, rgba(255, 72, 0, 0.2), rgba(255, 141, 0, 0.1));
             border: 2px solid rgba(255, 141, 0, 0.5);
             border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #ff8d00;
+            box-shadow: 0 0 15px rgba(255, 141, 0, 0.3);
             flex-shrink: 0;
         }
         
-        .logo-text h1 { font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; }
-        .logo-text p { font-size: 0.65rem; color: #888; margin-top: 2px; }
+        .logo-text h1 {
+            font-size: 1.1rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        
+        .logo-text p {
+            font-size: 0.65rem;
+            color: #888;
+            margin-top: 2px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
         
         .header-btn {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(255, 141, 0, 0.3);
             border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s ease;
-            color: var(--primary); padding: 0.5rem 1rem; gap: 0.5rem;
-            text-decoration: none; font-size: 0.8rem; font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #ff8d00;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
         }
-        .header-btn:hover { background: rgba(255, 141, 0, 0.15); border-color: var(--primary); transform: scale(1.05); }
         
-        main { flex: 1; display: flex; flex-direction: column; position: relative; z-index: 1; overflow: hidden; min-height: 0; }
+        .header-btn:hover {
+            background: rgba(255, 141, 0, 0.15);
+            border-color: #ff8d00;
+            transform: scale(1.05);
+        }
+        
+        main { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+            z-index: 1; 
+            overflow: hidden; 
+            min-height: 0; 
+        }
         
         .tab-bar {
-            flex-shrink: 0; display: flex; background: rgba(10, 10, 10, 0.95);
+            flex-shrink: 0;
+            display: flex;
+            background: rgba(10, 10, 10, 0.95);
             border-bottom: 1px solid rgba(255, 141, 0, 0.15);
-            padding: 0.5rem; gap: 0.5rem; overflow-x: auto;
-            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+            padding: 0.5rem;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
+        
         .tab-bar::-webkit-scrollbar { height: 2px; }
         .tab-bar::-webkit-scrollbar-thumb { background: rgba(255, 141, 0, 0.3); border-radius: 2px; }
         
         .tab-btn {
-            display: flex; align-items: center; justify-content: center;
-            padding: 0.75rem 1rem; border: 1px solid #333; border-radius: 12px;
-            background: transparent; color: #888; cursor: pointer; transition: all 0.3s;
-            white-space: nowrap; gap: 0.5rem; font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.85rem; font-weight: 700; scroll-snap-align: start; flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1rem;
+            border: 1px solid #333;
+            border-radius: 12px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            gap: 0.5rem;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            scroll-snap-align: start;
+            flex-shrink: 0;
         }
+        
         .tab-btn.active {
-            border-color: var(--primary); color: #fff;
+            border-color: #ff8d00;
+            color: #fff;
             background: rgba(255, 141, 0, 0.12);
             box-shadow: 0 0 15px rgba(255, 141, 0, 0.2);
         }
         
-        .tabs-container { flex: 1; overflow: hidden; position: relative; min-height: 0; }
+        .tabs-container { 
+            flex: 1; 
+            overflow: hidden; 
+            position: relative; 
+            min-height: 0;
+        }
         
         .tab-page { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            overflow-y: auto; overflow-x: hidden; padding: 1.5rem; 
-            scroll-behavior: smooth; opacity: 0; transform: translateX(100%);
-            transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            padding: 1.5rem; 
+            scroll-behavior: smooth; 
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
         }
-        .tab-page.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+        
+        .tab-page.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        
         .tab-page::-webkit-scrollbar { width: 4px; }
         .tab-page::-webkit-scrollbar-thumb { background: rgba(255, 141, 0, 0.4); border-radius: 4px; }
         
         .lesson-card {
-            background: var(--bg-card); backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color); border-radius: 1.5rem;
-            padding: 1.5rem; margin-bottom: 1.5rem;
-            box-shadow: 0 0 20px rgba(255, 141, 0, 0.1); transition: transform 0.3s ease;
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 141, 0, 0.3);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 141, 0, 0.1);
+            transition: transform 0.3s ease;
         }
-        .lesson-card:hover { transform: translateY(-2px); }
+        
+        .lesson-card:hover {
+            transform: translateY(-2px);
+        }
         
         .lesson-title {
-            display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;
-            font-size: 1.2rem; font-weight: 900; color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ff8d00;
         }
         
-        .lesson-content { color: var(--text-main); line-height: 1.9; font-size: 0.95rem; }
-        .lesson-content p { margin-bottom: 1rem; }
-        .lesson-content strong { color: var(--primary); font-weight: 900; }
+        .lesson-content {
+            color: #c9d1d9;
+            line-height: 1.9;
+            font-size: 0.95rem;
+        }
         
-        .highlight-box { background: rgba(255, 141, 0, 0.08); border: 1px solid rgba(255, 141, 0, 0.3); border-radius: 12px; padding: 1rem; margin: 1rem 0; }
-        .warning-box { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 12px; padding: 1rem; margin: 1rem 0; }
-        .success-box { background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 12px; padding: 1rem; margin: 1rem 0; }
+        .lesson-content p {
+            margin-bottom: 1rem;
+        }
         
-        /* Live Editor Styling */
-        .live-editor-container {
-            display: flex; flex-direction: column; gap: 1rem; height: 500px;
-            background: #000; border: 1px solid var(--border-color);
-            border-radius: 16px; overflow: hidden; margin-top: 1rem;
+        .lesson-content strong {
+            color: #ff8d00;
+            font-weight: 900;
         }
-        .editor-header {
-            background: rgba(255, 141, 0, 0.1); padding: 0.5rem 1rem;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border-color);
+        
+        .lesson-content a {
+            color: #ff8d00;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(255, 141, 0, 0.4);
         }
-        .editor-workarea { display: flex; flex: 1; overflow: hidden; }
-        .code-area { flex: 1; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; }
-        .code-textarea {
-            flex: 1; background: #0a0a0a; color: #c9d1d9; font-family: 'JetBrains Mono', monospace;
-            padding: 1rem; border: none; resize: none; outline: none; font-size: 0.85rem; line-height: 1.5;
+        
+        .lesson-content a:hover {
+            border-bottom-color: #ff8d00;
         }
-        .preview-area { flex: 1; background: #fff; }
-        .preview-iframe { width: 100%; height: 100%; border: none; }
-        .run-btn {
-            background: var(--primary); color: #000; border: none; padding: 0.4rem 1rem;
-            border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; gap: 0.5rem; align-items: center;
+        
+        .highlight-box {
+            background: rgba(255, 141, 0, 0.08);
+            border: 1px solid rgba(255, 141, 0, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
         }
-
-        /* Chat System */
+        
+        .warning-box {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .success-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .live-demo {
+            background: #0a0a0a;
+            border: 2px solid rgba(255, 141, 0, 0.5);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            box-shadow: 0 0 30px rgba(255, 141, 0, 0.2);
+        }
+        
+        .live-demo-header {
+            background: linear-gradient(135deg, rgba(255, 72, 0, 0.2), rgba(255, 141, 0, 0.1));
+            border-bottom: 1px solid rgba(255, 141, 0, 0.3);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .live-demo-title {
+            color: #ff8d00;
+            font-size: 0.9rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .live-demo-badge {
+            background: rgba(255, 141, 0, 0.2);
+            border: 1px solid rgba(255, 141, 0, 0.4);
+            color: #ff8d00;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .live-demo-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ff8d00;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .live-demo-body {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #000;
+        }
+        
+        .live-demo-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .live-demo-footer {
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 141, 0, 0.2);
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            color: #888;
+            text-align: center;
+        }
+        
+        /* Chat Minimal */
         .chat-container {
-            position: fixed; bottom: 100px; right: 20px; width: 360px; max-width: calc(100vw - 40px);
-            background: rgba(17, 17, 17, 0.95); backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color); border-radius: 1.5rem;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            max-height: 450px;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 141, 0, 0.3);
+            border-radius: 1.5rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 141, 0, 0.1);
-            z-index: 1000; display: none; flex-direction: column; overflow: hidden;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
         }
-        .chat-container.active { display: flex; animation: slideUp 0.3s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .chat-container.active {
+            display: flex;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         .chat-header {
             background: linear-gradient(135deg, rgba(255, 72, 0, 0.15), rgba(255, 141, 0, 0.08));
-            padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255, 141, 0, 0.2);
-            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 141, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .chat-header-title { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.9rem; color: var(--primary); }
-        .chat-close { background: none; border: none; color: #666; cursor: pointer; padding: 0.25rem; font-size: 1.2rem; transition: color 0.3s; }
+        
+        .chat-header-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #ff8d00;
+        }
+        
+        .chat-header-title i { font-size: 1rem; }
+        
+        .chat-close {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
         .chat-close:hover { color: #fff; }
         
-        .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; max-height: 300px; }
-        .chat-bubble { max-width: 85%; padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
-        .chat-bubble.user { align-self: flex-end; background: rgba(255, 141, 0, 0.2); border: 1px solid rgba(255, 141, 0, 0.2); }
-        .chat-bubble.ai { align-self: flex-start; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.05); }
-        
-        .chat-input-area { padding: 0.75rem 1rem; border-top: 1px solid rgba(255, 141, 0, 0.15); display: flex; gap: 0.5rem; align-items: flex-end; }
-        .chat-input {
-            flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 141, 0, 0.2);
-            border-radius: 10px; padding: 0.6rem 0.8rem; color: var(--text-main); font-family: 'Vazirmatn', sans-serif;
-            outline: none; resize: none; font-size: 0.85rem; min-height: 38px; max-height: 100px; transition: border-color 0.3s;
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 250px;
         }
-        .chat-input:focus { border-color: rgba(255, 141, 0, 0.5); }
+        
+        .chat-messages::-webkit-scrollbar { width: 3px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: rgba(255, 141, 0, 0.3); border-radius: 3px; }
+        
+        .chat-bubble {
+            max-width: 85%;
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .chat-bubble.user {
+            align-self: flex-end;
+            background: rgba(255, 141, 0, 0.2);
+            border: 1px solid rgba(255, 141, 0, 0.2);
+        }
+        
+        .chat-bubble.ai {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .chat-input-area {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid rgba(255, 141, 0, 0.15);
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-end;
+        }
+        
+        .chat-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 141, 0, 0.2);
+            border-radius: 10px;
+            padding: 0.6rem 0.8rem;
+            color: #c9d1d9;
+            font-family: 'Vazirmatn', sans-serif;
+            outline: none;
+            resize: none;
+            font-size: 0.85rem;
+            min-height: 38px;
+            max-height: 100px;
+            transition: border-color 0.3s;
+        }
+        
+        .chat-input:focus {
+            border-color: rgba(255, 141, 0, 0.5);
+        }
         
         .chat-send {
-            background: linear-gradient(135deg, #ff4800, #ff8d00); border: none; border-radius: 10px;
-            padding: 0.6rem 1.2rem; color: #000; font-weight: 700; cursor: pointer; transition: all 0.3s;
-            font-size: 0.85rem; height: 38px; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #ff4800, #ff8d00);
+            border: none;
+            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
         }
-        .chat-send:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 141, 0, 0.3); }
+        
+        .chat-send:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 141, 0, 0.3);
+        }
         
         .chat-toggle {
-            position: fixed; bottom: 30px; right: 30px; width: 56px; height: 56px;
-            background: linear-gradient(135deg, #ff4800, #ff8d00); border: none; border-radius: 50%;
-            color: #000; cursor: pointer; box-shadow: 0 10px 40px rgba(255, 141, 0, 0.4);
-            z-index: 999; transition: all 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #ff4800, #ff8d00);
+            border: none;
+            border-radius: 50%;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(255, 141, 0, 0.4);
+            z-index: 999;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
         }
-        .chat-toggle:hover { transform: scale(1.1); box-shadow: 0 15px 50px rgba(255, 141, 0, 0.5); }
+        
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 50px rgba(255, 141, 0, 0.5);
+        }
         
         .main-footer {
-            flex-shrink: 0; padding: 0.5rem; text-align: center; font-size: 0.75rem;
-            background: rgba(0, 0, 0, 0.95); border-top: 1px solid rgba(255, 141, 0, 0.1);
+            flex-shrink: 0;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.65rem;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(255, 141, 0, 0.1);
         }
-
-        @media (max-width: 768px) {
-            .editor-workarea { flex-direction: column; }
-            .code-area { border-right: none; border-bottom: 1px solid var(--border-color); height: 50%; }
-            .preview-area { height: 50%; }
-            .live-editor-container { height: 600px; }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            .main-header { padding: 0.5rem 0.75rem; min-height: 56px; }
+            .logo-icon { width: 36px; height: 36px; font-size: 1rem; }
+            .logo-text h1 { font-size: 0.95rem; }
+            .logo-text p { font-size: 0.55rem; }
+            .header-btn span { display: none; }
+            .header-btn { padding: 0.4rem 0.7rem; font-size: 0.7rem; }
+            .tab-btn { padding: 0.5rem 0.6rem; font-size: 0.7rem; }
+            .tab-btn span { display: none; }
+            .tab-page { padding: 1rem; }
+            .lesson-card { padding: 1rem; }
+            .lesson-title { font-size: 1rem; }
+            .live-demo-body { height: 280px; }
+            .chat-container { width: calc(100vw - 30px); right: 15px; bottom: 90px; max-height: 400px; }
+            .chat-toggle { width: 50px; height: 50px; bottom: 20px; right: 20px; font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -243,48 +559,111 @@
     
     <header class="main-header">
         <div class="header-logo">
-            <div class="logo-icon"><i data-lucide="palette"></i></div>
+            <div class="logo-icon">☬</div>
             <div class="logo-text">
-                <h1 class="animated-gradient-text font-orbitron" dir="ltr">DotArt Overhauled</h1>
-                <p>سند کالبدشکافی و ارتقای معماری</p>
+                <h1 class="animated-gradient-text font-orbitron" dir="ltr">Dot Art Overhauled</h1>
+                <p>سند راهنمای ارتقای DotArt Studio</p>
             </div>
         </div>
-        <a href="https://aishervin.github.io/Bot" target="_blank" class="header-btn" title="کامپایلر SHΞN™ Core">
-            <i data-lucide="external-link"></i><span>SHΞN™ Core</span>
-        </a>
+        <div class="header-actions">
+            <a href="https://aishervin.github.io/Bot" target="_blank" class="header-btn" title="کامپایلر SHΞN™ Core">
+                <i data-lucide="external-link"></i>
+                <span>SHΞN™ Core</span>
+            </a>
+        </div>
     </header>
 
     <main>
         <div class="tab-bar" id="tabBar">
-            <button class="tab-btn active" data-tab="intro"><i data-lucide="crosshair"></i><span>کالبدشکافی</span></button>
-            <button class="tab-btn" data-tab="solutions"><i data-lucide="layers"></i><span>معماری UI/UX</span></button>
-            <button class="tab-btn" data-tab="particle"><i data-lucide="sparkles"></i><span>Particle Engine</span></button>
-            <button class="tab-btn" data-tab="ai"><i data-lucide="brain-circuit"></i><span>AI واقعی</span></button>
-            <button class="tab-btn" data-tab="livecode"><i data-lucide="code-2"></i><span>Live Frame Component</span></button>
+            <button class="tab-btn active" data-tab="intro"><i data-lucide="book-open"></i><span>مقدمه</span></button>
+            <button class="tab-btn" data-tab="issues"><i data-lucide="alert-triangle"></i><span>انتقادات</span></button>
+            <button class="tab-btn" data-tab="solutions"><i data-lucide="lightbulb"></i><span>پیشنهادات</span></button>
+            <button class="tab-btn" data-tab="particle"><i data-lucide="sparkles"></i><span>Particle</span></button>
+            <button class="tab-btn" data-tab="ai"><i data-lucide="brain"></i><span>AI واقعی</span></button>
+            <button class="tab-btn" data-tab="conclusion"><i data-lucide="flag"></i><span>جمع‌بندی</span></button>
         </div>
 
         <div class="tabs-container">
             
-            <!-- ===== INTRO & ISSUES TAB ===== -->
+            <!-- ===== INTRO TAB ===== -->
             <div class="tab-page active" id="intro-tab">
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="search"></i>کالبدشکافی یک فاجعه بصری</div>
+                    <div class="lesson-title"><i data-lucide="hand"></i>سلام به تو داداش خلاق و عزیزم </div>
                     <div class="lesson-content">
-                        <p>همکار عزیز، پروژه‌ات در سطح ایده و تلاش قابل تقدیره، اما از منظر مهندسی نرم‌افزار و طراحی محصول، با یک سری ایرادات بنیادین روبه‌روست. این موارد رو به عنوان نصیحت فنی در نظر بگیر تا ابزارت از یک اسکریپت ساده به یک استودیوی حرفه‌ای تبدیل بشه.</p>
-                        
-                        <div class="warning-box">
-                            <strong>❌ انتقاد ۱: هدررفت فاجعه‌بار فضای UI</strong><br>
-                            در حال حاضر، حدود <strong>۲۷۰ پیکسل از ۸۰۰ پیکسل</strong> ارتفاع صفحه موبایل فقط صرف دکوراتیو شده است (Header: ~80px، Padding: ~60px، Margin: ~80px، Footer: ~50px). یعنی <strong>۳۴٪ از فضای ارزشمند صفحه</strong> سوخت شده! کاربر به استودیوی تو می‌آید تا «آرت» ببیند، نه پدینگ‌های بی‌مورد.
+                        <p>قبل از هر چیز بگم که پروژه‌ات پتانسیل خیلی بالایی داره و مشخصه که براش زحمت کشیدی. اما به عنوان کسی که می‌خواد کمکت کنه، چند تا نقد جدی و پیشنهاد عملی برات دارم که اگر اعمال کنی، پروژه‌ات از یه ابزار معمولی به یه استودیو حرفه‌ای در سطح حرفه ای تبدیل می‌شه.</p>
+                        <p>این موارد رو به عنوان نصیحت استاد به شاگرد در نظر نگیر لطفا صرفا یه همفکری از روی تجربه س من خودم رو یه سری موارد حساسم مخصوصاً وقتی با هوش کد میزنی کار باید در حدی تمیز باشه که هر کسی نتونه راحت دهنشو باز کنه بگه کاری نداره با با هوش ساخته دیگه پس حالا که کد زدن تا حدودی راحت شده یه مقداری برای سلیقه و آرایش کار باید بیشتر زمان بزاریم !  !    .</p>
+                        <div class="highlight-box">
+                            <strong>📌 نکته مهم:</strong> در خلال این آموزش، اگر سوالی داشتی، از دکمه چت گوشه صفحه می‌تونی استفاده کنی با هوش مصنوعی صحبت بکنی به مدل‌های سبک جی پی تی وصل هستش .
                         </div>
+                    </div>
+                </div>
 
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="target"></i>هدف این سند</div>
+                    <div class="lesson-content">
+                        <p>این سند یک <strong>نقد فنی و حرفه‌ای</strong> از پروژه DotArt Studio شماست. هدف، کمک به ارتقای پروژه به یک استودیو ASCII Art در سطح جهانی است.</p>
+                        <p>در این سند موارد زیر بررسی می‌شود:</p>
+                        <p>۱. ایرادات UI/UX فعلی (فضای هدر رفته، موبایل، preset ها)</p>
+                        <p>۲. مشکل AI ظاهری و راه‌حل آن</p>
+                        <p>۳. معرفی Floating Panel</p>
+                        <p>۴. معرفی Particle Mode با دموی زنده</p>
+                        <p>۵. ادغام AI واقعی با puter.js و Pollinations</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ISSUES TAB ===== -->
+            <div class="tab-page" id="issues-tab">
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="alert-circle"></i>انتقاد ۱: فضای UI هدر رفته</div>
+                    <div class="lesson-content">
+                        <p>توی طراحی فعلی‌ات، حدود <strong>۲۷۰ پیکسل از ۸۰۰ پیکسل</strong> ارتفاع صفحه موبایل، فقط صرف هدر، پدینگ‌های داخلی، مارجین بین کارت‌ها و فوتر شده. یعنی تقریباً یک سوم صفحه فقط برای دکوراتیو!</p>
+                        <p>توی یه استودیو ASCII Art، مهم‌ترین بخش، همون فضای preview هست. کاربر باید بتونه جزئیات ریز خروجی رو ببینه. وقتی فضا کم باشه، تجربه کاربری به شدت ضعیف می‌شه.</p>
                         <div class="warning-box">
-                            <strong>❌ انتقاد ۲: UX موبایل دست‌وپاگیر و چرخه معیوب</strong><br>
-                            مجبور کردن کاربر به جابه‌جایی مداوم بین تب «تنظیمات» و «خروجی»، اصل اساسی <strong>Live Preview</strong> را نقض می‌کند. کاربر باید همزمان با کشیدن اسلایدر، تغییر پیکسل‌ها را ببیند. این چرخه معیوب حس استودیوی زنده را کشته است.
+                            <strong>⚠️ آمار:</strong> مجموع فضای هدر رفته: ~270px از 800px<br>
+                            یعنی 34% از صفحه فقط برای دکوراتیو!
                         </div>
+                        <p>پدینگ‌ها و مارجین‌های فعلی‌ات خیلی زیاده. باید بهینه‌شون کنی تا فضای بیشتری برای هنر باقی بمونه.</p>
+                    </div>
+                </div>
 
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="smartphone"></i>انتقاد ۲: UX موبایل دست و پاگیر</div>
+                    <div class="lesson-content">
+                        <p>الان توی موبایل، کاربر مجبوره مدام بین دو تب جابجا بشه:</p>
+                        <p>• بره تب تنظیمات، یه چیزی عوض کنه</p>
+                        <p>• بره تب خروجی، نتیجه رو ببینه</p>
+                        <p>• دوباره برگرده تنظیمات</p>
                         <div class="warning-box">
-                            <strong>❌ انتقاد ۳: هوش مصنوعی (AI) جعلی و گول‌زننده</strong><br>
-                            دکمه "AI Auto Config" تو صرفاً چند دستور If/Else ساده آماری (میانگین روشنایی و انحراف معیار) است. در دنیای امروز، استفاده از لیبل AI برای یک تابع آماری، به شدت غیرحرفه‌ای است و اعتماد کاربر را نابود می‌کند.
+                            <strong>❌ این چرخه خسته‌کننده‌ست!</strong><br>
+                            کاربر نمی‌تونه همزمان تغییرات رو ببینه<br>
+                            حس "استودیو زنده" از بین می‌ره
+                        </div>
+                        <p>توی هیچ استودیوی حرفه‌ای‌ای (مثل Photoshop، Lightroom، یا هر ابزار هنری دیگه) کاربر مجبور نیست بین تنظیمات و preview جابجا بشه. همه چیز باید همزمان دیده بشه.</p>
+                        <p>اصل <strong>Live Preview</strong> یه اصل اساسی توی ابزارهای هنریه و تو داری ازش غفلت می‌کنی.</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="grid-3x3"></i>انتقاد ۳: Preset های شبکه‌های اجتماعی غیرضروری</div>
+                    <div class="lesson-content">
+                        <p>اون ۸ تا دکمه‌ای که برای تلگرام، اینستاگرام، واتساپ، توییتر، دیسکورد و... گذاشتی، هم فضای زیادی اشغال کردن، هم کاربردشون محدوده.</p>
+                        <p>ASCII Art یه ابزار هنریه، نه ابزار شبکه‌های اجتماعی. کاربر حرفه‌ای ابعاد دلخواه خودشو وارد می‌کنه. این preset ها بیشتر گمراه‌کننده‌ان تا مفید.</p>
+                        <div class="highlight-box">
+                            <strong>💡 پیشنهاد:</strong> اگر واقعاً لازمشون داری، باید منتقلشون کنی به بخش Export، یعنی همون جایی که کاربر واقعاً موقع خروجی گرفتن بهشون نیاز داره. نه اینکه توی پنل اصلی فضا اشغال کنن.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="brain-circuit"></i>انتقاد ۴: AI که گذاشتی، AI نیست!</div>
+                    <div class="lesson-content">
+                        <p>این مهم‌ترین ایراده. اون دکمه <strong>"AI Auto Config"</strong> که گذاشتی، اسمش AI هست ولی واقعاً AI نیست. فقط چند تا if-else ساده‌ست که میانگین روشنایی و انحراف معیار تصویر رو حساب می‌کنه و بر اساس چند قانون ساده، تنظیمات رو عوض می‌کنه.</p>
+                        <div class="warning-box">
+                            <strong>⚠️ چرا این مشکل‌سازه؟</strong><br>
+                            • برای کاربر ناامیدکننده‌ست<br>
+                            • وقتی می‌بینه "AI Auto Config" و نتیجه‌اش یه چیز خیلی ساده‌ست، اعتمادش رو از دست می‌ده<br>
+                            • توی دنیای امروز که همه جا AI واقعی هست، این کار در شأن پروژه‌ات نیست
                         </div>
                     </div>
                 </div>
@@ -293,19 +672,30 @@
             <!-- ===== SOLUTIONS TAB ===== -->
             <div class="tab-page" id="solutions-tab">
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="layout-template"></i>راه‌حل‌ها و معماری نوین UI/UX</div>
+                    <div class="lesson-title"><i data-lucide="layers"></i>پیشنهاد ۱: Floating Panel با دستگیره شناور</div>
                     <div class="lesson-content">
-                        <p>برای رفع مشکلات بالا، باید معماری رابط کاربری رو به طور کامل ریفکتور کنی.</p>
-                        
+                        <p>به جای اون دو تا تب جداگانه، یه پنل شناور کوچیک توی گوشه تصویر بذار. یه دستگیره کوچیک (مثلاً با آیکون 🎛️) که با یه کلیک باز می‌شه و تمام تنظیمات رو نشون می‌ده. بعد از تغییرات، با یه swipe یا کلیک بیرون، بسته می‌شه.</p>
                         <div class="success-box">
-                            <strong>✅ پیشنهاد ۱: Floating Panel با Accordion</strong><br>
-                            به جای تب‌های ثابت که نصف صفحه را می‌بلعند، یک <strong>پنل شناور</strong> در گوشه تصویر قرار بده. این پنل باید با یک آیکون 🎛️ باز شود و با یک Swipe به پایین بسته شود. تنظیمات داخل آن نیز باید از سیستم آکاردئون (Accordion) استفاده کنند تا فضا مدیریت شود. (الگوی موفق: Snapseed یا Adobe Lightroom Mobile).
+                            <strong>✅ مزایا:</strong><br>
+                            • همیشه preview تمام صفحه دیده می‌شه<br>
+                            • کاربر هر وقت خواست تنظیمات رو باز می‌کنه<br>
+                            • حس استودیو زنده حفظ می‌شه<br>
+                            • تجربه کاربری مدرن و حرفه‌ای می‌شه
                         </div>
+                        <p>این همون مدلیه که توی اپلیکیشن‌هایی مثل Snapseed، Adobe Lightroom Mobile، و ابزارهای CAD می‌بینی.</p>
+                    </div>
+                </div>
 
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="move"></i>پیشنهاد ۲: انتقال Preset ها به Export</div>
+                    <div class="lesson-content">
+                        <p>به جای اینکه preset ها توی پنل اصلی فضا اشغال کنن، منتقلشون کن به بخش خروجی. اونجا جاییه که کاربر واقعاً بهشون نیاز داره.</p>
                         <div class="highlight-box">
-                            <strong>✅ پیشنهاد ۲: پاکسازی پنل اصلی از Presetهای سوشال مدیا</strong><br>
-                            آن ۸ دکمه‌ای که برای شبکه‌های اجتماعی (تلگرام، اینستاگرام و...) گذاشتی، در پنل اصلی کارایی ندارند. پنل اصلی فقط جای <strong>ابعاد شبکه (X, Y) و قفل Aspect Ratio</strong> است. Presetها را به یک Dropdown در بخش Export منتقل کن.
+                            <strong>💡 الگوی درست:</strong><br>
+                            • پنل اصلی: فقط ابعاد دلخواه (دو فیلد عددی + قفل aspect ratio)<br>
+                            • بخش Export: dropdown با preset های شبکه‌های اجتماعی
                         </div>
+                        <p>اینجوری هم فضای preview حفظ می‌شه، هم کاربر موقع خروجی گرفتن به preset ها دسترسی داره.</p>
                     </div>
                 </div>
             </div>
@@ -313,16 +703,64 @@
             <!-- ===== PARTICLE TAB ===== -->
             <div class="tab-page" id="particle-tab">
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="atom"></i>انقلاب بصری: Particle Mode تعاملی</div>
+                    <div class="lesson-title"><i data-lucide="sparkles"></i>Particle Mode - حالت پارتیکل</div>
                     <div class="lesson-content">
-                        <p>برای اینکه پروژه‌ات رقیب نداشته باشد، باید از محدودیت کاراکترهای ثابت متنی فراتر بروی. حالت <strong>Particle Mode</strong> را اضافه کن که در آن هر پیکسل، یک پارتیکل رنگی با فیزیک واقعی (گرانش و اصطکاک) است.</p>
-                        <p>در این حالت، ذرات با اثر انگشت یا ماوس کاربر موج می‌خورند، پراکنده می‌شوند و به جای اصلی بازمی‌گردند. این یک تجربه فوق‌العاده تعاملی است.</p>
-                        
-                        <div class="highlight-box">
-                            <strong>📚 کتابخانه‌های پیشنهادی برای پیاده‌سازی:</strong><br>
-                            • p5.js (رندرینگ خلاقانه)<br>
-                            • matter.js (موتور فیزیک دوبعدی)<br>
-                            • three.js (اگر قصد اجرای WebGL با پرفورمنس نجومی داری)
+                        <p>این پیشنهادی‌ه که پروژه‌ات رو متحول می‌کنه. به جای اینکه فقط کاراکترهای متنی داشته باشی، یه حالت جدید اضافه کن که از <strong>پارتیکل‌های رنگی واقعی</strong> استفاده کنه.</p>
+                        <p>توی این حالت:</p>
+                        <p>• هر پیکسل تصویر تبدیل به یه پارتیکل رنگی می‌شه</p>
+                        <p>• پارتیکل‌ها فیزیک واقعی دارن (گرانش، اصطکاک)</p>
+                        <p>• با لمس صفحه واکنش نشون می‌دن</p>
+                        <p>• با اثر انگشت موج می‌خورن</p>
+                        <p>• می‌تونن پراکنده بشن و دوباره به جای اصلیشون برگردن</p>
+                        <div class="success-box">
+                            <strong>✨ نتیجه:</strong> خروجی از یه ASCII Art ساده به یه اثر هنری تعاملی و زنده تبدیل می‌شه. برای موبایل فوق‌العاده‌ست و تجربه‌ای می‌سازه که هیچ استودیوی دیگه‌ای نداره.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="play-circle"></i>دموی زنده Particle - تعاملی</div>
+                    <div class="lesson-content">
+                        <p>در کادر زیر، یه دموی کامل از Particle Mode قرار دادم. <strong>می‌تونی با ماوس یا انگشت روی تصویر کلیک کنی و نگه داری</strong> تا پارتیکل‌ها پراکنده بشن. وقتی رها کنی، به جای اصلیشون برمی‌گردن.</p>
+                        <p>این هم یه ایده ی مکمل هست که میتونی توی DotArt Studio پیاده‌سازی کنی.</p>
+                    </div>
+                    
+                    <div class="live-demo">
+                        <div class="live-demo-header">
+                            <div class="live-demo-title">
+                                <i data-lucide="zap"></i>
+                                Particle Demo - تعاملی
+                            </div>
+                            <div class="live-demo-badge">LIVE</div>
+                        </div>
+                        <div class="live-demo-body">
+                            <iframe id="particleFrame"></iframe>
+                        </div>
+                        <div class="live-demo-footer">
+                            💡 با ماوس یا انگشت روی تصویر کلیک کن و نگه دار
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="image"></i>نمونه ASCII Art که می‌تونی بسازی</div>
+                    <div class="lesson-content">
+                        <p>این یه نمونه از ASCII Art هست که با Particle Mode می‌تونی بسازی. هر کدوم از این کاراکترها می‌تونن به پارتیکل تبدیل بشن و با لمس کاربر واکنش نشون بدن:</p>
+                    </div>
+                    
+                    <div class="live-demo">
+                        <div class="live-demo-header">
+                            <div class="live-demo-title">
+                                <i data-lucide="palette"></i>
+                                نمونه ASCII Art تعاملی
+                            </div>
+                            <div class="live-demo-badge">LIVE</div>
+                        </div>
+                        <div class="live-demo-body">
+                            <iframe id="asciiFrame"></iframe>
+                        </div>
+                        <div class="live-demo-footer">
+                            🎨 این نمونه رو می‌تونی با Particle Mode بسازی
                         </div>
                     </div>
                 </div>
@@ -331,53 +769,112 @@
             <!-- ===== AI TAB ===== -->
             <div class="tab-page" id="ai-tab">
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="cpu"></i>جایگزینی منطق شرطی با AI واقعی</div>
+                    <div class="lesson-title"><i data-lucide="cpu"></i>AI واقعی با puter.js</div>
                     <div class="lesson-content">
-                        <p>برای حل مشکل هوش مصنوعی جعلی، معماری پردازشی تو باید <strong>هیبریدی (ترکیبی)</strong> شود:</p>
-                        <ul style="padding-right: 1.5rem; margin-bottom: 1rem;">
-                            <li><strong>لایه اول (سریع):</strong> همان الگوریتم هیستوگرام فعلی تو برای سرعت پایه.</li>
-                            <li><strong>لایه دوم (عمیق و واقعی):</strong> استفاده از API های مبتنی بر مرورگر برای درک واقعی تصویر و محتوا.</li>
-                        </ul>
-
+                        <p><strong>puter.js</strong> یه کتابخانه رایگانه که بهت اجازه می‌ده مستقیم توی مرورگر از GPT-4 Vision، Claude، Gemini و... استفاده کنی. بدون نیاز به API key، بدون هزینه.</p>
                         <div class="success-box">
-                            <strong>🛠️ ابزارهای ضروری:</strong><br><br>
-                            <strong>۱. Puter.js:</strong> اجرای مستقیم مدل‌های قدرتمند (GPT-4 Vision, Claude) در مرورگر بدون نیاز به کلید API.<br>
-                            <a href="https://puter.com/docs" target="_blank" style="color:var(--primary);">مستندات Puter</a><br><br>
-                            <strong>۲. Pollinations AI:</strong> برای تولید تصویر مرجع یا تحلیل متنی بدون ثبت‌نام.<br>
-                            <code>Endpoint: https://text.pollinations.ai/openai</code>
+                            <strong>✅ ویژگی‌ها:</strong><br>
+                            • کاملاً رایگان<br>
+                            • بدون نیاز به API key<br>
+                            • پشتیبانی از Vision (تحلیل تصویر)<br>
+                            • اجرای مستقیم در مرورگر
+                        </div>
+                        <p><strong>📚 مستندات:</strong> <a href="https://puter.com/docs" target="_blank">https://puter.com/docs</a></p>
+                        <p>سناریویی که پیشنهاد می‌کنم:</p>
+                        <p>۱. کاربر تصویر آپلود می‌کنه</p>
+                        <p>۲. دکمه "AI Analysis" رو می‌زنه</p>
+                        <p>۳. تصویر به puter.js فرستاده می‌شه</p>
+                        <p>۴. AI تحلیل می‌کنه: "این یه پرتره‌ست با نور کم..."</p>
+                        <p>۵. پیشنهاد می‌ده: روشنایی +۴۰، کنتراست +۲۰، پالت dense</p>
+                        <p>۶. تنظیمات خودکار اعمال می‌شن</p>
+                        <p>۷. کاربر می‌تونه دستی ویرایش کنه</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="image"></i>Pollinations AI - تولید تصویر و متن</div>
+                    <div class="lesson-content">
+                        <p><strong>Pollinations AI</strong> یه سرویس کاملاً رایگان برای تولید متن و تصویر. بدون نیاز به ثبت‌نام.</p>
+                        <div class="highlight-box">
+                            <strong>💡 کاربرد در DotArt Studio:</strong><br>
+                            • تولید تصاویر مرجع برای ASCII Art<br>
+                            • پیشنهاد پالت رنگی بر اساس تصویر ورودی<br>
+                            • تولید پرامپت برای بهبود خروجی<br>
+                            • چت AI برای راهنمایی کاربر
+                        </div>
+                        <p><strong>📚 مستندات:</strong> <a href="https://pollinations.ai" target="_blank">https://pollinations.ai</a></p>
+                        <p><strong>🔗 API Endpoint:</strong> <code style="background:rgba(0,0,0,0.5);padding:0.2rem 0.5rem;border-radius:4px;direction:ltr;display:inline-block;font-family:'JetBrains Mono',monospace;">https://text.pollinations.ai/openai</code></p>
+                        <p>اینجوری هم کاربر حرفه‌ای می‌تونه دستی کار کنه، هم کاربر معمولی از AI کمک بگیره. ترکیب برنده.</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="git-merge"></i>معماری ترکیبی پیشنهادی</div>
+                    <div class="lesson-content">
+                        <p>پیشنهاد می‌کنم یه سیستم <strong>هیبریدی</strong> بسازی:</p>
+                        <p><strong>لایه ۱: الگوریتم محلی (سریع)</strong></p>
+                        <p>• تحلیل histogram تصویر<br>
+                        • تشخیص روشنایی/کنتراست<br>
+                        • تنظیمات پایه</p>
+                        <p><strong>لایه ۲: AI واقعی (عمیق)</strong></p>
+                        <p>• ارسال تصویر به API<br>
+                        • تحلیل محتوای تصویری<br>
+                        • پیشنهاد پالت و سبک هنری<br>
+                        • تشخیص اشیاء و مناطق مهم</p>
+                        <div class="success-box">
+                            <strong>✨ نتیجه:</strong> کاربر هم سرعت داره (لایه محلی) و هم هوشمندی (لایه AI).
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ===== LIVE CODE TAB ===== -->
-            <div class="tab-page" id="livecode-tab">
+            <!-- ===== CONCLUSION TAB ===== -->
+            <div class="tab-page" id="conclusion-tab">
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="monitor-play"></i>کامپوننت Live Frame (پیش‌نمایش زنده کد)</div>
+                    <div class="lesson-title"><i data-lucide="flag"></i>جمع‌بندی</div>
                     <div class="lesson-content">
-                        <p>به عنوان یک توسعه‌دهنده، بهترین راه برای تست ایده پنل شناور (Floating Panel) یا استایل‌های جدید، استفاده از یک محیط ایزوله است. در اینجا می‌توانی کدهای HTML/CSS خود را تایپ کرده و در لحظه خروجی را ببینی.</p>
-                        
-                        <div class="live-editor-container">
-                            <div class="editor-header">
-                                <span style="font-weight: bold; color: var(--primary);"><i data-lucide="code"></i> ویرایشگر زنده</span>
-                                <button class="run-btn" id="runCodeBtn"><i data-lucide="play"></i> اجرا کن</button>
-                            </div>
-                            <div class="editor-workarea">
-                                <div class="code-area">
-<textarea class="code-textarea" id="htmlCodeInput" spellcheck="false">
-<!-- نمونه پنل شناور تستی -->
-<div style="background: rgba(17,17,17,0.9); border: 1px solid #ff8d00; padding: 15px; border-radius: 12px; color: #fff; position: absolute; bottom: 20px; right: 20px; font-family: sans-serif; backdrop-filter: blur(10px);">
-    <h3 style="color: #ff8d00; margin-top: 0;">🎛️ Floating Panel</h3>
-    <p style="font-size: 14px; color: #aaa;">تنظیمات استودیو</p>
-    <input type="range" style="width: 100%; accent-color: #ff8d00;">
-</div>
-</textarea>
-                                </div>
-                                <div class="preview-area">
-                                    <iframe class="preview-iframe" id="livePreviewFrame"></iframe>
-                                </div>
-                            </div>
+                        <p>اگر این تغییرات رو اعمال کنی:</p>
+                        <p>۱. فضای UI رو بهینه کنی</p>
+                        <p>۲. Floating Panel اضافه کنی</p>
+                        <p>۳. Particle Mode پیاده‌سازی کنی</p>
+                        <p>۴. AI واقعی با puter.js و Pollinations ادغام کنی</p>
+                        <div class="success-box">
+                            <strong>🚀 نتیجه:</strong> پروژه‌ات از یه DotArt Studio معمولی، به یه استودیو حرفه‌ای و در سطح استاندارد تبدیل می‌شه که رقیب نداره.
                         </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="link"></i>منابع و الهام</div>
+                    <div class="lesson-content">
+                        <p>و نهایتاً باز هم اگر اصرار بر طراحی به صورت دو تب مجزای تنظیمات و خروجی داری و یه پلتفرم استودیویی نمی‌خوای می‌تونی یه سر به این اپلیکیشن بزنی کارایی متفاوتی داره به عنوان یک کامپایلر و چتبات سبک ساخته شده ولی منابع و اسکلت کار میتونه خیلی به ساختار پروژه ی دات آرت شما کمک کنه، مایل بودی  به این آدرس سر بزن تمام سورسش هم صفر تا صد فرانت اند و توی یک فایل html خلاصه شده:</p>
+                        <div class="highlight-box">
+                            <strong>🔗 کامپایلر SHΞN™studio Ai Core:</strong><br>
+                            <a href="https://aishervin.github.io/Bot" target="_blank">
+                                https://aishervin.github.io/Bot
+                            </a>
+                        </div>
+                        <p>این کامپایلر، یه نمونه از:</p>
+                        <p>• ادغام هوش مصنوعی واقعی (DeepSeek و Pollinations)<br>
+                        • طراحی ماژولار داشبورد و نمایشگر خروجی هستش<br>
+                        • دو تب کاربردی و راحت (چت و کامپایلر)<br>
+                        • تجربه کاربری روان بدون شلوغی<br>
+                        • استفاده بهینه از فضا</p>
+                        <p>می‌تونی از الگوریتم و طراحی‌اش برای استودیوی خودت ایده بگیری.</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="book-marked"></i>منابع بیشتر</div>
+                    <div class="lesson-content">
+                        <p><strong>📚 برای Particle Mode:</strong></p>
+                        <p>• p5.js - <a href="https://p5js.org" target="_blank">https://p5js.org</a><br>
+                        • matter.js - <a href="https://brm.io/matter-js" target="_blank">https://brm.io/matter-js</a><br>
+                        • three.js - <a href="https://threejs.org" target="_blank">https://threejs.org</a></p>
+                        <p><strong>🤖 برای AI:</strong></p>
+                        <p>• puter.js - <a href="https://puter.com" target="_blank">https://puter.com</a><br>
+                        • Pollinations AI - <a href="https://pollinations.ai" target="_blank">https://pollinations.ai</a><br>
+                        • TensorFlow.js - <a href="https://www.tensorflow.org/js" target="_blank">https://www.tensorflow.org/js</a></p>
                     </div>
                 </div>
             </div>
@@ -386,34 +883,49 @@
     </main>
 
     <footer class="main-footer">
-        <p dir="ltr" style="font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px;">
-            <span style="color: #fff;">Exclusive</span>
+        <p class="font-semibold flex items-center justify-center gap-1" dir="ltr">
+            <span class="animated-gradient-text">Exclusive</span>
             <span class="animated-gradient-text">☬SHΞN™</span>
-            <span style="color: #fff;">made</span>
+            <span class="animated-gradient-text">made</span>
         </p>
     </footer>
 
-    <!-- Chat Interface -->
-    <button class="chat-toggle" id="chatToggle" title="دستیار هوش مصنوعی Pollinations"><i data-lucide="message-square"></i></button>
+    <!-- Chat Toggle -->
+    <button class="chat-toggle" id="chatToggle" aria-label="Chat">
+        <i data-lucide="message-circle"></i>
+    </button>
+
+    <!-- Chat Container -->
     <div class="chat-container" id="chatContainer">
         <div class="chat-header">
-            <div class="chat-header-title"><i data-lucide="bot"></i> دستیار فنی (Pollinations AI)</div>
-            <button class="chat-close" id="chatClose">✕</button>
+            <div class="chat-header-title">
+                <i data-lucide="bot"></i>
+                دستیار فنی
+            </div>
+            <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
         </div>
         <div class="chat-messages" id="chatMessages">
-            <div class="chat-bubble ai">درود. من دستیار مبتنی بر Pollinations هستم. اگر درباره معماری Single-file، پیاده‌سازی Floating Panel یا Particle Mode سوالی داری، در خدمتم.</div>
+            <div class="chat-bubble ai">
+                سلام! من دستیار فنی هستم. سوالی درباره DotArt Overhauled داری؟ بپرس تا کمکت کنم.
+            </div>
         </div>
         <div class="chat-input-area">
-            <textarea class="chat-input" id="chatInput" placeholder="سوال خود را تایپ کنید..." rows="1"></textarea>
-            <button class="chat-send" id="chatSend"><i data-lucide="send"></i></button>
+            <textarea class="chat-input" id="chatInput" placeholder="سوال خود را بنویسید..." rows="1"></textarea>
+            <button class="chat-send" id="chatSend">
+                <i data-lucide="send"></i>
+            </button>
         </div>
     </div>
 
     <script>
-        // Initialize Icons
+        // ================================================================
+        // 1. LUCIDE ICONS
+        // ================================================================
         lucide.createIcons();
 
-        // Canvas Particle Background
+        // ================================================================
+        // 2. BACKGROUND PARTICLES
+        // ================================================================
         const bgCanvas = document.getElementById('background-canvas');
         const bgCtx = bgCanvas.getContext('2d');
         let bgParticles = [];
@@ -426,13 +938,13 @@
 
         function initBgParticles() {
             bgParticles = [];
-            const count = Math.min(60, Math.floor(window.innerWidth * window.innerHeight / 18000));
+            const count = Math.min(50, Math.floor(bgCanvas.width * bgCanvas.height / 20000));
             for (let i = 0; i < count; i++) {
                 bgParticles.push({
                     x: Math.random() * bgCanvas.width,
                     y: Math.random() * bgCanvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
                     r: Math.random() * 1.5 + 0.5
                 });
             }
@@ -441,23 +953,26 @@
         function drawBg() {
             bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
             bgParticles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy;
+                p.x += p.vx;
+                p.y += p.vy;
                 if (p.x < 0 || p.x > bgCanvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > bgCanvas.height) p.vy *= -1;
-                
                 bgCtx.beginPath();
                 bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                bgCtx.fillStyle = 'rgba(255, 141, 0, 0.4)';
+                bgCtx.fillStyle = 'rgba(255, 141, 0, 0.3)';
                 bgCtx.fill();
                 
                 for (let j = i + 1; j < bgParticles.length; j++) {
                     const p2 = bgParticles[j];
-                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 120) {
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 140) {
                         bgCtx.beginPath();
                         bgCtx.moveTo(p.x, p.y);
                         bgCtx.lineTo(p2.x, p2.y);
-                        bgCtx.strokeStyle = `rgba(255, 141, 0, ${0.15 * (1 - dist / 120)})`;
+                        bgCtx.strokeStyle = `rgba(255, 141, 0, ${0.2 * (1 - dist/140)})`;
+                        bgCtx.lineWidth = 0.7;
                         bgCtx.stroke();
                     }
                 }
@@ -466,108 +981,325 @@
         }
 
         window.addEventListener('resize', resizeBg);
-        resizeBg(); drawBg();
+        resizeBg();
+        drawBg();
 
-        // Tab Navigation System
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabPages = document.querySelectorAll('.tab-page');
+        // ================================================================
+// 3. TAB NAVIGATION (حالت ساده و استاندارد)
+// ================================================================
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabPages = document.querySelectorAll('.tab-page');
+const tabBar = document.getElementById('tabBar');
 
-        function switchTab(tabName) {
-            tabBtns.forEach(b => b.classList.remove('active'));
-            tabPages.forEach(p => p.classList.remove('active'));
-            
-            const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
-            const targetPage = document.getElementById(`${tabName}-tab`);
-            
-            if (targetBtn) targetBtn.classList.add('active');
-            if (targetPage) targetPage.classList.add('active');
-            
-            if (targetBtn) targetBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        }
+function switchTab(tabName) {
+    // حذف کلاس فعال از همه تب‌ها و صفحات
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabPages.forEach(p => p.classList.remove('active'));
+    
+    // پیدا کردن تب و صفحه هدف
+    const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+    if (targetBtn) targetBtn.classList.add('active');
+    
+    const targetPage = document.getElementById(`${tabName}-tab`);
+    if (targetPage) targetPage.classList.add('active');
+    
+    // اسکرول نرم خود نوار تب‌ها (وقتی تب‌های زیادی داریم)
+    if (targetBtn) {
+        targetBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+}
 
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+// تغییر تب فقط با کلیک انجام می‌شود
+tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const tabName = btn.dataset.tab;
+        switchTab(tabName);
+        
+        // ریست کردن اسکرول صفحه به بالاترین نقطه بعد از ورود به تب جدید
+        const page = document.getElementById(`${tabName}-tab`);
+        if (page) page.scrollTop = 0;
+    });
+});
+
+        // ================================================================
+        // 4. PARTICLE DEMO (Blob URL)
+        // ================================================================
+        const particleCode = `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; touch-action: none; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let isDown = false;
+const mouse = { x: 0, y: 0, radius: 80 };
+
+function resize() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  init();
+}
+
+function init() {
+  particles = [];
+  ctx.fillStyle = 'white';
+  const fontSize = Math.min(canvas.width * 0.15, 60);
+  ctx.font = 'bold ' + fontSize + 'px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('SHΞЯVIN', canvas.width/2, canvas.height/2);
+  
+  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  for (let y = 0; y < img.height; y += 4) {
+    for (let x = 0; x < img.width; x += 4) {
+      if (img.data[(y*img.width+x)*4+3] > 128) {
+        particles.push({
+          x, y, baseX: x, baseY: y,
+          size: 1.5,
+          density: Math.random() * 20 + 10
         });
+      }
+    }
+  }
+}
 
-        // Live Editor Component Logic
-        const runCodeBtn = document.getElementById('runCodeBtn');
-        const codeInput = document.getElementById('htmlCodeInput');
-        const previewFrame = document.getElementById('livePreviewFrame');
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    if (isDown) {
+      const dx = mouse.x - p.x;
+      const dy = mouse.y - p.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < mouse.radius) {
+        const force = (mouse.radius - dist) / mouse.radius;
+        p.x -= (dx/dist) * force * p.density * 0.3;
+        p.y -= (dy/dist) * force * p.density * 0.3;
+      }
+    } else {
+      p.x += (p.baseX - p.x) / 10;
+      p.y += (p.baseY - p.y) / 10;
+    }
+    ctx.fillStyle = 'hsl(' + ((p.x+p.y)%360) + ', 80%, 60%)';
+    ctx.fillRect(p.x, p.y, p.size, p.size);
+  });
+  requestAnimationFrame(animate);
+}
 
-        function updateLiveFrame() {
-            const code = codeInput.value;
-            const blob = new Blob([code], { type: 'text/html' });
-            previewFrame.src = URL.createObjectURL(blob);
-        }
+canvas.addEventListener('mousedown', () => isDown = true);
+canvas.addEventListener('touchstart', () => isDown = true, {passive:true});
+canvas.addEventListener('mouseup', () => isDown = false);
+canvas.addEventListener('mouseleave', () => isDown = false);
+canvas.addEventListener('touchend', () => isDown = false);
+canvas.addEventListener('mousemove', e => {
+  const r = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - r.left;
+  mouse.y = e.clientY - r.top;
+});
+canvas.addEventListener('touchmove', e => {
+  const r = canvas.getBoundingClientRect();
+  mouse.x = e.touches[0].clientX - r.left;
+  mouse.y = e.touches[0].clientY - r.top;
+}, {passive:true});
 
-        runCodeBtn.addEventListener('click', updateLiveFrame);
-        updateLiveFrame(); // Initial render
+resize();
+animate();
+window.addEventListener('resize', resize);
+<\/script>
+</body>
+</html>`;
 
-        // Chat System (Pollinations AI Integration)
+        const particleBlob = new Blob([particleCode], { type: 'text/html' });
+        document.getElementById('particleFrame').src = URL.createObjectURL(particleBlob);
+
+        // ================================================================
+        // 5. ASCII DEMO (Blob URL)
+        // ================================================================
+        const asciiCode = `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { 
+    margin: 0; 
+    background: #000; 
+    color: #ff8d00;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .ascii {
+    font-size: 10px;
+    line-height: 1;
+    white-space: pre;
+    text-align: center;
+    margin: 20px 0;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .ascii:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 20px #ff8d00;
+  }
+  .label {
+    color: #888;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="label">🩻 نمونه ASCII Art</div>
+  <div class="ascii">
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠉⠉⠉⠉⠉⠉⠉⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⢀⣤⣾⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠉⠀⠀⠚⠛⠛⠛⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⣀⣀⣀⣀⣀⣀⣀⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠀⠉⠛⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⠤⠀⠉⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠉⠉⢀⣀⣤⣶⣾⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠒⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠀⣶⣶⠀⢰⣶⣶⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⡀⠙⠋⢀⡀⠈⠛⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠿⣶⡶⠿⣿⣿⠶⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠀⣿⡇⠀⣿⣿⠀⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠀⣿⣇⣀⣿⣿⠀⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠛⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⣶⣶⣶⠀⣶⣶⣶⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠿⠿⠿⠀⠿⠿⠿⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⣤⣤⣤⣤⣤⣤⣤⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⠋⢀⣿⠋⢀⡀⠙⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣇⠀⢿⡏⢀⣾⡿⠀⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⣤⣀⣀⣼⣇⣀⣰⣿⣿⣿⣿⣿⣿,
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿,
+</div>
+  <div class="label">💡 این ASCII Art می‌تونه با Particle Mode تعاملی بشه</div>
+</body>
+</html>`;
+
+        const asciiBlob = new Blob([asciiCode], { type: 'text/html' });
+        document.getElementById('asciiFrame').src = URL.createObjectURL(asciiBlob);
+
+        // ================================================================
+        // 6. CHAT WITH POLLINATIONS AI
+        // ================================================================
         const chatToggle = document.getElementById('chatToggle');
         const chatContainer = document.getElementById('chatContainer');
         const chatClose = document.getElementById('chatClose');
+        const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
         const chatSend = document.getElementById('chatSend');
-        const chatMessages = document.getElementById('chatMessages');
-
-        let chatHistory = [{ 
-            role: 'system', 
-            content: 'تو دستیار فنی حرفه‌ای برای ارتقای استودیو DotArt هستی. پاسخ‌هایت را به زبان فارسی، کوتاه، کوبنده، و کاملاً فنی بده. بر اساس معماری Vanilla JS و طراحی حرفه‌ای راهنمایی کن.' 
-        }];
 
         chatToggle.addEventListener('click', () => {
-            chatContainer.classList.add('active');
-            chatInput.focus();
+            chatContainer.classList.toggle('active');
+            if (chatContainer.classList.contains('active')) {
+                chatInput.focus();
+            }
         });
         chatClose.addEventListener('click', () => chatContainer.classList.remove('active'));
 
-        // Fix for UI issue: Ensuring input textarea auto-resizes properly without hiding logic
-        chatInput.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight < 100 ? this.scrollHeight : 100) + 'px';
-        });
+        let chatHistory = [
+            { 
+                role: 'system', 
+                content: 'تو دستیار فنی برای پکیج DotArt Overhauled هستی. به سوالات درباره ارتقای DotArt Studio، Floating Panel، Particle Mode، و ادغام AI پاسخ بده. به زبان فارسی پاسخ بده. لحن مستقیم و تخصصی داشته باش.' 
+            }
+        ];
 
-        async function sendMsg() {
+        async function sendChatMessage() {
             const text = chatInput.value.trim();
             if (!text) return;
 
-            // User message
-            chatMessages.innerHTML += `<div class="chat-bubble user">${text}</div>`;
-            chatHistory.push({ role: 'user', content: text });
-            chatInput.value = ''; chatInput.style.height = 'auto';
+            // Add user message
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble user';
+            userBubble.textContent = text;
+            chatMessages.appendChild(userBubble);
+            chatInput.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Loading state
-            const loadId = 'load-' + Date.now();
-            chatMessages.innerHTML += `<div class="chat-bubble ai" id="${loadId}" style="color: #888;">در حال پردازش...</div>`;
+            chatHistory.push({ role: 'user', content: text });
+
+            // Loading indicator
+            const loadingBubble = document.createElement('div');
+            loadingBubble.className = 'chat-bubble ai';
+            loadingBubble.textContent = 'در حال تایپ...';
+            loadingBubble.style.color = '#888';
+            chatMessages.appendChild(loadingBubble);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
             try {
                 const response = await fetch('https://text.pollinations.ai/openai', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ model: 'openai', messages: chatHistory })
+                    body: JSON.stringify({
+                        model: 'openai',
+                        messages: chatHistory
+                    })
                 });
                 const data = await response.json();
-                const aiResponse = data.choices[0].message.content;
+                const aiText = data.choices[0].message.content;
                 
-                document.getElementById(loadId).remove();
-                chatHistory.push({ role: 'assistant', content: aiResponse });
-                chatMessages.innerHTML += `<div class="chat-bubble ai">${aiResponse}</div>`;
+                chatHistory.push({ role: 'assistant', content: aiText });
+                
+                loadingBubble.remove();
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'chat-bubble ai';
+                aiBubble.textContent = aiText;
+                chatMessages.appendChild(aiBubble);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             } catch (error) {
-                document.getElementById(loadId).innerText = '⚠️ خطا در اتصال به Pollinations API.';
+                loadingBubble.remove();
+                const errorBubble = document.createElement('div');
+                errorBubble.className = 'chat-bubble ai';
+                errorBubble.textContent = '⚠️ خطا در ارتباط با AI. لطفاً دوباره تلاش کنید.';
+                errorBubble.style.color = '#ef4444';
+                chatMessages.appendChild(errorBubble);
             }
         }
 
-        chatSend.addEventListener('click', sendMsg);
+        chatSend.addEventListener('click', sendChatMessage);
         chatInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                sendMsg();
+                sendChatMessage();
             }
         });
+
+        // Auto-resize textarea
+        chatInput.addEventListener('input', () => {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
+        });
+
+        // ================================================================
+        // 7. KEYBOARD SHORTCUTS
+        // ================================================================
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Shift+C to toggle chat
+            if (e.ctrlKey && e.shiftKey && (e.key === 'c' || e.key === 'C')) {
+                e.preventDefault();
+                chatContainer.classList.toggle('active');
+                if (chatContainer.classList.contains('active')) {
+                    chatInput.focus();
+                }
+            }
+        });
+
+        console.log('🚀 DotArt Overhauled | سند راهنمای ارتقا');
+        console.log('📌 برای چت: Ctrl+Shift+C');
+        console.log('📌 اسکرول به پایین هر تب برای حرکت به تب بعدی');
     </script>
 </body>
 </html>
