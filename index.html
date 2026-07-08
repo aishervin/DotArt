@@ -674,7 +674,7 @@
                 <div class="lesson-card">
                     <div class="lesson-title"><i data-lucide="layers"></i>پیشنهاد ۱: Floating Panel با دستگیره شناور</div>
                     <div class="lesson-content">
-                        <p>به جای اون دو تا تب جداگانه، یه پنل شناور کوچیک توی گوشه تصویر بذار. یه دستگیره کوچیک (مثلاً با آیکون 🎛️) که با یه کلیک باز می‌شه و تمام تنظیمات رو نشون می‌ده. بعد از تغییرات، با یه swipe یا کلیک بیرون، بسته می‌شه.</p>
+                        <p>به جای اون دو تا تب جداگانه، یه پنل شناور کوچیک توی گوشه تصویر بذار. یه دستگیره کوچیک (مثلاً با آیکون 🎚️) که با یه کلیک باز می‌شه و تمام تنظیمات رو نشون می‌ده. بعد از تغییرات، با یه swipe یا کلیک بیرون، بسته می‌شه.</p>
                         <div class="success-box">
                             <strong>✅ مزایا:</strong><br>
                             • همیشه preview تمام صفحه دیده می‌شه<br>
@@ -743,7 +743,7 @@
                 </div>
 
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="image"></i>نمونه ASCII Art که می‌تونی بسازی</div>
+                    <div class="lesson-title"><i data-lucide="image"></i>نمونه particles که می‌تونی بسازی</div>
                     <div class="lesson-content">
                         <p>این یه نمونه از ASCII Art هست که با Particle Mode می‌تونی بسازی. هر کدوم از این کاراکترها می‌تونن به پارتیکل تبدیل بشن و با لمس کاربر واکنش نشون بدن:</p>
                     </div>
@@ -760,7 +760,7 @@
                             <iframe id="asciiFrame"></iframe>
                         </div>
                         <div class="live-demo-footer">
-                            🎨 این نمونه رو می‌تونی با Particle Mode بسازی
+                            🎨 این نمونه رو می‌تونی با DotArt  بسازی
                         </div>
                     </div>
                 </div>
@@ -906,11 +906,11 @@
         </div>
         <div class="chat-messages" id="chatMessages">
             <div class="chat-bubble ai">
-                سلام! من دستیار فنی هستم. سوالی درباره DotArt Overhauled داری؟ بپرس تا کمکت کنم.
+                سلام ، من شین هستم اگر سوال یا همفکری نیاز داشتی در خدمتم 👁️‍🗨️ 
             </div>
         </div>
         <div class="chat-input-area">
-            <textarea class="chat-input" id="chatInput" placeholder="سوال خود را بنویسید..." rows="1"></textarea>
+            <textarea class="chat-input" id="chatInput" placeholder="نترس بپرس اونقدام بیسواد نیستم ..." rows="1"></textarea>
             <button class="chat-send" id="chatSend">
                 <i data-lucide="send"></i>
             </button>
@@ -1054,9 +1054,9 @@ function init() {
   ctx.font = 'bold ' + fontSize + 'px Arial';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('SHΞЯVIN', canvas.width/2, canvas.height/2);
+  ctx.fillText('THE SAZ', canvas.width/2, canvas.height/2);
   
-  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const img = ctx.getImageshξяvin 0, canvas.width, canvas.height);
   for (let y = 0; y < img.height; y += 4) {
     for (let x = 0; x < img.width; x += 4) {
       if (img.data[(y*img.width+x)*4+3] > 128) {
@@ -1119,17 +1119,17 @@ window.addEventListener('resize', resize);
         document.getElementById('particleFrame').src = URL.createObjectURL(particleBlob);
 
         // ================================================================
-        // 5. ASCII DEMO (Blob URL)
+                // ================================================================
+        // 5. ASCII DEMO (رندر مستقیم تکست بدون مشکل انکودینگ و بلوک‌های خالی)
         // ================================================================
         const asciiCode = `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <style>
   body { 
     margin: 0; 
     background: #000; 
-    color: #ff8d00;
-    font-family: 'Courier New', monospace;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1139,13 +1139,17 @@ window.addEventListener('resize', resize);
     box-sizing: border-box;
   }
   .ascii {
-    font-size: 10px;
-    line-height: 1;
+    /* استفاده از فونت‌های استاندارد که کاراکترهای بریل رو در ویندوز و اندروید دارند */
+    font-family: 'Segoe UI Symbol', 'Apple Braille', 'DejaVu Sans', 'Droid Sans Fallback', sans-serif;
+    font-size: 11px;
+    line-height: 0.95; /* فاصله‌ها رو کم کردیم که نقطه‌ها دقیقاً به هم بچسبند */
+    letter-spacing: 0;
     white-space: pre;
-    text-align: center;
+    text-align: left;
+    direction: ltr; /* حتما چپ‌چین */
+    color: #ff8d00;
     margin: 20px 0;
     transition: all 0.3s;
-    cursor: pointer;
   }
   .ascii:hover {
     transform: scale(1.05);
@@ -1155,42 +1159,45 @@ window.addEventListener('resize', resize);
     color: #888;
     font-size: 12px;
     margin-top: 10px;
+    font-family: Tahoma, sans-serif;
   }
 </style>
 </head>
 <body>
-  <div class="label">🩻 نمونه ASCII Art</div>
+  <div class="label">🚧 نمونه ASCII Art</div>
   <div class="ascii">
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠉⠉⠉⠉⠉⠉⠉⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⢀⣤⣾⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠉⠀⠀⠚⠛⠛⠛⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⣀⣀⣀⣀⣀⣀⣀⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠀⠉⠛⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⠤⠀⠉⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠉⠉⢀⣀⣤⣶⣾⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠒⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠀⣶⣶⠀⢰⣶⣶⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⡀⠙⠋⢀⡀⠈⠛⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠿⣶⡶⠿⣿⣿⠶⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠀⣿⡇⠀⣿⣿⠀⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠀⣿⣇⣀⣿⣿⠀⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠛⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⣶⣶⣶⠀⣶⣶⣶⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠿⠿⠿⠀⠿⠿⠿⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⣤⣤⣤⣤⣤⣤⣤⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⠋⢀⣿⠋⢀⡀⠙⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣇⠀⢿⡏⢀⣾⡿⠀⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⣤⣀⣀⣼⣇⣀⣰⣿⣿⣿⣿⣿⣿,
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿,
-</div>
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠉⠉⠉⠉⠉⠉⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⢀⣤⣾⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠀⠀⠚⠛⠛⠛⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣀⣀⣀⣀⣀⣀⣀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⠉⠛⠿⠿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⠤⠀⠉⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠉⢀⣀⣤⣶⣾⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠒⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣶⣶⠀⢰⣶⣶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⡀⠙⠋⢀⡀⠈⠛⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⣶⡶⠿⣿⣿⠶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣿⡇⠀⣿⣿⠀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣿⣇⣀⣿⣿⠀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠛⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣶⣶⣶⠀⣶⣶⣶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⠿⠿⠀⠿⠿⠿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣤⣤⣤⣤⣤⣤⣤⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠋⢀⣿⠋⢀⡀⠙⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣇⠀⢿⡏⢀⣾⡿⠀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣤⣀⣀⣼⣇⣀⣰⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿</div>
   <div class="label">💡 این ASCII Art می‌تونه با Particle Mode تعاملی بشه</div>
 </body>
 </html>`;
 
-        const asciiBlob = new Blob([asciiCode], { type: 'text/html' });
-        document.getElementById('asciiFrame').src = URL.createObjectURL(asciiBlob);
+        // تزریق مستقیم کد به جای استفاده از Blob
+        const asciiFrame = document.getElementById('asciiFrame');
+        if(asciiFrame) {
+            asciiFrame.srcdoc = asciiCode;
+        }
 
         // ================================================================
         // 6. CHAT WITH POLLINATIONS AI
