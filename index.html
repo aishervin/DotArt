@@ -1021,8 +1021,8 @@ tabBtns.forEach(btn => {
     });
 });
 
-                // ================================================================
-        // 4. PARTICLE DEMO (ASCII Art Interactive + srcdoc)
+        // ================================================================
+        // 4. PARTICLE DEMO (Image to Particles + srcdoc)
         // ================================================================
         const particleCode = `<!DOCTYPE html>
 <html lang="en">
@@ -1031,83 +1031,86 @@ tabBtns.forEach(btn => {
 <style>
   body { margin: 0; background: #000; overflow: hidden; }
   canvas { display: block; touch-action: none; cursor: pointer; }
+  #loading {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff8d00;
+    font-family: sans-serif;
+    font-size: 14px;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
 </style>
 </head>
 <body>
+<div id="loading">در حال بارگذاری لوگو...</div>
 <canvas id="c"></canvas>
 <script>
 const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+const loading = document.getElementById('loading');
 let particles = [];
 let isDown = false;
-const mouse = { x: 0, y: 0, radius: 80 };
+const mouse = { x: -1000, y: -1000, radius: 80 };
 
-// متن اسکی آرت شما
-const asciiText = \`⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠉⠉⠉⠉⠉⠉⠉⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⢀⣤⣾⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠉⠀⠀⠚⠛⠛⠛⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣀⣀⣀⣀⣀⣀⣀⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠀⠉⠛⠿⠿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⠤⠀⠉⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠉⠉⢀⣀⣤⣶⣾⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠒⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠀⣶⣶⠀⢰⣶⣶⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⡀⠙⠋⢀⡀⠈⠛⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠿⣶⡶⠿⣿⣿⠶⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠀⣿⡇⠀⣿⣿⠀⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠀⣿⣇⣀⣿⣿⠀⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠛⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣶⣶⣶⠀⣶⣶⣶⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠿⠿⠿⠀⠿⠿⠿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣤⣤⣤⣤⣤⣤⣤⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠋⢀⣿⠋⢀⡀⠙⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣇⠀⢿⡏⢀⣾⡿⠀⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣤⣀⣀⣼⣇⣀⣰⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\`;
+const imgUrl = "https://raw.githubusercontent.com/shervinofpersia/Gpt/refs/heads/main/1712259501956.png";
+let logoImg = new Image();
+logoImg.crossOrigin = "Anonymous"; // برای جلوگیری از خطای امنیتی بوم
 
 function resize() {
-  canvas.width = canvas.offsetWidth || window.innerWidth;
-  canvas.height = canvas.offsetHeight || window.innerHeight;
-  init();
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  if(logoImg.complete) {
+      initParticles();
+  }
 }
 
-function init() {
+logoImg.onload = () => {
+    loading.style.opacity = 0;
+    resize();
+};
+logoImg.src = imgUrl;
+
+function initParticles() {
   particles = [];
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  // سایز و فونت مخصوص برای رندر دقیق اسکی آرت
-  const fontSize = Math.min(canvas.width / 22, 16); 
-  ctx.font = fontSize + "px 'Segoe UI Symbol', 'Apple Braille', 'DejaVu Sans', sans-serif";
-  ctx.fillStyle = 'white';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
+  // محاسبه ابعاد برای قرارگیری دقیق در مرکز صفحه
+  const padding = 40;
+  const maxWidth = canvas.width - padding;
+  const maxHeight = canvas.height - padding;
+  const scale = Math.min(maxWidth / logoImg.width, maxHeight / logoImg.height, 0.8); // حداکثر 80 درصد صفحه
   
-  // رسم متن به صورت چندخطی
-  const lines = asciiText.split('\\n');
-  const lineHeight = fontSize * 0.95; // فشردگی خطوط
-  const totalHeight = lines.length * lineHeight;
-  const startY = (canvas.height - totalHeight) / 2;
+  const w = logoImg.width * scale;
+  const h = logoImg.height * scale;
+  const x = (canvas.width - w) / 2;
+  const y = (canvas.height - h) / 2;
   
-  lines.forEach((line, index) => {
-    ctx.fillText(line, canvas.width/2, startY + (index * lineHeight));
-  });
+  // رسم موقت تصویر برای خواندن پیکسل‌ها
+  ctx.drawImage(logoImg, x, y, w, h);
+  const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  // استخراج پیکسل‌های بوم (تابع اصلاح شده!)
-  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // پاک کردن متن اولیه
-  
-  // تبدیل پیکسل‌ها به پارتیکل (گام ۲ برای تراکم بیشتر)
-  for (let y = 0; y < img.height; y += 2) {
-    for (let x = 0; x < img.width; x += 2) {
-      if (img.data[(y*img.width+x)*4+3] > 128) {
+  // استخراج پیکسل‌ها (گام 3 برای تراکم مناسب و لبه‌های نرم)
+  const step = 3; 
+  for (let py = 0; py < imgData.height; py += step) {
+    for (let px = 0; px < imgData.width; px += step) {
+      const index = (py * imgData.width + px) * 4;
+      const alpha = imgData.data[index + 3];
+      
+      if (alpha > 128) {
+        const r = imgData.data[index];
+        const g = imgData.data[index + 1];
+        const b = imgData.data[index + 2];
+        
         particles.push({
-          x: x + (Math.random() - 0.5) * 20, // پخش شدن اولیه موقع لود
-          y: y + (Math.random() - 0.5) * 20,
-          baseX: x, 
-          baseY: y,
-          size: 1.2,
+          x: px + (Math.random() - 0.5) * 40, // افکت انفجار اولیه
+          y: py + (Math.random() - 0.5) * 40,
+          baseX: px, 
+          baseY: py,
+          color: \`rgb(\${r},\${g},\${b})\`,
+          size: 1.5, // پارتیکل‌های ریز برای کیفیت بالاتر
           density: Math.random() * 15 + 5
         });
       }
@@ -1117,31 +1120,33 @@ function init() {
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
+  
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    
     if (isDown) {
       const dx = mouse.x - p.x;
       const dy = mouse.y - p.y;
       const dist = Math.sqrt(dx*dx + dy*dy);
+      
       if (dist < mouse.radius) {
         const force = (mouse.radius - dist) / mouse.radius;
-        // قدرت پخش شدن ذرات با لمس
         p.x -= (dx/dist) * force * p.density;
         p.y -= (dy/dist) * force * p.density;
       }
     } else {
-      // برگشتن ذرات به سر جای اصلی
       p.x += (p.baseX - p.x) / 10;
       p.y += (p.baseY - p.y) / 10;
     }
     
-    // تم رنگی نارنجی متناسب با UI شما
-    ctx.fillStyle = 'hsl(' + (25 + (p.y / canvas.height) * 20) + ', 100%, 55%)';
+    ctx.fillStyle = p.color;
     ctx.fillRect(p.x, p.y, p.size, p.size);
-  });
+  }
+  
   requestAnimationFrame(animate);
 }
 
-// مدیریت رویدادهای ماوس و لمس
+// رویدادها
 canvas.addEventListener('mousedown', () => isDown = true);
 canvas.addEventListener('touchstart', () => isDown = true, {passive:true});
 canvas.addEventListener('mouseup', () => isDown = false);
@@ -1149,32 +1154,28 @@ canvas.addEventListener('mouseleave', () => isDown = false);
 canvas.addEventListener('touchend', () => isDown = false);
 
 canvas.addEventListener('mousemove', e => {
-  const r = canvas.getBoundingClientRect();
-  mouse.x = e.clientX - r.left;
-  mouse.y = e.clientY - r.top;
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 });
 canvas.addEventListener('touchmove', e => {
-  const r = canvas.getBoundingClientRect();
-  mouse.x = e.touches[0].clientX - r.left;
-  mouse.y = e.touches[0].clientY - r.top;
+  mouse.x = e.touches[0].clientX;
+  mouse.y = e.touches[0].clientY;
 }, {passive:true});
 
-// راه‌اندازی
-setTimeout(resize, 100); // تاخیر کوتاه برای اطمینان از لود شدن ابعاد
-animate();
 window.addEventListener('resize', resize);
+animate();
 <\/script>
 </body>
 </html>`;
 
-        // تزریق مستقیم به فریم به جای Blob برای رندر امن‌تر
         const particleFrame = document.getElementById('particleFrame');
         if(particleFrame) {
             particleFrame.srcdoc = particleCode;
         }
 
+
         // ================================================================
-                // ================================================================
+      // ================================================================
         // 5. ASCII DEMO (رندر مستقیم تکست بدون مشکل انکودینگ و بلوک‌های خالی)
         // ================================================================
         const asciiCode = `<!DOCTYPE html>
