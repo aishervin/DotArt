@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dot Art Overhauled | سند راهنمای ارتقا</title>
+    <title>Dot Art Overhauled | سند راهنمای ارتقای دات آرت</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Vazirmatn:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,7 +19,6 @@
             flex-direction: column;
         }
         
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
         
         .animated-gradient-text { 
@@ -82,13 +81,14 @@
         }
         
         .logo-text h1 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            font-family: 'Vazirmatn', sans-serif;
         }
         
         .logo-text p {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: #888;
             margin-top: 2px;
         }
@@ -173,6 +173,28 @@
             background: rgba(255, 141, 0, 0.12);
             box-shadow: 0 0 15px rgba(255, 141, 0, 0.2);
         }
+
+        /* افکت فلیکر برای تب بعدی */
+        @keyframes pulse-attention {
+            0% { box-shadow: 0 0 0 0 rgba(255, 141, 0, 0.5); border-color: rgba(255,141,0,0.8); }
+            70% { box-shadow: 0 0 0 8px rgba(255, 141, 0, 0); border-color: #555; }
+            100% { box-shadow: 0 0 0 0 rgba(255, 141, 0, 0); border-color: #333; }
+        }
+        @keyframes blink-arrow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+        .tab-btn.needs-attention {
+            animation: pulse-attention 1.5s infinite;
+            color: #ff8d00;
+        }
+        .tab-btn.needs-attention span::after {
+            content: ' ⇇'; /* فلش دوگانه */
+            animation: blink-arrow 0.8s infinite;
+            display: inline-block;
+            font-weight: 900;
+            margin-right: 4px;
+        }
         
         .tabs-container { 
             flex: 1; 
@@ -221,19 +243,25 @@
             transform: translateY(-2px);
         }
         
+        /* تایپوگرافی اصلاح شده */
         .lesson-title {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             margin-bottom: 1rem;
-            font-size: 1.2rem;
+            font-size: 1.35rem; /* بزرگتر و خواناتر */
             font-weight: 900;
-            color: #ff8d00;
+            color: #ffffff; /* سفید شدن متن تایتل */
+        }
+        
+        .lesson-title i {
+            color: #ff8d00; /* آیکون همچنان نارنجی است */
+            font-size: 1.4rem;
         }
         
         .lesson-content {
-            color: #c9d1d9;
-            line-height: 1.9;
+            color: #a1aab3; /* رنگ ملایم‌تر برای محتوا */
+            line-height: 2;
             font-size: 0.95rem;
         }
         
@@ -242,7 +270,7 @@
         }
         
         .lesson-content strong {
-            color: #ff8d00;
+            color: #f3f4f6; /* سفید روشن برای بولدها */
             font-weight: 900;
         }
         
@@ -262,6 +290,7 @@
             border-radius: 12px;
             padding: 1rem;
             margin: 1rem 0;
+            color: #c9d1d9;
         }
         
         .warning-box {
@@ -270,6 +299,7 @@
             border-radius: 12px;
             padding: 1rem;
             margin: 1rem 0;
+            color: #c9d1d9;
         }
         
         .success-box {
@@ -278,6 +308,7 @@
             border-radius: 12px;
             padding: 1rem;
             margin: 1rem 0;
+            color: #c9d1d9;
         }
         
         .live-demo {
@@ -539,7 +570,7 @@
         @media (max-width: 640px) {
             .main-header { padding: 0.5rem 0.75rem; min-height: 56px; }
             .logo-icon { width: 36px; height: 36px; font-size: 1rem; }
-            .logo-text h1 { font-size: 0.95rem; }
+            .logo-text h1 { font-size: 1rem; }
             .logo-text p { font-size: 0.55rem; }
             .header-btn span { display: none; }
             .header-btn { padding: 0.4rem 0.7rem; font-size: 0.7rem; }
@@ -547,7 +578,7 @@
             .tab-btn span { display: none; }
             .tab-page { padding: 1rem; }
             .lesson-card { padding: 1rem; }
-            .lesson-title { font-size: 1rem; }
+            .lesson-title { font-size: 1.15rem; }
             .live-demo-body { height: 280px; }
             .chat-container { width: calc(100vw - 30px); right: 15px; bottom: 90px; max-height: 400px; }
             .chat-toggle { width: 50px; height: 50px; bottom: 20px; right: 20px; font-size: 1.3rem; }
@@ -559,9 +590,9 @@
     
     <header class="main-header">
         <div class="header-logo">
-            <div class="logo-icon">☬</div>
+            <div class="logo-icon">🎨</div>
             <div class="logo-text">
-                <h1 class="animated-gradient-text font-orbitron" dir="ltr">Dot Art Overhauled</h1>
+                <h1 class="animated-gradient-text" dir="ltr">Dot Art Overhauled</h1>
                 <p>سند راهنمای ارتقای DotArt Studio</p>
             </div>
         </div>
@@ -575,36 +606,35 @@
 
     <main>
         <div class="tab-bar" id="tabBar">
-            <button class="tab-btn active" data-tab="intro"><i data-lucide="book-open"></i><span>مقدمه</span></button>
-            <button class="tab-btn" data-tab="issues"><i data-lucide="alert-triangle"></i><span>انتقادات</span></button>
-            <button class="tab-btn" data-tab="solutions"><i data-lucide="lightbulb"></i><span>پیشنهادات</span></button>
+            <button class="tab-btn active" data-tab="intro"><i data-lucide="book-text"></i><span>مقدمه</span></button>
+            <button class="tab-btn" data-tab="issues"><i data-lucide="target"></i><span>انتقادات</span></button>
+            <button class="tab-btn" data-tab="solutions"><i data-lucide="rocket"></i><span>پیشنهادات</span></button>
             <button class="tab-btn" data-tab="particle"><i data-lucide="sparkles"></i><span>Particle</span></button>
-            <button class="tab-btn" data-tab="ai"><i data-lucide="brain"></i><span>AI واقعی</span></button>
+            <button class="tab-btn" data-tab="ai"><i data-lucide="cpu"></i><span>AI واقعی</span></button>
             <button class="tab-btn" data-tab="conclusion"><i data-lucide="flag"></i><span>جمع‌بندی</span></button>
         </div>
 
         <div class="tabs-container">
             
-            <!-- ===== INTRO TAB ===== -->
             <div class="tab-page active" id="intro-tab">
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="hand"></i>سلام به تو داداش خلاق و عزیزم </div>
+                    <div class="lesson-title"><i data-lucide="hand"></i>سلام همکار عزیز</div>
                     <div class="lesson-content">
-                        <p>قبل از هر چیز بگم که پروژه‌ات پتانسیل خیلی بالایی داره و مشخصه که براش زحمت کشیدی. اما به عنوان کسی که می‌خواد کمکت کنه، چند تا نقد جدی و پیشنهاد عملی برات دارم که اگر اعمال کنی، پروژه‌ات از یه ابزار معمولی به یه استودیو حرفه‌ای در سطح حرفه ای تبدیل می‌شه.</p>
-                        <p>این موارد رو به عنوان نصیحت استاد به شاگرد در نظر نگیر لطفا صرفا یه همفکری از روی تجربه س من خودم رو یه سری موارد حساسم مخصوصاً وقتی با هوش کد میزنی کار باید در حدی تمیز باشه که هر کسی نتونه راحت دهنشو باز کنه بگه کاری نداره با با هوش ساخته دیگه پس حالا که کد زدن تا حدودی راحت شده یه مقداری برای سلیقه و آرایش کار باید بیشتر زمان بزاریم !  !    .</p>
+                        <p>قبل از هر چیز بگم که پروژه‌ات پتانسیل خیلی بالایی داره و مشخصه که براش زحمت کشیدی. اما به عنوان کسی که می‌خواد کمکت کنه، چند تا نقد جدی و پیشنهاد عملی برات دارم که اگر اعمال کنی، پروژه‌ات از یه ابزار معمولی به یه استودیو حرفه‌ای در سطح جهانی تبدیل می‌شه.</p>
+                        <p>این موارد رو به عنوان نصیحت استاد به شاگرد در نظر بگیر، نه انتقاد بی‌دلیل.</p>
                         <div class="highlight-box">
-                            <strong>📌 نکته مهم:</strong> در خلال این آموزش، اگر سوالی داشتی، از دکمه چت گوشه صفحه می‌تونی استفاده کنی با هوش مصنوعی صحبت بکنی به مدل‌های سبک جی پی تی وصل هستش .
+                            <strong>📌 نکته مهم:</strong> در خلال این آموزش، اگر سوالی داشتی، از دکمه چت گوشه صفحه استفاده کن تا با هوش مصنوعی صحبت کنی.
                         </div>
                     </div>
                 </div>
 
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="target"></i>هدف این سند</div>
+                    <div class="lesson-title"><i data-lucide="layout-template"></i>هدف این سند</div>
                     <div class="lesson-content">
                         <p>این سند یک <strong>نقد فنی و حرفه‌ای</strong> از پروژه DotArt Studio شماست. هدف، کمک به ارتقای پروژه به یک استودیو ASCII Art در سطح جهانی است.</p>
                         <p>در این سند موارد زیر بررسی می‌شود:</p>
                         <p>۱. ایرادات UI/UX فعلی (فضای هدر رفته، موبایل، preset ها)</p>
-                        <p>۲. مشکل AI ظاهری و راه‌حل آن</p>
+                        <p>۲. مشکل AI جعلی و راه‌حل آن</p>
                         <p>۳. معرفی Floating Panel</p>
                         <p>۴. معرفی Particle Mode با دموی زنده</p>
                         <p>۵. ادغام AI واقعی با puter.js و Pollinations</p>
@@ -612,7 +642,6 @@
                 </div>
             </div>
 
-            <!-- ===== ISSUES TAB ===== -->
             <div class="tab-page" id="issues-tab">
                 <div class="lesson-card">
                     <div class="lesson-title"><i data-lucide="alert-circle"></i>انتقاد ۱: فضای UI هدر رفته</div>
@@ -640,7 +669,7 @@
                             حس "استودیو زنده" از بین می‌ره
                         </div>
                         <p>توی هیچ استودیوی حرفه‌ای‌ای (مثل Photoshop، Lightroom، یا هر ابزار هنری دیگه) کاربر مجبور نیست بین تنظیمات و preview جابجا بشه. همه چیز باید همزمان دیده بشه.</p>
-                        <p>اصل <strong>Live Preview</strong> یه اصل اساسی توی ابزارهای هنریه و تو داری ازش غفلت می‌کنی.</p>
+                        <p>اصل <strong>Live Preview</strong> یه اصل اساسی توی ابزارهای هنریه و تو داری ازش بی‌خبری می‌کنی.</p>
                     </div>
                 </div>
 
@@ -669,12 +698,11 @@
                 </div>
             </div>
 
-            <!-- ===== SOLUTIONS TAB ===== -->
             <div class="tab-page" id="solutions-tab">
                 <div class="lesson-card">
                     <div class="lesson-title"><i data-lucide="layers"></i>پیشنهاد ۱: Floating Panel با دستگیره شناور</div>
                     <div class="lesson-content">
-                        <p>به جای اون دو تا تب جداگانه، یه پنل شناور کوچیک توی گوشه تصویر بذار. یه دستگیره کوچیک (مثلاً با آیکون 🎚️) که با یه کلیک باز می‌شه و تمام تنظیمات رو نشون می‌ده. بعد از تغییرات، با یه swipe یا کلیک بیرون، بسته می‌شه.</p>
+                        <p>به جای اون دو تا تب جداگانه، یه پنل شناور کوچیک توی گوشه تصویر بذار. یه دستگیره کوچیک (مثلاً با آیکون 🎛️) که با یه کلیک باز می‌شه و تمام تنظیمات رو نشون می‌ده. بعد از تغییرات، با یه swipe یا کلیک بیرون، بسته می‌شه.</p>
                         <div class="success-box">
                             <strong>✅ مزایا:</strong><br>
                             • همیشه preview تمام صفحه دیده می‌شه<br>
@@ -700,7 +728,6 @@
                 </div>
             </div>
 
-            <!-- ===== PARTICLE TAB ===== -->
             <div class="tab-page" id="particle-tab">
                 <div class="lesson-card">
                     <div class="lesson-title"><i data-lucide="sparkles"></i>Particle Mode - حالت پارتیکل</div>
@@ -722,7 +749,7 @@
                     <div class="lesson-title"><i data-lucide="play-circle"></i>دموی زنده Particle - تعاملی</div>
                     <div class="lesson-content">
                         <p>در کادر زیر، یه دموی کامل از Particle Mode قرار دادم. <strong>می‌تونی با ماوس یا انگشت روی تصویر کلیک کنی و نگه داری</strong> تا پارتیکل‌ها پراکنده بشن. وقتی رها کنی، به جای اصلیشون برمی‌گردن.</p>
-                        <p>این هم یه ایده ی مکمل هست که میتونی توی DotArt Studio پیاده‌سازی کنی.</p>
+                        <p>این همون تجربه‌ایه که باید توی DotArt Studio پیاده‌سازی کنی.</p>
                     </div>
                     
                     <div class="live-demo">
@@ -743,7 +770,7 @@
                 </div>
 
                 <div class="lesson-card">
-                    <div class="lesson-title"><i data-lucide="image"></i>نمونه particles که می‌تونی بسازی</div>
+                    <div class="lesson-title"><i data-lucide="image"></i>نمونه ASCII Art که می‌تونی بسازی</div>
                     <div class="lesson-content">
                         <p>این یه نمونه از ASCII Art هست که با Particle Mode می‌تونی بسازی. هر کدوم از این کاراکترها می‌تونن به پارتیکل تبدیل بشن و با لمس کاربر واکنش نشون بدن:</p>
                     </div>
@@ -760,13 +787,12 @@
                             <iframe id="asciiFrame"></iframe>
                         </div>
                         <div class="live-demo-footer">
-                            🎨 این نمونه رو می‌تونی با DotArt  بسازی
+                            🎨 این نمونه رو می‌تونی با Particle Mode بسازی
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ===== AI TAB ===== -->
             <div class="tab-page" id="ai-tab">
                 <div class="lesson-card">
                     <div class="lesson-title"><i data-lucide="cpu"></i>AI واقعی با puter.js</div>
@@ -828,7 +854,6 @@
                 </div>
             </div>
 
-            <!-- ===== CONCLUSION TAB ===== -->
             <div class="tab-page" id="conclusion-tab">
                 <div class="lesson-card">
                     <div class="lesson-title"><i data-lucide="flag"></i>جمع‌بندی</div>
@@ -839,7 +864,7 @@
                         <p>۳. Particle Mode پیاده‌سازی کنی</p>
                         <p>۴. AI واقعی با puter.js و Pollinations ادغام کنی</p>
                         <div class="success-box">
-                            <strong>🚀 نتیجه:</strong> پروژه‌ات از یه DotArt Studio معمولی، به یه استودیو حرفه‌ای و در سطح استاندارد تبدیل می‌شه که رقیب نداره.
+                            <strong>🚀 نتیجه:</strong> پروژه‌ات از یه DotArt Studio معمولی، به یه استودیو حرفه‌ای و در سطح جهانی تبدیل می‌شه که رقیب نداره.
                         </div>
                     </div>
                 </div>
@@ -847,16 +872,16 @@
                 <div class="lesson-card">
                     <div class="lesson-title"><i data-lucide="link"></i>منابع و الهام</div>
                     <div class="lesson-content">
-                        <p>و نهایتاً باز هم اگر اصرار بر طراحی به صورت دو تب مجزای تنظیمات و خروجی داری و یه پلتفرم استودیویی نمی‌خوای می‌تونی یه سر به این اپلیکیشن بزنی کارایی متفاوتی داره به عنوان یک کامپایلر و چتبات سبک ساخته شده ولی منابع و اسکلت کار میتونه خیلی به ساختار پروژه ی دات آرت شما کمک کنه، مایل بودی  به این آدرس سر بزن تمام سورسش هم صفر تا صد فرانت اند و توی یک فایل html خلاصه شده:</p>
+                        <p>برای اینکه ببینی یه پلتفرم حرفه‌ای چطور باید طراحی بشه، حتماً به این آدرس سر بزن:</p>
                         <div class="highlight-box">
-                            <strong>🔗 کامپایلر SHΞN™studio Ai Core:</strong><br>
+                            <strong>🔗 کامپایلر SHΞN™ Core:</strong><br>
                             <a href="https://aishervin.github.io/Bot" target="_blank">
                                 https://aishervin.github.io/Bot
                             </a>
                         </div>
-                        <p>این کامپایلر، یه نمونه از:</p>
+                        <p>این کامپایلر، یه نمونه عالی از:</p>
                         <p>• ادغام هوش مصنوعی واقعی (DeepSeek و Pollinations)<br>
-                        • طراحی ماژولار داشبورد و نمایشگر خروجی هستش<br>
+                        • طراحی تم تیره و حرفه‌ای<br>
                         • دو تب کاربردی و راحت (چت و کامپایلر)<br>
                         • تجربه کاربری روان بدون شلوغی<br>
                         • استفاده بهینه از فضا</p>
@@ -890,12 +915,10 @@
         </p>
     </footer>
 
-    <!-- Chat Toggle -->
     <button class="chat-toggle" id="chatToggle" aria-label="Chat">
         <i data-lucide="message-circle"></i>
     </button>
 
-    <!-- Chat Container -->
     <div class="chat-container" id="chatContainer">
         <div class="chat-header">
             <div class="chat-header-title">
@@ -906,11 +929,11 @@
         </div>
         <div class="chat-messages" id="chatMessages">
             <div class="chat-bubble ai">
-                سلام ، من شین هستم اگر سوال یا همفکری نیاز داشتی در خدمتم 👁️‍🗨️ 
+                سلام! من دستیار فنی هستم. سوالی داری بپرس تا کمکت کنم.
             </div>
         </div>
         <div class="chat-input-area">
-            <textarea class="chat-input" id="chatInput" placeholder="نترس بپرس اونقدام بیسواد نیستم ..." rows="1"></textarea>
+            <textarea class="chat-input" id="chatInput" placeholder="سوال خود را بنویسید..." rows="1"></textarea>
             <button class="chat-send" id="chatSend">
                 <i data-lucide="send"></i>
             </button>
@@ -985,41 +1008,65 @@
         drawBg();
 
         // ================================================================
-// 3. TAB NAVIGATION (حالت ساده و استاندارد)
-// ================================================================
-const tabBtns = document.querySelectorAll('.tab-btn');
-const tabPages = document.querySelectorAll('.tab-page');
-const tabBar = document.getElementById('tabBar');
+        // 3. TAB NAVIGATION (تب‌های ساده + اسکرول فلیکر)
+        // ================================================================
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPages = document.querySelectorAll('.tab-page');
+        const tabBar = document.getElementById('tabBar');
 
-function switchTab(tabName) {
-    // حذف کلاس فعال از همه تب‌ها و صفحات
-    tabBtns.forEach(b => b.classList.remove('active'));
-    tabPages.forEach(p => p.classList.remove('active'));
-    
-    // پیدا کردن تب و صفحه هدف
-    const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
-    if (targetBtn) targetBtn.classList.add('active');
-    
-    const targetPage = document.getElementById(`${tabName}-tab`);
-    if (targetPage) targetPage.classList.add('active');
-    
-    // اسکرول نرم خود نوار تب‌ها (وقتی تب‌های زیادی داریم)
-    if (targetBtn) {
-        targetBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-    }
-}
+        function switchTab(tabName) {
+            tabBtns.forEach(b => {
+                b.classList.remove('active');
+                b.classList.remove('needs-attention'); // حذف فلیکر موقع جابجایی
+            });
+            tabPages.forEach(p => p.classList.remove('active'));
+            
+            const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+            if (targetBtn) targetBtn.classList.add('active');
+            
+            const targetPage = document.getElementById(`${tabName}-tab`);
+            if (targetPage) targetPage.classList.add('active');
+            
+            if (targetBtn) {
+                targetBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }
 
-// تغییر تب فقط با کلیک انجام می‌شود
-tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const tabName = btn.dataset.tab;
-        switchTab(tabName);
-        
-        // ریست کردن اسکرول صفحه به بالاترین نقطه بعد از ورود به تب جدید
-        const page = document.getElementById(`${tabName}-tab`);
-        if (page) page.scrollTop = 0;
-    });
-});
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.dataset.tab;
+                switchTab(tabName);
+                const page = document.getElementById(`${tabName}-tab`);
+                if (page) page.scrollTop = 0;
+            });
+        });
+
+        // اضافه کردن پایش اسکرول برای روشن کردن تب بعدی (بدون تغییر خودکار صفحه)
+        tabPages.forEach((page) => {
+            page.addEventListener('scroll', () => {
+                const scrollTop = page.scrollTop;
+                const scrollHeight = page.scrollHeight;
+                const clientHeight = page.clientHeight;
+                
+                const currentTab = page.id.replace('-tab', '');
+                const tabNames = Array.from(tabBtns).map(b => b.dataset.tab);
+                const currentIndex = tabNames.indexOf(currentTab);
+                const nextTabBtn = tabBtns[currentIndex + 1];
+
+                // اگر به 10 پیکسلی انتهای محتوا رسید
+                if (scrollTop + clientHeight >= scrollHeight - 10) {
+                    if (nextTabBtn && !nextTabBtn.classList.contains('active')) {
+                        nextTabBtn.classList.add('needs-attention');
+                        // نوار تب‌ها رو یکم اسکرول کن که تب بعدی دیده بشه
+                        nextTabBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }
+                } else {
+                    if (nextTabBtn) {
+                        nextTabBtn.classList.remove('needs-attention');
+                    }
+                }
+            });
+        });
 
         // ================================================================
         // 4. PARTICLE DEMO (Image to Particles + srcdoc)
@@ -1056,7 +1103,7 @@ const mouse = { x: -1000, y: -1000, radius: 80 };
 
 const imgUrl = "https://raw.githubusercontent.com/shervinofpersia/Gpt/refs/heads/main/1712259501956.png";
 let logoImg = new Image();
-logoImg.crossOrigin = "Anonymous"; // برای جلوگیری از خطای امنیتی بوم
+logoImg.crossOrigin = "Anonymous";
 
 function resize() {
   canvas.width = window.innerWidth;
@@ -1076,23 +1123,20 @@ function initParticles() {
   particles = [];
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  // محاسبه ابعاد برای قرارگیری دقیق در مرکز صفحه
   const padding = 40;
   const maxWidth = canvas.width - padding;
   const maxHeight = canvas.height - padding;
-  const scale = Math.min(maxWidth / logoImg.width, maxHeight / logoImg.height, 0.8); // حداکثر 80 درصد صفحه
+  const scale = Math.min(maxWidth / logoImg.width, maxHeight / logoImg.height, 0.8); 
   
   const w = logoImg.width * scale;
   const h = logoImg.height * scale;
   const x = (canvas.width - w) / 2;
   const y = (canvas.height - h) / 2;
   
-  // رسم موقت تصویر برای خواندن پیکسل‌ها
   ctx.drawImage(logoImg, x, y, w, h);
   const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  // استخراج پیکسل‌ها (گام 3 برای تراکم مناسب و لبه‌های نرم)
   const step = 3; 
   for (let py = 0; py < imgData.height; py += step) {
     for (let px = 0; px < imgData.width; px += step) {
@@ -1105,12 +1149,12 @@ function initParticles() {
         const b = imgData.data[index + 2];
         
         particles.push({
-          x: px + (Math.random() - 0.5) * 40, // افکت انفجار اولیه
+          x: px + (Math.random() - 0.5) * 40,
           y: py + (Math.random() - 0.5) * 40,
           baseX: px, 
           baseY: py,
           color: \`rgb(\${r},\${g},\${b})\`,
-          size: 1.5, // پارتیکل‌های ریز برای کیفیت بالاتر
+          size: 1.5, 
           density: Math.random() * 15 + 5
         });
       }
@@ -1146,7 +1190,6 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-// رویدادها
 canvas.addEventListener('mousedown', () => isDown = true);
 canvas.addEventListener('touchstart', () => isDown = true, {passive:true});
 canvas.addEventListener('mouseup', () => isDown = false);
@@ -1173,9 +1216,7 @@ animate();
             particleFrame.srcdoc = particleCode;
         }
 
-
         // ================================================================
-      // ================================================================
         // 5. ASCII DEMO (رندر مستقیم تکست بدون مشکل انکودینگ و بلوک‌های خالی)
         // ================================================================
         const asciiCode = `<!DOCTYPE html>
@@ -1195,14 +1236,13 @@ animate();
     box-sizing: border-box;
   }
   .ascii {
-    /* استفاده از فونت‌های استاندارد که کاراکترهای بریل رو در ویندوز و اندروید دارند */
     font-family: 'Segoe UI Symbol', 'Apple Braille', 'DejaVu Sans', 'Droid Sans Fallback', sans-serif;
     font-size: 11px;
-    line-height: 0.95; /* فاصله‌ها رو کم کردیم که نقطه‌ها دقیقاً به هم بچسبند */
+    line-height: 0.95; 
     letter-spacing: 0;
     white-space: pre;
     text-align: left;
-    direction: ltr; /* حتما چپ‌چین */
+    direction: ltr; 
     color: #ff8d00;
     margin: 20px 0;
     transition: all 0.3s;
@@ -1220,9 +1260,8 @@ animate();
 </style>
 </head>
 <body>
-  <div class="label">🚧 نمونه ASCII Art</div>
-  <div class="ascii">
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+  <div class="label">🎨 نمونه ASCII Art</div>
+  <div class="ascii">⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⠉⠉⠉⠉⠉⠉⠉⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⢀⣤⣾⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⠉⠀⠀⠚⠛⠛⠛⣿⣿⣿⣿⣿
@@ -1249,7 +1288,6 @@ animate();
 </body>
 </html>`;
 
-        // تزریق مستقیم کد به جای استفاده از Blob
         const asciiFrame = document.getElementById('asciiFrame');
         if(asciiFrame) {
             asciiFrame.srcdoc = asciiCode;
@@ -1273,10 +1311,11 @@ animate();
         });
         chatClose.addEventListener('click', () => chatContainer.classList.remove('active'));
 
+        // پرامپت ساده شده به درخواست شما
         let chatHistory = [
             { 
                 role: 'system', 
-                content: 'تو دستیار فنی برای پکیج DotArt Overhauled هستی. به سوالات درباره ارتقای DotArt Studio، Floating Panel، Particle Mode، و ادغام AI پاسخ بده. به زبان فارسی پاسخ بده. لحن مستقیم و تخصصی داشته باش.' 
+                content: 'به عنوان دستیار راهنما، فقط به زبان فارسی پاسخ بده و کاربر را محترمانه و کوتاه راهنمایی کن.' 
             }
         ];
 
@@ -1284,7 +1323,6 @@ animate();
             const text = chatInput.value.trim();
             if (!text) return;
 
-            // Add user message
             const userBubble = document.createElement('div');
             userBubble.className = 'chat-bubble user';
             userBubble.textContent = text;
@@ -1294,7 +1332,6 @@ animate();
 
             chatHistory.push({ role: 'user', content: text });
 
-            // Loading indicator
             const loadingBubble = document.createElement('div');
             loadingBubble.className = 'chat-bubble ai';
             loadingBubble.textContent = 'در حال تایپ...';
@@ -1340,7 +1377,6 @@ animate();
             }
         });
 
-        // Auto-resize textarea
         chatInput.addEventListener('input', () => {
             chatInput.style.height = 'auto';
             chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
@@ -1350,7 +1386,6 @@ animate();
         // 7. KEYBOARD SHORTCUTS
         // ================================================================
         document.addEventListener('keydown', (e) => {
-            // Ctrl+Shift+C to toggle chat
             if (e.ctrlKey && e.shiftKey && (e.key === 'c' || e.key === 'C')) {
                 e.preventDefault();
                 chatContainer.classList.toggle('active');
@@ -1359,10 +1394,6 @@ animate();
                 }
             }
         });
-
-        console.log('🚀 DotArt Overhauled | سند راهنمای ارتقا');
-        console.log('📌 برای چت: Ctrl+Shift+C');
-        console.log('📌 اسکرول به پایین هر تب برای حرکت به تب بعدی');
     </script>
 </body>
 </html>
