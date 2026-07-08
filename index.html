@@ -2,1154 +2,1325 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DotArt Studio 🏴‍☠️ | Ultimate Particle Edition</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dot Art Overhauled | سند راهنمای ارتقا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Vazirmatn:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', system-ui, sans-serif; }
-
-        :root {
-            --bg-body: #02010c;
-            --bg-app: rgba(16, 10, 30, 0.78);
-            --border-app: rgba(255, 255, 255, 0.09);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --control-bg: rgba(255, 255, 255, 0.02);
-            --sub-panel-bg: rgba(0, 0, 0, 0.5);
-            --output-bg: #010103;
-            --accent: 135deg, #a855f7, #ec4899, #f59e0b;
-            --accent-glow: rgba(168, 85, 247, 0.5);
-            --ai-accent: 135deg, #10b981, #059669;
-            --gold: #fbbf24;
-            --gold-glow: rgba(251, 191, 36, 0.4);
-            --output-font-size: 10px;
-            --radius-lg: 28px;
-            --radius-md: 18px;
-            --liquid-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%);
-            --liquid-border: rgba(255, 255, 255, 0.12);
-            --elastic-curve: cubic-bezier(0.34, 1.56, 0.64, 1);
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; touch-action: pan-y; scroll-behavior: smooth; }
+        body { 
+            font-family: 'Vazirmatn', sans-serif; 
+            background: #000; 
+            color: #c9d1d9; 
+            display: flex; 
+            flex-direction: column;
         }
-
-        body.light-mode {
-            --bg-body: #f1f5f9;
-            --bg-app: rgba(255, 255, 255, 0.9);
-            --border-app: rgba(15, 23, 42, 0.08);
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --control-bg: rgba(15, 23, 42, 0.02);
-            --sub-panel-bg: rgba(15, 23, 42, 0.04);
-            --output-bg: #ffffff;
-            --accent: 135deg, #7c3aed, #db2777, #d97706;
-            --accent-glow: rgba(124, 58, 237, 0.3);
-            --liquid-glass: linear-gradient(135deg, rgba(15, 23, 42, 0.03) 0%, rgba(15, 23, 42, 0.01) 100%);
-            --liquid-border: rgba(15, 23, 42, 0.1);
+        
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+        
+        .animated-gradient-text { 
+            background: linear-gradient(45deg, #ff4800, #ff8d00, #ffea00, #ff8d00, #ff4800); 
+            background-size: 400% 400%; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+            animation: gradient-wave 5s ease infinite; 
         }
-
-        body { background-color: var(--bg-body); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; overflow-x: hidden; color: var(--text-primary); transition: background-color 0.6s var(--elastic-curve); width: 100vw; position: relative; }
-        #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.6; mix-blend-mode: screen; }
-
-        .master-container { width: 100%; max-width: 1680px; background: var(--bg-app); backdrop-filter: blur(50px); border: 1px solid var(--border-app); border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.8), 0 0 100px -20px var(--accent-glow); position: relative; z-index: 1; transition: all 0.6s var(--elastic-curve); animation: studioIntro 1s var(--elastic-curve) forwards; transform: translateY(40px) scale(0.98); opacity: 0; }
-        @keyframes studioIntro { to { transform: translateY(0) scale(1); opacity: 1; } }
-
-        .studio-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-app); padding-bottom: 24px; margin-bottom: 28px; gap: 16px; flex-wrap: wrap; }
-        .brand { display: flex; align-items: center; gap: 14px; }
-        .brand i { font-size: 2.5rem; background: linear-gradient(var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 15px var(--accent-glow)); animation: floatCrown 3s ease-in-out infinite; }
-        @keyframes floatCrown { 0%, 100% { transform: translateY(0) rotate(0deg) scale(1); } 50% { transform: translateY(-8px) rotate(5deg) scale(1.05); } }
-        .brand h1 { font-size: 1.7rem; font-weight: 900; letter-spacing: -0.5px; line-height: 1.1; text-shadow: 0 0 20px rgba(255,255,255,0.05); }
-        .brand .version-tag { font-size: 0.8rem; font-weight: 800; background: linear-gradient(90deg, #fbbf24, #ec4899, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .nav-tools { display: flex; gap: 12px; flex-wrap: wrap; }
-        .tool-btn { background: var(--liquid-glass); border: 1px solid var(--liquid-border); color: var(--text-primary); padding: 12px 20px; border-radius: 16px; cursor: pointer; transition: all 0.4s var(--elastic-curve); display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-        .tool-btn:hover { background: var(--liquid-glass-hover); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.35); border-color: rgba(255,255,255,0.35); }
-        .tool-btn.active-live { background: rgba(239, 68, 68, 0.2) !important; border-color: #ef4444 !important; color: #fca5a5; animation: livePulse 1.5s infinite; }
-        @keyframes livePulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 18px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
-
-        .workspace { display: grid; grid-template-columns: 1fr; gap: 28px; width: 100%; }
-        .controls-column { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
-        .preview-column { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-
-        .studio-card { background: var(--control-bg); border: 1px solid var(--border-app); border-radius: var(--radius-lg); padding: 24px; transition: all 0.4s var(--elastic-curve); box-shadow: 0 10px 35px -10px rgba(0,0,0,0.25); width: 100%; position: relative; overflow: hidden; }
-        .studio-card:hover { border-color: rgba(168, 85, 247, 0.3); transform: translateY(-3px); }
-        .studio-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.02), transparent); transition: all 0.6s ease; pointer-events: none; }
-        .studio-card:hover::before { left: 150%; }
-
-        .card-main-title { font-size: 1.15rem; font-weight: 900; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
-        .sub-panel { background: var(--sub-panel-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: var(--radius-md); padding: 20px; margin-bottom: 18px; }
-        .sub-panel:last-child { margin-bottom: 0; }
-        .sub-panel-title { font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; letter-spacing: 1px; }
-
-        .drop-deck { border: 2px dashed rgba(168, 85, 247, 0.4); border-radius: 16px; padding: 30px 10px; text-align: center; cursor: pointer; transition: all 0.4s var(--elastic-curve); background: linear-gradient(180deg, rgba(168, 85, 247, 0.05) 0%, transparent 100%); }
-        .drop-deck:hover { border-color: var(--gold); background: rgba(251, 191, 36, 0.08); transform: scale(1.02); }
-        .drop-deck i { font-size: 2.8rem; background: linear-gradient(var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; transition: transform 0.4s var(--elastic-curve); }
-        .drop-deck:hover i { transform: translateY(-6px) scale(1.05); }
-
-        .img-mini-dock { display: none; margin-top: 14px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border-app); background: #000; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: scale(0.92); opacity: 0; transition: all 0.4s var(--elastic-curve); }
-        .img-mini-dock.active { display: block; transform: scale(1); opacity: 1; }
-        .img-mini-dock img { max-width: 100%; max-height: 160px; object-fit: contain; display: block; margin: 0 auto; }
-
-        .matrix-inputs { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-        .matrix-inputs > div { flex: 1; min-width: 80px; }
-        .matrix-inputs input { width: 100%; padding: 13px; border-radius: 14px; border: 1px solid var(--border-app); background: rgba(0,0,0,0.35); color: inherit; text-align: center; font-size: 0.95rem; font-weight: 800; outline: none; transition: all 0.3s var(--elastic-curve); }
-        .matrix-inputs input:focus { border-color: #a855f7; box-shadow: 0 0 25px rgba(168, 85, 247, 0.3); transform: translateY(-2px); }
-        .aspect-lock { background: var(--control-bg); border: 1px solid var(--border-app); color: var(--text-primary); padding: 12px; border-radius: 14px; cursor: pointer; width: 48px; height: 46px; transition: all 0.3s var(--elastic-curve); display: flex; align-items: center; justify-content: center; }
-        .aspect-lock.active { background: linear-gradient(135deg, #9333ea, #db2777); border: none; box-shadow: 0 6px 20px rgba(219, 39, 119, 0.45); color: #fff; }
-        .aspect-lock.active i { transform: rotate(180deg); }
-
-        .preset-deck { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .preset-btn { flex: 1 1 calc(25% - 8px); background: rgba(255,255,255,0.04); border: 1px solid var(--border-app); color: var(--text-secondary); padding: 10px 6px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.3s var(--elastic-curve); text-align: center; min-width: 65px; }
-        .preset-btn:hover { background: rgba(168, 85, 247, 0.18); color: #fff; border-color: #a855f7; transform: translateY(-3px); }
-
-        .grid-sliders { display: flex; flex-direction: column; gap: 16px; }
-        .slider-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .slider-item label { font-size: 0.85rem; min-width: 110px; display: flex; align-items: center; gap: 8px; font-weight: 700; color: #e2e8f0; }
-        body.light-mode .slider-item label { color: #1e293b; }
-        .slider-item input[type="range"] { flex: 1; -webkit-appearance: none; height: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); outline: none; cursor: pointer; }
-        .slider-item input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #ec4899, #a855f7); cursor: pointer; border: 2px solid #fff; box-shadow: 0 0 15px rgba(219, 39, 119, 0.6); transition: transform 0.2s; }
-        .slider-item input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.35); }
-        .slider-counter { font-size: 0.85rem; font-weight: 800; min-width: 44px; text-align: center; color: #c084fc; background: rgba(0,0,0,0.35); padding: 4px 6px; border-radius: 8px; }
-
-        .toggles-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px; font-size: 0.8rem; }
-        .toggles-container label { display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; background: rgba(0,0,0,0.3); padding: 12px 8px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); user-select: none; transition: all 0.3s var(--elastic-curve); font-weight: 700; text-align: center; }
-        .toggles-container label:hover { background: rgba(255,255,255,0.08); border-color: #a855f7; transform: translateY(-3px); }
-        .toggles-container input[type="checkbox"] { accent-color: #ec4899; width: 16px; height: 16px; cursor: pointer; }
-
-        .ai-btn { grid-column: 1 / -1; background: linear-gradient(var(--ai-accent)); color: white; border: none; padding: 15px; border-radius: 14px; font-weight: 900; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 22px rgba(16, 185, 129, 0.4); transition: all 0.4s var(--elastic-curve); width: 100%; }
-        .ai-btn:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 14px 28px rgba(16, 185, 129, 0.6); }
-
-        .style-hub { display: flex; flex-wrap: wrap; gap: 10px; }
-        .hub-btn { background: rgba(0,0,0,0.25); border: 1px solid var(--border-app); border-radius: 14px; padding: 13px; color: var(--text-primary); font-size: 0.8rem; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.4s var(--elastic-curve); flex: 1 1 calc(33.33% - 10px); min-width: 80px; }
-        .hub-btn:hover { border-color: #a855f7; background: rgba(168, 85, 247, 0.12); transform: translateY(-3px); }
-        .hub-btn.active { background: linear-gradient(var(--accent)); color: #fff; border: none; box-shadow: 0 8px 25px var(--accent-glow); font-weight: 900; transform: scale(1.05); }
-
-        #customCharsInput { width: 100%; margin-top: 14px; padding: 14px; border-radius: 14px; background: rgba(0,0,0,0.45); border: 1px solid #ec4899; color: #fff; text-align: center; font-size: 0.95rem; font-weight: bold; letter-spacing: 2px; display: none; outline: none; box-shadow: inset 0 0 15px rgba(219, 39, 119, 0.25); animation: panelSlideIn 0.4s var(--elastic-curve); box-sizing: border-box; }
-        @keyframes panelSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
-        .btn-fire { width: 100%; background: linear-gradient(var(--accent)); background-size: 200% auto; border: none; color: white; font-size: 1.15rem; box-shadow: 0 10px 35px var(--accent-glow); padding: 16px; border-radius: 16px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); animation: liquidGradient 3s linear infinite; }
-        .btn-fire:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 20px 45px var(--accent-glow); }
-        @keyframes liquidGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        .output-viewport { background: var(--output-bg); border-radius: var(--radius-lg); padding: 28px; border: 1px solid var(--border-app); height: 520px; overflow: auto; direction: ltr; text-align: left; position: relative; box-shadow: inset 0 0 60px rgba(0,0,0,0.95); transition: all 0.4s ease; width: 100%; }
-        .output-viewport pre { margin: 0; color: #e2e8f0; font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace; font-size: var(--output-font-size); line-height: 1.05; white-space: pre; min-width: min-content; }
-        .output-viewport.color-mode pre { color: inherit; }
-
-        .viewport-loader { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 1, 3, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px; z-index: 100; border-radius: var(--radius-lg); }
-        .viewport-loader i { font-size: 2.8rem; color: #ec4899; animation: spinMatrix 1s linear infinite; }
-        @keyframes spinMatrix { to { transform: rotate(360deg); } }
-
-        .empty-state { text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-secondary); width: 85%; direction: rtl; }
-
-        .viewport-toolbar { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-        .v-btn { background: var(--liquid-glass); border: 1px solid var(--liquid-border); color: var(--text-primary); padding: 10px 16px; border-radius: 12px; cursor: pointer; font-size: 0.85rem; font-weight: 700; transition: all 0.3s var(--elastic-curve); }
-        .v-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); border-color: rgba(255,255,255,0.3); }
-
-        .smart-exports { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 16px; }
-        .smart-btn { background: var(--control-bg); border: 1px solid var(--border-app); color: var(--text-primary); padding: 14px 10px; border-radius: 14px; cursor: pointer; font-size: 0.85rem; font-weight: 700; transition: all 0.3s var(--elastic-curve); display: flex; flex-direction: column; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-        .smart-btn:hover { background: rgba(255,255,255,0.06); transform: translateY(-4px); border-color: rgba(255,255,255,0.28); }
-        .smart-btn i { font-size: 1.25rem; transition: transform 0.4s var(--elastic-curve); }
-        .smart-btn:hover i { transform: scale(1.2) rotate(8deg); }
-        .ai-suggest-btn { grid-column: 1 / -1; background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.08)); border-color: #10b981; color: #10b981; flex-direction: row; justify-content: center; padding: 15px; gap: 8px; }
-        .ai-suggest-btn:hover { background: #10b981; color: #fff; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4); }
-
-        .studio-footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-app); font-size: 0.9rem; color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
-        .studio-footer span { background: linear-gradient(135deg, #f59e0b, #ec4899, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
-
-        /* Particle Canvas Overlay */
-        #particleCanvas { display: none; width: 100%; height: 100%; background: transparent; position: absolute; top: 0; left: 0; z-index: 10; }
-        .particle-active .output-viewport { position: relative; }
-        .particle-active #particleCanvas { display: block; }
-        .particle-active #canvasPre { display: none !important; }
-
+        @keyframes gradient-wave { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+        
+        #background-canvas { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            z-index: 0; 
+            pointer-events: none; 
+        }
+        
+        .main-header {
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 30;
+            min-height: 64px;
+            border-bottom: 1px solid rgba(255, 141, 0, 0.2);
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(255, 72, 0, 0.2), rgba(255, 141, 0, 0.1));
+            border: 2px solid rgba(255, 141, 0, 0.5);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #ff8d00;
+            box-shadow: 0 0 15px rgba(255, 141, 0, 0.3);
+            flex-shrink: 0;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.1rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        
+        .logo-text p {
+            font-size: 0.65rem;
+            color: #888;
+            margin-top: 2px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .header-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 141, 0, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #ff8d00;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .header-btn:hover {
+            background: rgba(255, 141, 0, 0.15);
+            border-color: #ff8d00;
+            transform: scale(1.05);
+        }
+        
+        main { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+            z-index: 1; 
+            overflow: hidden; 
+            min-height: 0; 
+        }
+        
+        .tab-bar {
+            flex-shrink: 0;
+            display: flex;
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid rgba(255, 141, 0, 0.15);
+            padding: 0.5rem;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .tab-bar::-webkit-scrollbar { height: 2px; }
+        .tab-bar::-webkit-scrollbar-thumb { background: rgba(255, 141, 0, 0.3); border-radius: 2px; }
+        
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1rem;
+            border: 1px solid #333;
+            border-radius: 12px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            gap: 0.5rem;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+        
+        .tab-btn.active {
+            border-color: #ff8d00;
+            color: #fff;
+            background: rgba(255, 141, 0, 0.12);
+            box-shadow: 0 0 15px rgba(255, 141, 0, 0.2);
+        }
+        
+        .tabs-container { 
+            flex: 1; 
+            overflow: hidden; 
+            position: relative; 
+            min-height: 0;
+        }
+        
+        .tab-page { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            padding: 1.5rem; 
+            scroll-behavior: smooth; 
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+        
+        .tab-page.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        
+        .tab-page::-webkit-scrollbar { width: 4px; }
+        .tab-page::-webkit-scrollbar-thumb { background: rgba(255, 141, 0, 0.4); border-radius: 4px; }
+        
+        .lesson-card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 141, 0, 0.3);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 141, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .lesson-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .lesson-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ff8d00;
+        }
+        
+        .lesson-content {
+            color: #c9d1d9;
+            line-height: 1.9;
+            font-size: 0.95rem;
+        }
+        
+        .lesson-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .lesson-content strong {
+            color: #ff8d00;
+            font-weight: 900;
+        }
+        
+        .lesson-content a {
+            color: #ff8d00;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(255, 141, 0, 0.4);
+        }
+        
+        .lesson-content a:hover {
+            border-bottom-color: #ff8d00;
+        }
+        
+        .highlight-box {
+            background: rgba(255, 141, 0, 0.08);
+            border: 1px solid rgba(255, 141, 0, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .warning-box {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .success-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .live-demo {
+            background: #0a0a0a;
+            border: 2px solid rgba(255, 141, 0, 0.5);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            box-shadow: 0 0 30px rgba(255, 141, 0, 0.2);
+        }
+        
+        .live-demo-header {
+            background: linear-gradient(135deg, rgba(255, 72, 0, 0.2), rgba(255, 141, 0, 0.1));
+            border-bottom: 1px solid rgba(255, 141, 0, 0.3);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .live-demo-title {
+            color: #ff8d00;
+            font-size: 0.9rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .live-demo-badge {
+            background: rgba(255, 141, 0, 0.2);
+            border: 1px solid rgba(255, 141, 0, 0.4);
+            color: #ff8d00;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .live-demo-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ff8d00;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .live-demo-body {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #000;
+        }
+        
+        .live-demo-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .live-demo-footer {
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 141, 0, 0.2);
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            color: #888;
+            text-align: center;
+        }
+        
         /* Chat Minimal */
-        .chat-mini { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
-        .chat-toggle { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #a855f7, #ec4899); border: none; color: #fff; font-size: 1.8rem; cursor: pointer; box-shadow: 0 10px 30px rgba(168, 85, 247, 0.5); transition: all 0.3s var(--elastic-curve); display: flex; align-items: center; justify-content: center; }
-        .chat-toggle:hover { transform: scale(1.1); }
-        .chat-box { display: none; position: absolute; bottom: 80px; right: 0; width: 320px; max-width: 90vw; background: var(--bg-app); backdrop-filter: blur(30px); border: 1px solid var(--border-app); border-radius: 20px; padding: 16px; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
-        .chat-box.active { display: block; animation: slideUp 0.3s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .chat-box textarea { width: 100%; border-radius: 12px; border: 1px solid var(--border-app); background: rgba(0,0,0,0.3); color: var(--text-primary); padding: 12px; font-family: inherit; resize: vertical; font-size: 0.9rem; outline: none; min-height: 60px; }
-        .chat-box .send-btn { margin-top: 10px; width: 100%; background: linear-gradient(135deg, #a855f7, #ec4899); border: none; color: #fff; padding: 10px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
-        .chat-box .send-btn:hover { transform: scale(1.02); }
-        .chat-box .messages { max-height: 200px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem; }
-        .chat-box .messages .bubble { padding: 8px 12px; border-radius: 12px; max-width: 85%; word-wrap: break-word; }
-        .chat-box .messages .user { align-self: flex-end; background: rgba(168,85,247,0.3); }
-        .chat-box .messages .ai { align-self: flex-start; background: rgba(255,255,255,0.05); }
-
-        @media (min-width: 1024px) {
-            .workspace { grid-template-columns: 530px 1fr; gap: 40px; align-items: start; }
-            .controls-column { position: sticky; top: 24px; max-height: calc(100vh - 100px); overflow-y: auto; overflow-x: hidden; padding-left: 14px; padding-bottom: 24px; scrollbar-width: thin; }
+        .chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            max-height: 450px;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 141, 0, 0.3);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 141, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
         }
-        @media (max-width: 1023px) {
-            body { padding: 12px; padding-bottom: 115px; }
-            .master-container { padding: 20px; border-radius: 24px; }
-            .output-viewport { height: calc(100vh - 390px); padding: 18px; min-height: 380px; }
-            .studio-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-            .nav-tools { width: 100%; justify-content: space-between; }
-            .tool-btn { flex: 1; padding: 12px; font-size: 0.9rem; }
-            .tool-btn span { display: none; }
-            .mobile-nav-deck { display: flex; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(16, 10, 32, 0.85); border: 1px solid rgba(168, 85, 247, 0.3); padding: 6px; border-radius: 50px; z-index: 2000; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.8); gap: 6px; backdrop-filter: blur(30px); width: 92%; max-width: 380px; justify-content: space-between; }
-            .m-nav-btn { background: transparent; border: none; color: var(--text-secondary); padding: 12px 6px; border-radius: 40px; font-size: 0.85rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; transition: all 0.3s var(--elastic-curve); }
-            .m-nav-btn.active { background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)); color: #fff; border: 1px solid rgba(255,255,255,0.2); transform: scale(1.04); }
-            .controls-column.mobile-hidden, .preview-column.mobile-hidden { display: none !important; }
-            .smart-exports { grid-template-columns: 1fr; }
-            .smart-btn { flex-direction: row; justify-content: center; padding: 13px; }
+        
+        .chat-container.active {
+            display: flex;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, rgba(255, 72, 0, 0.15), rgba(255, 141, 0, 0.08));
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 141, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chat-header-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #ff8d00;
+        }
+        
+        .chat-header-title i { font-size: 1rem; }
+        
+        .chat-close {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .chat-close:hover { color: #fff; }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 250px;
+        }
+        
+        .chat-messages::-webkit-scrollbar { width: 3px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: rgba(255, 141, 0, 0.3); border-radius: 3px; }
+        
+        .chat-bubble {
+            max-width: 85%;
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .chat-bubble.user {
+            align-self: flex-end;
+            background: rgba(255, 141, 0, 0.2);
+            border: 1px solid rgba(255, 141, 0, 0.2);
+        }
+        
+        .chat-bubble.ai {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .chat-input-area {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid rgba(255, 141, 0, 0.15);
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-end;
+        }
+        
+        .chat-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 141, 0, 0.2);
+            border-radius: 10px;
+            padding: 0.6rem 0.8rem;
+            color: #c9d1d9;
+            font-family: 'Vazirmatn', sans-serif;
+            outline: none;
+            resize: none;
+            font-size: 0.85rem;
+            min-height: 38px;
+            max-height: 100px;
+            transition: border-color 0.3s;
+        }
+        
+        .chat-input:focus {
+            border-color: rgba(255, 141, 0, 0.5);
+        }
+        
+        .chat-send {
+            background: linear-gradient(135deg, #ff4800, #ff8d00);
+            border: none;
+            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .chat-send:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 141, 0, 0.3);
+        }
+        
+        .chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #ff4800, #ff8d00);
+            border: none;
+            border-radius: 50%;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(255, 141, 0, 0.4);
+            z-index: 999;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 50px rgba(255, 141, 0, 0.5);
+        }
+        
+        .main-footer {
+            flex-shrink: 0;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.65rem;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(255, 141, 0, 0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            .main-header { padding: 0.5rem 0.75rem; min-height: 56px; }
+            .logo-icon { width: 36px; height: 36px; font-size: 1rem; }
+            .logo-text h1 { font-size: 0.95rem; }
+            .logo-text p { font-size: 0.55rem; }
+            .header-btn span { display: none; }
+            .header-btn { padding: 0.4rem 0.7rem; font-size: 0.7rem; }
+            .tab-btn { padding: 0.5rem 0.6rem; font-size: 0.7rem; }
+            .tab-btn span { display: none; }
+            .tab-page { padding: 1rem; }
+            .lesson-card { padding: 1rem; }
+            .lesson-title { font-size: 1rem; }
+            .live-demo-body { height: 280px; }
+            .chat-container { width: calc(100vw - 30px); right: 15px; bottom: 90px; max-height: 400px; }
+            .chat-toggle { width: 50px; height: 50px; bottom: 20px; right: 20px; font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
-
-<canvas id="bgCanvas"></canvas>
-
-<div class="master-container" id="appFrame">
-    <div class="studio-header">
-        <div class="brand">
-            <i class="fas fa-crown"></i>
-            <div>
-                <h1>DotArt Studio 🏴‍☠️</h1>
-                <div class="version-tag">Particle Kinetic Edition</div>
+    <canvas id="background-canvas"></canvas>
+    
+    <header class="main-header">
+        <div class="header-logo">
+            <div class="logo-icon">🎨</div>
+            <div class="logo-text">
+                <h1 class="animated-gradient-text font-orbitron" dir="ltr">Dot Art Overhauled</h1>
+                <p>سند راهنمای ارتقای DotArt Studio</p>
             </div>
         </div>
-        <div class="nav-tools">
-            <button class="tool-btn" id="webcamBtn"><i class="fas fa-video"></i><span>دوربین</span></button>
-            <button class="tool-btn" id="sampleBtn"><i class="fas fa-vial"></i><span>تست</span></button>
-            <button class="tool-btn" id="themeBtn"><i class="fas fa-moon"></i></button>
-            <button class="tool-btn" id="particleToggleBtn"><i class="fas fa-cubes"></i><span>پارتیکل</span></button>
+        <div class="header-actions">
+            <a href="https://aishervin.github.io/Bot" target="_blank" class="header-btn" title="کامپایلر SHΞN™ Core">
+                <i data-lucide="external-link"></i>
+                <span>SHΞN™ Core</span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="tab-bar" id="tabBar">
+            <button class="tab-btn active" data-tab="intro"><i data-lucide="book-open"></i><span>مقدمه</span></button>
+            <button class="tab-btn" data-tab="issues"><i data-lucide="alert-triangle"></i><span>انتقادات</span></button>
+            <button class="tab-btn" data-tab="solutions"><i data-lucide="lightbulb"></i><span>پیشنهادات</span></button>
+            <button class="tab-btn" data-tab="particle"><i data-lucide="sparkles"></i><span>Particle</span></button>
+            <button class="tab-btn" data-tab="ai"><i data-lucide="brain"></i><span>AI واقعی</span></button>
+            <button class="tab-btn" data-tab="conclusion"><i data-lucide="flag"></i><span>جمع‌بندی</span></button>
+        </div>
+
+        <div class="tabs-container">
+            
+            <!-- ===== INTRO TAB ===== -->
+            <div class="tab-page active" id="intro-tab">
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="hand"></i>سلام همکار عزیز</div>
+                    <div class="lesson-content">
+                        <p>قبل از هر چیز بگم که پروژه‌ات پتانسیل خیلی بالایی داره و مشخصه که براش زحمت کشیدی. اما به عنوان کسی که می‌خواد کمکت کنه، چند تا نقد جدی و پیشنهاد عملی برات دارم که اگر اعمال کنی، پروژه‌ات از یه ابزار معمولی به یه استودیو حرفه‌ای در سطح جهانی تبدیل می‌شه.</p>
+                        <p>این موارد رو به عنوان نصیحت استاد به شاگرد در نظر بگیر، نه انتقاد بی‌دلیل.</p>
+                        <div class="highlight-box">
+                            <strong>📌 نکته مهم:</strong> در خلال این آموزش، اگر سوالی داشتی، از دکمه چت گوشه صفحه استفاده کن تا با هوش مصنوعی صحبت کنی.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="target"></i>هدف این سند</div>
+                    <div class="lesson-content">
+                        <p>این سند یک <strong>نقد فنی و حرفه‌ای</strong> از پروژه DotArt Studio شماست. هدف، کمک به ارتقای پروژه به یک استودیو ASCII Art در سطح جهانی است.</p>
+                        <p>در این سند موارد زیر بررسی می‌شود:</p>
+                        <p>۱. ایرادات UI/UX فعلی (فضای هدر رفته، موبایل، preset ها)</p>
+                        <p>۲. مشکل AI جعلی و راه‌حل آن</p>
+                        <p>۳. معرفی Floating Panel</p>
+                        <p>۴. معرفی Particle Mode با دموی زنده</p>
+                        <p>۵. ادغام AI واقعی با puter.js و Pollinations</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ISSUES TAB ===== -->
+            <div class="tab-page" id="issues-tab">
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="alert-circle"></i>انتقاد ۱: فضای UI هدر رفته</div>
+                    <div class="lesson-content">
+                        <p>توی طراحی فعلی‌ات، حدود <strong>۲۷۰ پیکسل از ۸۰۰ پیکسل</strong> ارتفاع صفحه موبایل، فقط صرف هدر، پدینگ‌های داخلی، مارجین بین کارت‌ها و فوتر شده. یعنی تقریباً یک سوم صفحه فقط برای دکوراتیو!</p>
+                        <p>توی یه استودیو ASCII Art، مهم‌ترین بخش، همون فضای preview هست. کاربر باید بتونه جزئیات ریز خروجی رو ببینه. وقتی فضا کم باشه، تجربه کاربری به شدت ضعیف می‌شه.</p>
+                        <div class="warning-box">
+                            <strong>⚠️ آمار:</strong> مجموع فضای هدر رفته: ~270px از 800px<br>
+                            یعنی 34% از صفحه فقط برای دکوراتیو!
+                        </div>
+                        <p>پدینگ‌ها و مارجین‌های فعلی‌ات خیلی زیاده. باید بهینه‌شون کنی تا فضای بیشتری برای هنر باقی بمونه.</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="smartphone"></i>انتقاد ۲: UX موبایل دست و پاگیر</div>
+                    <div class="lesson-content">
+                        <p>الان توی موبایل، کاربر مجبوره مدام بین دو تب جابجا بشه:</p>
+                        <p>• بره تب تنظیمات، یه چیزی عوض کنه</p>
+                        <p>• بره تب خروجی، نتیجه رو ببینه</p>
+                        <p>• دوباره برگرده تنظیمات</p>
+                        <div class="warning-box">
+                            <strong>❌ این چرخه خسته‌کننده‌ست!</strong><br>
+                            کاربر نمی‌تونه همزمان تغییرات رو ببینه<br>
+                            حس "استودیو زنده" از بین می‌ره
+                        </div>
+                        <p>توی هیچ استودیوی حرفه‌ای‌ای (مثل Photoshop، Lightroom، یا هر ابزار هنری دیگه) کاربر مجبور نیست بین تنظیمات و preview جابجا بشه. همه چیز باید همزمان دیده بشه.</p>
+                        <p>اصل <strong>Live Preview</strong> یه اصل اساسی توی ابزارهای هنریه و تو داری ازش بی‌خبری می‌کنی.</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="grid-3x3"></i>انتقاد ۳: Preset های شبکه‌های اجتماعی غیرضروری</div>
+                    <div class="lesson-content">
+                        <p>اون ۸ تا دکمه‌ای که برای تلگرام، اینستاگرام، واتساپ، توییتر، دیسکورد و... گذاشتی، هم فضای زیادی اشغال کردن، هم کاربردشون محدوده.</p>
+                        <p>ASCII Art یه ابزار هنریه، نه ابزار شبکه‌های اجتماعی. کاربر حرفه‌ای ابعاد دلخواه خودشو وارد می‌کنه. این preset ها بیشتر گمراه‌کننده‌ان تا مفید.</p>
+                        <div class="highlight-box">
+                            <strong>💡 پیشنهاد:</strong> اگر واقعاً لازمشون داری، باید منتقلشون کنی به بخش Export، یعنی همون جایی که کاربر واقعاً موقع خروجی گرفتن بهشون نیاز داره. نه اینکه توی پنل اصلی فضا اشغال کنن.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="brain-circuit"></i>انتقاد ۴: AI که گذاشتی، AI نیست!</div>
+                    <div class="lesson-content">
+                        <p>این مهم‌ترین ایراده. اون دکمه <strong>"AI Auto Config"</strong> که گذاشتی، اسمش AI هست ولی واقعاً AI نیست. فقط چند تا if-else ساده‌ست که میانگین روشنایی و انحراف معیار تصویر رو حساب می‌کنه و بر اساس چند قانون ساده، تنظیمات رو عوض می‌کنه.</p>
+                        <div class="warning-box">
+                            <strong>⚠️ چرا این مشکل‌سازه؟</strong><br>
+                            • برای کاربر ناامیدکننده‌ست<br>
+                            • وقتی می‌بینه "AI Auto Config" و نتیجه‌اش یه چیز خیلی ساده‌ست، اعتمادش رو از دست می‌ده<br>
+                            • توی دنیای امروز که همه جا AI واقعی هست، این کار در شأن پروژه‌ات نیست
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SOLUTIONS TAB ===== -->
+            <div class="tab-page" id="solutions-tab">
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="layers"></i>پیشنهاد ۱: Floating Panel با دستگیره شناور</div>
+                    <div class="lesson-content">
+                        <p>به جای اون دو تا تب جداگانه، یه پنل شناور کوچیک توی گوشه تصویر بذار. یه دستگیره کوچیک (مثلاً با آیکون 🎛️) که با یه کلیک باز می‌شه و تمام تنظیمات رو نشون می‌ده. بعد از تغییرات، با یه swipe یا کلیک بیرون، بسته می‌شه.</p>
+                        <div class="success-box">
+                            <strong>✅ مزایا:</strong><br>
+                            • همیشه preview تمام صفحه دیده می‌شه<br>
+                            • کاربر هر وقت خواست تنظیمات رو باز می‌کنه<br>
+                            • حس استودیو زنده حفظ می‌شه<br>
+                            • تجربه کاربری مدرن و حرفه‌ای می‌شه
+                        </div>
+                        <p>این همون مدلیه که توی اپلیکیشن‌هایی مثل Snapseed، Adobe Lightroom Mobile، و ابزارهای CAD می‌بینی.</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="move"></i>پیشنهاد ۲: انتقال Preset ها به Export</div>
+                    <div class="lesson-content">
+                        <p>به جای اینکه preset ها توی پنل اصلی فضا اشغال کنن، منتقلشون کن به بخش خروجی. اونجا جاییه که کاربر واقعاً بهشون نیاز داره.</p>
+                        <div class="highlight-box">
+                            <strong>💡 الگوی درست:</strong><br>
+                            • پنل اصلی: فقط ابعاد دلخواه (دو فیلد عددی + قفل aspect ratio)<br>
+                            • بخش Export: dropdown با preset های شبکه‌های اجتماعی
+                        </div>
+                        <p>اینجوری هم فضای preview حفظ می‌شه، هم کاربر موقع خروجی گرفتن به preset ها دسترسی داره.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== PARTICLE TAB ===== -->
+            <div class="tab-page" id="particle-tab">
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="sparkles"></i>Particle Mode - حالت پارتیکل</div>
+                    <div class="lesson-content">
+                        <p>این پیشنهادی‌ه که پروژه‌ات رو متحول می‌کنه. به جای اینکه فقط کاراکترهای متنی داشته باشی، یه حالت جدید اضافه کن که از <strong>پارتیکل‌های رنگی واقعی</strong> استفاده کنه.</p>
+                        <p>توی این حالت:</p>
+                        <p>• هر پیکسل تصویر تبدیل به یه پارتیکل رنگی می‌شه</p>
+                        <p>• پارتیکل‌ها فیزیک واقعی دارن (گرانش، اصطکاک)</p>
+                        <p>• با لمس صفحه واکنش نشون می‌دن</p>
+                        <p>• با اثر انگشت موج می‌خورن</p>
+                        <p>• می‌تونن پراکنده بشن و دوباره به جای اصلیشون برگردن</p>
+                        <div class="success-box">
+                            <strong>✨ نتیجه:</strong> خروجی از یه ASCII Art ساده به یه اثر هنری تعاملی و زنده تبدیل می‌شه. برای موبایل فوق‌العاده‌ست و تجربه‌ای می‌سازه که هیچ استودیوی دیگه‌ای نداره.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="play-circle"></i>دموی زنده Particle - تعاملی</div>
+                    <div class="lesson-content">
+                        <p>در کادر زیر، یه دموی کامل از Particle Mode قرار دادم. <strong>می‌تونی با ماوس یا انگشت روی تصویر کلیک کنی و نگه داری</strong> تا پارتیکل‌ها پراکنده بشن. وقتی رها کنی، به جای اصلیشون برمی‌گردن.</p>
+                        <p>این همون تجربه‌ایه که باید توی DotArt Studio پیاده‌سازی کنی.</p>
+                    </div>
+                    
+                    <div class="live-demo">
+                        <div class="live-demo-header">
+                            <div class="live-demo-title">
+                                <i data-lucide="zap"></i>
+                                Particle Demo - تعاملی
+                            </div>
+                            <div class="live-demo-badge">LIVE</div>
+                        </div>
+                        <div class="live-demo-body">
+                            <iframe id="particleFrame"></iframe>
+                        </div>
+                        <div class="live-demo-footer">
+                            💡 با ماوس یا انگشت روی تصویر کلیک کن و نگه دار
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="image"></i>نمونه ASCII Art که می‌تونی بسازی</div>
+                    <div class="lesson-content">
+                        <p>این یه نمونه از ASCII Art هست که با Particle Mode می‌تونی بسازی. هر کدوم از این کاراکترها می‌تونن به پارتیکل تبدیل بشن و با لمس کاربر واکنش نشون بدن:</p>
+                    </div>
+                    
+                    <div class="live-demo">
+                        <div class="live-demo-header">
+                            <div class="live-demo-title">
+                                <i data-lucide="palette"></i>
+                                نمونه ASCII Art تعاملی
+                            </div>
+                            <div class="live-demo-badge">LIVE</div>
+                        </div>
+                        <div class="live-demo-body">
+                            <iframe id="asciiFrame"></iframe>
+                        </div>
+                        <div class="live-demo-footer">
+                            🎨 این نمونه رو می‌تونی با Particle Mode بسازی
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== AI TAB ===== -->
+            <div class="tab-page" id="ai-tab">
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="cpu"></i>AI واقعی با puter.js</div>
+                    <div class="lesson-content">
+                        <p><strong>puter.js</strong> یه کتابخانه رایگانه که بهت اجازه می‌ده مستقیم توی مرورگر از GPT-4 Vision، Claude، Gemini و... استفاده کنی. بدون نیاز به API key، بدون هزینه.</p>
+                        <div class="success-box">
+                            <strong>✅ ویژگی‌ها:</strong><br>
+                            • کاملاً رایگان<br>
+                            • بدون نیاز به API key<br>
+                            • پشتیبانی از Vision (تحلیل تصویر)<br>
+                            • اجرای مستقیم در مرورگر
+                        </div>
+                        <p><strong>📚 مستندات:</strong> <a href="https://puter.com/docs" target="_blank">https://puter.com/docs</a></p>
+                        <p>سناریویی که پیشنهاد می‌کنم:</p>
+                        <p>۱. کاربر تصویر آپلود می‌کنه</p>
+                        <p>۲. دکمه "AI Analysis" رو می‌زنه</p>
+                        <p>۳. تصویر به puter.js فرستاده می‌شه</p>
+                        <p>۴. AI تحلیل می‌کنه: "این یه پرتره‌ست با نور کم..."</p>
+                        <p>۵. پیشنهاد می‌ده: روشنایی +۴۰، کنتراست +۲۰، پالت dense</p>
+                        <p>۶. تنظیمات خودکار اعمال می‌شن</p>
+                        <p>۷. کاربر می‌تونه دستی ویرایش کنه</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="image"></i>Pollinations AI - تولید تصویر و متن</div>
+                    <div class="lesson-content">
+                        <p><strong>Pollinations AI</strong> یه سرویس کاملاً رایگان برای تولید متن و تصویر. بدون نیاز به ثبت‌نام.</p>
+                        <div class="highlight-box">
+                            <strong>💡 کاربرد در DotArt Studio:</strong><br>
+                            • تولید تصاویر مرجع برای ASCII Art<br>
+                            • پیشنهاد پالت رنگی بر اساس تصویر ورودی<br>
+                            • تولید پرامپت برای بهبود خروجی<br>
+                            • چت AI برای راهنمایی کاربر
+                        </div>
+                        <p><strong>📚 مستندات:</strong> <a href="https://pollinations.ai" target="_blank">https://pollinations.ai</a></p>
+                        <p><strong>🔗 API Endpoint:</strong> <code style="background:rgba(0,0,0,0.5);padding:0.2rem 0.5rem;border-radius:4px;direction:ltr;display:inline-block;font-family:'JetBrains Mono',monospace;">https://text.pollinations.ai/openai</code></p>
+                        <p>اینجوری هم کاربر حرفه‌ای می‌تونه دستی کار کنه، هم کاربر معمولی از AI کمک بگیره. ترکیب برنده.</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="git-merge"></i>معماری ترکیبی پیشنهادی</div>
+                    <div class="lesson-content">
+                        <p>پیشنهاد می‌کنم یه سیستم <strong>هیبریدی</strong> بسازی:</p>
+                        <p><strong>لایه ۱: الگوریتم محلی (سریع)</strong></p>
+                        <p>• تحلیل histogram تصویر<br>
+                        • تشخیص روشنایی/کنتراست<br>
+                        • تنظیمات پایه</p>
+                        <p><strong>لایه ۲: AI واقعی (عمیق)</strong></p>
+                        <p>• ارسال تصویر به API<br>
+                        • تحلیل محتوای تصویری<br>
+                        • پیشنهاد پالت و سبک هنری<br>
+                        • تشخیص اشیاء و مناطق مهم</p>
+                        <div class="success-box">
+                            <strong>✨ نتیجه:</strong> کاربر هم سرعت داره (لایه محلی) و هم هوشمندی (لایه AI).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CONCLUSION TAB ===== -->
+            <div class="tab-page" id="conclusion-tab">
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="flag"></i>جمع‌بندی</div>
+                    <div class="lesson-content">
+                        <p>اگر این تغییرات رو اعمال کنی:</p>
+                        <p>۱. فضای UI رو بهینه کنی</p>
+                        <p>۲. Floating Panel اضافه کنی</p>
+                        <p>۳. Particle Mode پیاده‌سازی کنی</p>
+                        <p>۴. AI واقعی با puter.js و Pollinations ادغام کنی</p>
+                        <div class="success-box">
+                            <strong>🚀 نتیجه:</strong> پروژه‌ات از یه DotArt Studio معمولی، به یه استودیو حرفه‌ای و در سطح جهانی تبدیل می‌شه که رقیب نداره.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="link"></i>منابع و الهام</div>
+                    <div class="lesson-content">
+                        <p>برای اینکه ببینی یه پلتفرم حرفه‌ای چطور باید طراحی بشه، حتماً به این آدرس سر بزن:</p>
+                        <div class="highlight-box">
+                            <strong>🔗 کامپایلر SHΞN™ Core:</strong><br>
+                            <a href="https://aishervin.github.io/Bot" target="_blank">
+                                https://aishervin.github.io/Bot
+                            </a>
+                        </div>
+                        <p>این کامپایلر، یه نمونه عالی از:</p>
+                        <p>• ادغام هوش مصنوعی واقعی (DeepSeek و Pollinations)<br>
+                        • طراحی تم تیره و حرفه‌ای<br>
+                        • دو تب کاربردی و راحت (چت و کامپایلر)<br>
+                        • تجربه کاربری روان بدون شلوغی<br>
+                        • استفاده بهینه از فضا</p>
+                        <p>می‌تونی از الگوریتم و طراحی‌اش برای استودیوی خودت ایده بگیری.</p>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-title"><i data-lucide="book-marked"></i>منابع بیشتر</div>
+                    <div class="lesson-content">
+                        <p><strong>📚 برای Particle Mode:</strong></p>
+                        <p>• p5.js - <a href="https://p5js.org" target="_blank">https://p5js.org</a><br>
+                        • matter.js - <a href="https://brm.io/matter-js" target="_blank">https://brm.io/matter-js</a><br>
+                        • three.js - <a href="https://threejs.org" target="_blank">https://threejs.org</a></p>
+                        <p><strong>🤖 برای AI:</strong></p>
+                        <p>• puter.js - <a href="https://puter.com" target="_blank">https://puter.com</a><br>
+                        • Pollinations AI - <a href="https://pollinations.ai" target="_blank">https://pollinations.ai</a><br>
+                        • TensorFlow.js - <a href="https://www.tensorflow.org/js" target="_blank">https://www.tensorflow.org/js</a></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p class="font-semibold flex items-center justify-center gap-1" dir="ltr">
+            <span class="animated-gradient-text">Exclusive</span>
+            <span class="animated-gradient-text">☬SHΞN™</span>
+            <span class="animated-gradient-text">made</span>
+        </p>
+    </footer>
+
+    <!-- Chat Toggle -->
+    <button class="chat-toggle" id="chatToggle" aria-label="Chat">
+        <i data-lucide="message-circle"></i>
+    </button>
+
+    <!-- Chat Container -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div class="chat-header-title">
+                <i data-lucide="bot"></i>
+                دستیار فنی
+            </div>
+            <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-bubble ai">
+                سلام! من دستیار فنی هستم. سوالی درباره DotArt Overhauled داری؟ بپرس تا کمکت کنم.
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <textarea class="chat-input" id="chatInput" placeholder="سوال خود را بنویسید..." rows="1"></textarea>
+            <button class="chat-send" id="chatSend">
+                <i data-lucide="send"></i>
+            </button>
         </div>
     </div>
 
-    <div class="workspace" id="workspace">
-        <div class="controls-column" id="controlsCol">
-            <div class="studio-card">
-                <div class="card-main-title"><i class="fas fa-layer-group"></i> منبع و ابعاد</div>
-                <div class="sub-panel">
-                    <div class="sub-panel-title"><i class="fas fa-upload"></i> بارگذاری تصویر</div>
-                    <div class="drop-deck" id="dropDeck">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <div style="font-size:0.9rem; font-weight:800;">فایل را بکشید یا کلیک کنید</div>
-                        <input type="file" id="imageLoader" accept="image/*" style="display:none;">
-                    </div>
-                    <div class="img-mini-dock" id="miniDock">
-                        <img id="sourceMiniImg" src="" alt="ورودی">
-                    </div>
-                </div>
-                <div class="sub-panel">
-                    <div class="sub-panel-title"><i class="fas fa-compress"></i> ابعاد شبکه</div>
-                    <div class="matrix-inputs">
-                        <div><div style="font-size:0.75rem; margin-bottom:6px; opacity:0.7; font-weight:700;">عرض</div><input type="number" id="matrixW" min="10" max="800" value="120"></div>
-                        <div><div style="font-size:0.75rem; margin-bottom:6px; opacity:0.7; font-weight:700;">ارتفاع</div><input type="number" id="matrixH" min="10" max="800" value="60"></div>
-                        <button class="aspect-lock active" id="aspectToggle"><i class="fas fa-link"></i></button>
-                    </div>
-                    <div class="preset-deck">
-                        <button class="preset-btn" data-w="40" data-h="40">تلگرام</button>
-                        <button class="preset-btn" data-w="100" data-h="100">اینستاگرام</button>
-                        <button class="preset-btn" data-w="60" data-h="60">واتساپ</button>
-                        <button class="preset-btn" data-w="30" data-h="20">چت مینیمال</button>
-                        <button class="preset-btn" data-w="80" data-h="80">توییتر (X)</button>
-                        <button class="preset-btn" data-w="50" data-h="50">دیسکورد</button>
-                        <button class="preset-btn" data-w="200" data-h="280">چاپ A4</button>
-                        <button class="preset-btn" data-w="200" data-h="100">فوق عریض</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="studio-card">
-                <div class="card-main-title"><i class="fas fa-sliders-h"></i> موتور رندر</div>
-                <div class="sub-panel">
-                    <div class="sub-panel-title"><i class="fas fa-sun"></i> نورپردازی</div>
-                    <div class="grid-sliders">
-                        <div class="slider-item"><label>روشنایی</label><input type="range" id="f_bright" min="0" max="250" value="100"><span class="slider-counter" id="c_bright">100</span></div>
-                        <div class="slider-item"><label>کنتراست</label><input type="range" id="f_contrast" min="0" max="250" value="100"><span class="slider-counter" id="c_contrast">100</span></div>
-                        <div class="slider-item"><label>اشباع</label><input type="range" id="f_saturation" min="0" max="200" value="100"><span class="slider-counter" id="c_saturation">100</span></div>
-                        <div class="slider-item"><label>گاما</label><input type="range" id="f_gamma" min="0.2" max="3.0" step="0.1" value="1.0"><span class="slider-counter" id="c_gamma">1.0</span></div>
-                        <div class="slider-item"><label>آستانه</label><input type="range" id="f_threshold" min="0" max="100" value="50"><span class="slider-counter" id="c_threshold">50</span></div>
-                        <div class="slider-item"><label style="color:#f59e0b;"><i class="fas fa-glasses"></i> انحراف RGB</label><input type="range" id="f_rgb_shift" min="0" max="10" value="0"><span class="slider-counter" id="c_rgb_shift" style="color:#f59e0b;">0</span></div>
-                    </div>
-                </div>
-                <div class="sub-panel">
-                    <div class="sub-panel-title"><i class="fas fa-microchip"></i> فیلترها</div>
-                    <div class="toggles-container">
-                        <button type="button" class="ai-btn" id="aiConfigBtn"><i class="fas fa-brain"></i> AI Auto Config</button>
-                        <label><input type="checkbox" id="c_invert"> وارونگی</label>
-                        <label><input type="checkbox" id="c_edge"> لبه‌یاب</label>
-                        <label><input type="checkbox" id="c_dither"> دیترینگ</label>
-                        <label><input type="checkbox" id="c_sharpen"> شارپنس</label>
-                        <label><input type="checkbox" id="c_noise"> نویز</label>
-                        <label><input type="checkbox" id="c_crt"> CRT</label>
-                    </div>
-                </div>
-                <div class="sub-panel">
-                    <div class="sub-panel-title"><i class="fas fa-palette"></i> پالت کاراکترها</div>
-                    <div class="style-hub">
-                        <button class="hub-btn active" data-style="standard">کلاسیک</button>
-                        <button class="hub-btn" data-style="dense">متراکم</button>
-                        <button class="hub-btn" data-style="block">بلوکی</button>
-                        <button class="hub-btn" data-style="braille">بریل (Braille)</button>
-                        <button class="hub-btn" data-style="matrix">ماتریکس</button>
-                        <button class="hub-btn" data-style="dot">نقطه‌ای</button>
-                        <button class="hub-btn" data-style="emoji">ایموجی</button>
-                        <button class="hub-btn" data-style="color">رنگی (HTML)</button>
-                        <button class="hub-btn" data-style="custom" style="flex:1 1 100%; background:rgba(236,72,153,0.1); border-color:rgba(236,72,153,0.4); color:#fbcfe8;"><i class="fas fa-pen-nib"></i> سفارشی</button>
-                    </div>
-                    <input type="text" id="customCharsInput" value="THE SAZ 💎" placeholder="کاراکترهای خود را بنویسید">
-                </div>
-            </div>
-            <div class="action-deck">
-                <button class="btn-fire" id="renderTrigger"><i class="fas fa-bolt"></i> پردازش و رندر</button>
-            </div>
-        </div>
-
-        <div class="preview-column mobile-hidden" id="previewCol">
-            <div class="viewport-toolbar">
-                <button class="v-btn" id="zoomOut"><i class="fas fa-search-minus"></i></button>
-                <button class="v-btn" id="zoomIn"><i class="fas fa-search-plus"></i></button>
-                <button class="v-btn" id="zoomReset">سایز عادی</button>
-            </div>
-            <div class="output-viewport" id="viewport">
-                <div class="viewport-loader" id="vLoader"><i class="fas fa-circle-notch"></i><div style="font-weight:800; color:#f8fafc;">در حال رندر...</div></div>
-                <div class="empty-state" id="emptyNotice"><i class="fas fa-gem" style="font-size:3.5rem; color:#f59e0b;"></i><br><span style="font-size:1.1rem; font-weight:800;">منتظر خلق یک شاهکار...</span></div>
-                <pre id="canvasPre" style="display:none;"></pre>
-                <canvas id="particleCanvas"></canvas>
-            </div>
-            <div class="smart-exports">
-                <button class="smart-btn" id="smartCopy"><i class="fas fa-copy"></i> کپی</button>
-                <button class="smart-btn" id="smartTxt"><i class="fas fa-file-alt"></i> TXT</button>
-                <button class="smart-btn" id="smartPng"><i class="fas fa-image"></i> PNG</button>
-                <button class="smart-btn" id="smartHtml" style="border-color: rgba(168, 85, 247, 0.4);"><i class="fas fa-code"></i> HTML</button>
-                <button class="smart-btn ai-suggest-btn" id="aiExportBtn"><i class="fas fa-magic"></i> خروجی پیشنهادی AI</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="studio-footer">توسعه یافته توسط <span>👑 THE SAZ 💎</span></div>
-</div>
-
-<div class="mobile-nav-deck" id="mobileNav">
-    <button class="m-nav-btn active" id="mobTabControls"><i class="fas fa-sliders-h"></i> تنظیمات</button>
-    <button class="m-nav-btn" id="mobTabPreview"><i class="fas fa-expand"></i> خروجی</button>
-</div>
-
-<!-- Chat Minimal -->
-<div class="chat-mini">
-    <button class="chat-toggle" id="chatToggle"><i class="fas fa-comment"></i></button>
-    <div class="chat-box" id="chatBox">
-        <div class="messages" id="chatMessages"><div class="bubble ai">سلام! چطور می‌تونم کمک کنم؟</div></div>
-        <textarea id="chatInput" placeholder="سوال خود را بنویسید..." rows="2"></textarea>
-        <button class="send-btn" id="chatSend">ارسال</button>
-    </div>
-</div>
-
-<script>
-    (function() {
+    <script>
         // ================================================================
-        // 1. BACKGROUND PARTICLE ENGINE
+        // 1. LUCIDE ICONS
         // ================================================================
-        const bgCanvas = document.getElementById('bgCanvas');
+        lucide.createIcons();
+
+        // ================================================================
+        // 2. BACKGROUND PARTICLES
+        // ================================================================
+        const bgCanvas = document.getElementById('background-canvas');
         const bgCtx = bgCanvas.getContext('2d');
-        let dots = [];
-        let mouseX = null, mouseY = null;
+        let bgParticles = [];
 
-        function resizeBg() { 
-            bgCanvas.width = window.innerWidth; 
-            bgCanvas.height = window.innerHeight; 
-            initDots(); 
+        function resizeBg() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+            initBgParticles();
         }
-        function initDots() {
-            dots = [];
-            let count = Math.min(130, Math.floor(bgCanvas.width * bgCanvas.height / 10500));
-            for(let i=0; i<count; i++) {
-                dots.push({ 
-                    x: Math.random()*bgCanvas.width, 
-                    y: Math.random()*bgCanvas.height, 
-                    r: Math.random()*3.5+0.5, 
-                    dx: (Math.random()-0.5)*0.8, 
-                    dy: (Math.random()-0.5)*0.8,
-                    color: Math.random() > 0.75 ? 'rgba(251, 191, 36, 0.35)' : 'rgba(168, 85, 247, 0.22)'
+
+        function initBgParticles() {
+            bgParticles = [];
+            const count = Math.min(50, Math.floor(bgCanvas.width * bgCanvas.height / 20000));
+            for (let i = 0; i < count; i++) {
+                bgParticles.push({
+                    x: Math.random() * bgCanvas.width,
+                    y: Math.random() * bgCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    r: Math.random() * 1.5 + 0.5
                 });
             }
         }
+
         function drawBg() {
-            bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
-            for(let i=dots.length-1; i>=0; i--) {
-                let d = dots[i];
-                d.x += d.dx; d.y += d.dy;
-                if(d.isTemporary) {
-                    d.life -= 1.5;
-                    d.r *= 0.98;
-                    if(d.life <= 0) { dots.splice(i, 1); continue; }
-                } else {
-                    if(d.x<0||d.x>bgCanvas.width) d.dx *= -1; 
-                    if(d.y<0||d.y>bgCanvas.height) d.dy *= -1;
-                }
-                if(mouseX !== null && mouseY !== null && !d.isTemporary) {
-                    let distX = d.x - mouseX; let distY = d.y - mouseY;
-                    let dist = Math.sqrt(distX*distX + distY*distY);
-                    if(dist < 130) {
-                        d.x += (distX / dist) * 1.8; d.y += (distY / dist) * 1.8;
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            bgParticles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > bgCanvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > bgCanvas.height) p.vy *= -1;
+                bgCtx.beginPath();
+                bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                bgCtx.fillStyle = 'rgba(255, 141, 0, 0.3)';
+                bgCtx.fill();
+                
+                for (let j = i + 1; j < bgParticles.length; j++) {
+                    const p2 = bgParticles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 140) {
+                        bgCtx.beginPath();
+                        bgCtx.moveTo(p.x, p.y);
+                        bgCtx.lineTo(p2.x, p2.y);
+                        bgCtx.strokeStyle = `rgba(255, 141, 0, ${0.2 * (1 - dist/140)})`;
+                        bgCtx.lineWidth = 0.7;
+                        bgCtx.stroke();
                     }
                 }
-                bgCtx.beginPath(); 
-                bgCtx.arc(d.x, d.y, d.r, 0, Math.PI*2); 
-                bgCtx.fillStyle = d.color;
-                bgCtx.fill();
-            }
+            });
             requestAnimationFrame(drawBg);
         }
+
         window.addEventListener('resize', resizeBg);
-        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
-        window.addEventListener('mouseleave', () => { mouseX = null; mouseY = null; });
-        window.addEventListener('click', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.closest('.slider-item')) return;
-            for(let i=0; i<16; i++) {
-                let angle = Math.random() * Math.PI * 2;
-                let speed = Math.random() * 4 + 1.5;
-                dots.push({
-                    x: e.clientX, y: e.clientY,
-                    r: Math.random() * 3.5 + 1.5,
-                    dx: Math.cos(angle) * speed, dy: Math.sin(angle) * speed,
-                    color: Math.random() > 0.5 ? 'rgba(236, 72, 153, 0.65)' : 'rgba(168, 85, 247, 0.55)',
-                    isTemporary: true, life: 100
-                });
+        resizeBg();
+        drawBg();
+
+        // ================================================================
+        // 3. TAB NAVIGATION WITH INFINITE SCROLL
+        // ================================================================
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPages = document.querySelectorAll('.tab-page');
+        const tabBar = document.getElementById('tabBar');
+
+        function switchTab(tabName) {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPages.forEach(p => p.classList.remove('active'));
+            
+            const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+            if (targetBtn) targetBtn.classList.add('active');
+            
+            const targetPage = document.getElementById(`${tabName}-tab`);
+            if (targetPage) targetPage.classList.add('active');
+            
+            // Scroll tab into view
+            if (targetBtn) {
+                targetBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
             }
-        });
-        resizeBg(); drawBg();
+        }
 
-        // ================================================================
-        // 2. INFINITE SCROLL (Infinite & Parallax)
-        // ================================================================
-        const controlsCol = document.getElementById('controlsCol');
-        const previewCol = document.getElementById('previewCol');
-        const mobControls = document.getElementById('mobTabControls');
-        const mobPreview = document.getElementById('mobTabPreview');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (entry.target.id === 'controlsCol') {
-                        mobControls.classList.add('active');
-                        mobPreview.classList.remove('active');
-                        controlsCol.classList.remove('mobile-hidden');
-                        previewCol.classList.add('mobile-hidden');
-                    } else if (entry.target.id === 'previewCol') {
-                        mobPreview.classList.add('active');
-                        mobControls.classList.remove('active');
-                        previewCol.classList.remove('mobile-hidden');
-                        controlsCol.classList.add('mobile-hidden');
-                    }
-                }
+        // Click on tabs
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.dataset.tab;
+                switchTab(tabName);
+                // Reset scroll position of the page
+                const page = document.getElementById(`${tabName}-tab`);
+                if (page) page.scrollTop = 0;
             });
-        }, { threshold: 0.3 });
-
-        // فقط در موبایل (عرض کمتر از 1024) این قابلیت فعال شود
-        if (window.innerWidth < 1024) {
-            observer.observe(controlsCol);
-            observer.observe(previewCol);
-        }
-        window.addEventListener('resize', () => {
-            if (window.innerWidth < 1024) {
-                if (!observer.observed) {
-                    observer.observe(controlsCol);
-                    observer.observe(previewCol);
-                }
-            }
         });
 
-        // دکمه‌های ناوبری موبایل (هم‌زمان با اسکرول)
-        mobControls.onclick = () => {
-            mobControls.classList.add('active'); mobPreview.classList.remove('active');
-            controlsCol.classList.remove('mobile-hidden'); previewCol.classList.add('mobile-hidden');
-            controlsCol.scrollIntoView({ behavior: 'smooth' });
-        };
-        mobPreview.onclick = () => {
-            mobPreview.classList.add('active'); mobControls.classList.remove('active');
-            previewCol.classList.remove('mobile-hidden'); controlsCol.classList.add('mobile-hidden');
-            previewCol.scrollIntoView({ behavior: 'smooth' });
-        };
-
-        // ================================================================
-        // 3. MAIN APPLICATION LOGIC (کامل و بدون حذف)
-        // ================================================================
-        const el = id => document.getElementById(id);
-        let currentImg = null;
-        let activeStyle = localStorage.getItem('dotart_style_premium') || 'standard';
-        let ratioLocked = true;
-        let imgAspectRatio = 1.0;
-        let fontScale = 10;
-        const engineCanvas = document.createElement('canvas');
-        const engineCtx = engineCanvas.getContext('2d', { willReadFrequently: true });
-        let isProcessing = false;
-        let renderQueued = false;
-        let webcamStream = null;
-        let webcamInterval = null;
-        const hiddenVideo = document.createElement('video');
-        hiddenVideo.autoplay = true; hiddenVideo.playsInline = true;
-        const NBSP = ' ';
-
-        const PALETTES = {
-            standard: ['@', '%', '#', '*', '+', '=', '-', ':', '.', NBSP],
-            dense: ['#', 'W', 'M', '$', 'O', 'X', 'C', '[', '(', '!', '+', '-', ';', ':', ',', '.', NBSP],
-            block: ['█', '▉', '▊', '▋', '▌', '▍', '▎', '▏', '░', NBSP],
-            dot: ['.', NBSP],
-            matrix: ['$', 'G', '8', '0', 'X', 'O', 't', 'i', '1', 'c', ';', ',', '.', NBSP],
-            emoji: ['🌑', '🌒', '🌓', '🌔', '🌕', '☀️'],
-            braille: []
-        };
-
-        try {
-            if(localStorage.getItem('dotart_w_premium')) {
-                el('matrixW').value = Math.min(600, Math.max(10, parseInt(localStorage.getItem('dotart_w_premium'))));
-                el('matrixH').value = Math.min(600, Math.max(10, parseInt(localStorage.getItem('dotart_h_premium') || 60)));
-                el('f_bright').value = localStorage.getItem('dotart_b_premium') || 100; el('c_bright').innerText = el('f_bright').value;
-                el('f_contrast').value = localStorage.getItem('dotart_c_premium') || 100; el('c_contrast').innerText = el('f_contrast').value;
-                el('f_rgb_shift').value = localStorage.getItem('dotart_rgb_premium') || 0; el('c_rgb_shift').innerText = el('f_rgb_shift').value;
-                el('f_saturation').value = localStorage.getItem('dotart_sat_premium') || 100; el('c_saturation').innerText = el('f_saturation').value;
-                document.querySelectorAll('.hub-btn').forEach(b => {
-                    if(b.dataset.style === activeStyle) {
-                        document.querySelectorAll('.hub-btn').forEach(x=>x.classList.remove('active'));
-                        b.classList.add('active');
-                    }
-                });
-                if(activeStyle === 'custom') el('customCharsInput').style.display = 'block';
-            }
-        } catch(err) { console.warn(err); }
-
-        function saveState() {
-            try {
-                localStorage.setItem('dotart_style_premium', activeStyle);
-                localStorage.setItem('dotart_w_premium', el('matrixW').value);
-                localStorage.setItem('dotart_h_premium', el('matrixH').value);
-                localStorage.setItem('dotart_b_premium', el('f_bright').value);
-                localStorage.setItem('dotart_c_premium', el('f_contrast').value);
-                localStorage.setItem('dotart_sat_premium', el('f_saturation').value);
-                localStorage.setItem('dotart_rgb_premium', el('f_rgb_shift').value);
-            } catch(e) {}
-        }
-
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.onclick = () => {
-                let w = parseInt(btn.dataset.w); let h = parseInt(btn.dataset.h);
-                if (currentImg && ratioLocked) {
-                    el('matrixW').value = w; el('matrixH').value = Math.round(w / imgAspectRatio);
-                } else {
-                    el('matrixW').value = w; el('matrixH').value = h;
-                }
-                btn.style.transform = "scale(0.9)"; setTimeout(() => btn.style.transform = "", 140);
-                if(currentImg) processArtEngine();
-            };
-        });
-
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            window.addEventListener(eventName, e => e.preventDefault(), false);
-        });
-
-        const dropDeck = el('dropDeck');
-        dropDeck.onclick = () => el('imageLoader').click();
-        el('imageLoader').onchange = (e) => { if(e.target.files.length) { stopWebcam(); loadImgSrc(e.target.files[0]); } };
-        dropDeck.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); dropDeck.style.borderColor = "var(--gold)"; });
-        dropDeck.addEventListener('dragleave', (e) => { e.preventDefault(); e.stopPropagation(); dropDeck.style.borderColor = ""; });
-        dropDeck.addEventListener('drop', (e) => { 
-            e.preventDefault(); e.stopPropagation(); dropDeck.style.borderColor = ""; 
-            if(e.dataTransfer.files.length) { stopWebcam(); loadImgSrc(e.dataTransfer.files[0]); } 
-        });
-
-        el('webcamBtn').onclick = async () => {
-            if(webcamStream) { stopWebcam(); } 
-            else {
-                try {
-                    webcamStream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
-                    hiddenVideo.srcObject = webcamStream;
-                    el('webcamBtn').classList.add('active-live');
-                    el('webcamBtn').innerHTML = '<i class="fas fa-video-slash"></i><span>قطع دوربین</span>';
-                    el('liveBadge') && (el('liveBadge').style.display = 'block'); 
-                    el('miniDock').classList.add('active');
-                    const tempCanvas = document.createElement('canvas'); const tempCtx = tempCanvas.getContext('2d');
-                    tempCanvas.width = 160; tempCanvas.height = 120;
-                    webcamInterval = setInterval(() => {
-                        try {
-                            if(hiddenVideo.readyState === hiddenVideo.HAVE_CURRENT_DATA) {
-                                currentImg = hiddenVideo; imgAspectRatio = hiddenVideo.videoWidth / hiddenVideo.videoHeight;
-                                if(ratioLocked) {
-                                    let secureW = Math.min(600, Math.max(10, parseInt(el('matrixW').value) || 120));
-                                    el('matrixH').value = Math.round(secureW / imgAspectRatio);
-                                }
-                                tempCtx.drawImage(hiddenVideo, 0, 0, tempCanvas.width, tempCanvas.height);
-                                el('sourceMiniImg').src = tempCanvas.toDataURL('image/jpeg');
-                                processArtEngine();
-                            }
-                        } catch(loopErr) { console.error(loopErr); }
-                    }, 100);
-                } catch(err) { 
-                    alert('دسترسی به سخت‌افزار دوربین امکان‌پذیر نیست.'); stopWebcam();
-                }
-            }
-        };
-
-        function stopWebcam() {
-            try {
-                if(webcamStream) { webcamStream.getTracks().forEach(t => t.stop()); webcamStream = null; }
-                if(webcamInterval) clearInterval(webcamInterval);
-                el('webcamBtn').classList.remove('active-live');
-                el('webcamBtn').innerHTML = '<i class="fas fa-video"></i><span>دوربین زنده</span>';
-                if(el('liveBadge')) el('liveBadge').style.display = 'none';
-            } catch(e) {}
-        }
-
-        el('sampleBtn').onclick = () => {
-            stopWebcam();
-            try {
-                const canvas = document.createElement('canvas'); canvas.width = 500; canvas.height = 500;
-                const ctx = canvas.getContext('2d');
-                let g = ctx.createLinearGradient(0,0,500,500);
-                g.addColorStop(0, '#02010c'); g.addColorStop(0.5, '#ec4899'); g.addColorStop(1, '#f59e0b');
-                ctx.fillStyle = g; ctx.fillRect(0,0,500,500);
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 55px Vazirmatn, Arial'; ctx.textAlign = 'center'; 
-                ctx.fillText('Premium', 250, 240); ctx.font = '25px Vazirmatn'; ctx.fillText('Kinetic Art', 250, 290);
-                const img = new Image(); img.onload = () => setupImage(img); img.src = canvas.toDataURL();
-            } catch(e) {}
-        };
-
-        function loadImgSrc(file) {
-            try {
-                const r = new FileReader();
-                r.onload = (e) => { 
-                    const img = new Image(); img.onload = () => setupImage(img); img.src = e.target.result; 
-                };
-                r.readAsDataURL(file);
-            } catch(err) {}
-        }
-
-        function setupImage(img) {
-            currentImg = img; el('sourceMiniImg').src = img.src; el('miniDock').classList.add('active');
-            imgAspectRatio = img.width / img.height;
-            if(ratioLocked) {
-                let secureW = Math.min(600, Math.max(10, parseInt(el('matrixW').value) || 120));
-                el('matrixH').value = Math.round(secureW / imgAspectRatio);
-            }
-            processArtEngine();
-        }
-
-        el('aiConfigBtn').onclick = () => {
-            if(!currentImg) { alert('ابتدا تصویری بارگذاری کنید.'); return; }
-            el('aiConfigBtn').style.opacity = "0.6";
-            setTimeout(() => {
-                try {
-                    const c = document.createElement('canvas'); c.width = 64; c.height = 64;
-                    const cx = c.getContext('2d'); cx.drawImage(currentImg, 0, 0, 64, 64);
-                    const data = cx.getImageData(0,0,64,64).data;
-                    let lums = [];
-                    for(let i=0; i<data.length; i+=4) lums.push(0.299*data[i] + 0.587*data[i+1] + 0.114*data[i+2]);
-                    const avgLum = lums.reduce((a,b)=>a+b,0)/lums.length;
-                    let variance = 0; lums.forEach(l => variance += Math.pow(l-avgLum,2));
-                    const stdDev = Math.sqrt(variance/lums.length);
-                    let aiB=100, aiC=100, aiG=1.0, rgbS=0, aiSat=100;
-                    if (avgLum < 55) { aiB=140; aiG=1.25; } else if (avgLum > 175) { aiB=85; aiG=0.85; }
-                    if (stdDev < 35) aiC = 130; else if (stdDev > 75) aiC = 95;
-                    if (stdDev > 55) rgbS = 1; if (activeStyle === 'color') aiSat = 120;
-                    el('c_sharpen').checked = (stdDev < 42); el('c_dither').checked = (stdDev < 65 && activeStyle !== 'color');
-                    el('f_bright').value = aiB; el('c_bright').innerText = aiB;
-                    el('f_contrast').value = aiC; el('c_contrast').innerText = aiC;
-                    el('f_saturation').value = aiSat; el('c_saturation').innerText = aiSat;
-                    el('f_gamma').value = aiG; el('c_gamma').innerText = aiG;
-                    el('f_rgb_shift').value = rgbS; el('c_rgb_shift').innerText = rgbS;
-                    processArtEngine();
-                } catch(e) {}
-                el('aiConfigBtn').style.opacity = "1";
-            }, 850);
-        };
-
-        // ================================================================
-        // 4. CORE RENDER ENGINE (FULL)
-        // ================================================================
-        function processArtEngine() {
-            if(!currentImg) return;
-            if(isProcessing) { renderQueued = true; return; }
-            isProcessing = true; 
-            el('vLoader').style.display = 'flex';
-
-            requestAnimationFrame(() => {
-                try {
-                    let w = Math.min(600, Math.max(10, parseInt(el('matrixW').value) || 100));
-                    let h = Math.min(600, Math.max(10, parseInt(el('matrixH').value) || 50));
-
-                    engineCanvas.width = w; engineCanvas.height = h;
-                    engineCtx.drawImage(currentImg, 0, 0, w, h);
-
-                    if(el('c_sharpen').checked) {
-                        let d = engineCtx.getImageData(0,0,w,h); let cp = new Uint8ClampedArray(d.data);
-                        let k = [0,-1,0,-1,5,-1,0,-1,0];
-                        for (let y=1; y<h-1; y++) {
-                            for (let x=1; x<w-1; x++) {
-                                let r=0,g=0,b=0;
-                                for(let ky=-1; ky<=1; ky++) {
-                                    for(let kx=-1; kx<=1; kx++) {
-                                        let idx = ((y+ky)*w+(x+kx))*4; let f = k[(ky+1)*3+(kx+1)];
-                                        r+=cp[idx]*f; g+=cp[idx+1]*f; b+=cp[idx+2]*f;
-                                    }
-                                }
-                                let i=(y*w+x)*4; d.data[i]=r; d.data[i+1]=g; d.data[i+2]=b;
-                            }
-                        }
-                        engineCtx.putImageData(d,0,0);
-                    }
-
-                    let imgData = engineCtx.getImageData(0,0,w,h); let pixelData = imgData.data;
-                    const bright = parseFloat(el('f_bright').value)/100;
-                    const contrast = parseFloat(el('f_contrast').value)/100;
-                    const saturation = parseFloat(el('f_saturation').value)/100;
-                    const gamma = parseFloat(el('f_gamma').value);
-                    const thresh = parseFloat(el('f_threshold').value)/100;
-                    const rgbShift = parseInt(el('f_rgb_shift').value) || 0;
-                    const inv = el('c_invert').checked; const edge = el('c_edge').checked;
-                    const dither = el('c_dither').checked; const noise = el('c_noise').checked;
-                    const isCRT = el('c_crt').checked;
-
-                    if (rgbShift > 0) {
-                        let temp = new Uint8ClampedArray(pixelData);
-                        for(let y=0; y<h; y++) {
-                            for(let x=0; x<w; x++) {
-                                let i = (y*w+x)*4;
-                                let idxR = (y*w + Math.max(0, x - rgbShift))*4;
-                                let idxB = (y*w + Math.min(w-1, x + rgbShift))*4;
-                                pixelData[i] = temp[idxR]; pixelData[i+2] = temp[idxB+2];
-                            }
-                        }
-                    }
-
-                    if(edge) {
-                        let grayArr = new Float32Array(w*h);
-                        for(let i=0; i<w*h; i++) grayArr[i] = (0.299*pixelData[i*4] + 0.587*pixelData[i*4+1] + 0.114*pixelData[i*4+2]);
-                        let gx = [-1,0,1,-2,0,2,-1,0,1], gy = [-1,-2,-1,0,0,0,1,2,1];
-                        for (let y=1; y<h-1; y++) {
-                            for (let x=1; x<w-1; x++) {
-                                let sx=0, sy=0;
-                                for(let ky=-1; ky<=1; ky++) {
-                                    for(let kx=-1; kx<=1; kx++) {
-                                        let v=grayArr[(y+ky)*w+(x+kx)]; let kIdx=(ky+1)*3+(kx+1); sx+=v*gx[kIdx]; sy+=v*gy[kIdx];
-                                    }
-                                }
-                                let m = Math.min(255, Math.sqrt(sx*sx+sy*sy));
-                                let idx=(y*w+x)*4; pixelData[idx]=pixelData[idx+1]=pixelData[idx+2]=m;
-                            }
-                        }
-                    }
-
-                    let matLight = new Float32Array(w*h);
-                    for(let y=0; y<h; y++) {
-                        for(let x=0; x<w; x++) {
-                            let i = y*w+x; let idx = i*4;
-                            let r = pixelData[idx], g = pixelData[idx+1], b = pixelData[idx+2];
-                            let gray = 0.299*r + 0.587*g + 0.114*b;
-                            r = gray + saturation * (r - gray); g = gray + saturation * (g - gray); b = gray + saturation * (b - gray);
-                            r = (r-127.5)*contrast+127.5; g = (g-127.5)*contrast+127.5; b = (b-127.5)*contrast+127.5;
-                            r *= bright; g *= bright; b *= bright;
-                            if(noise) { let n=(Math.random()-0.5)*35; r+=n; g+=n; b+=n; }
-                            if(isCRT && y%2===0) { r*=0.56; g*=0.56; b*=0.56; }
-                            if(inv) { r=255-r; g=255-g; b=255-b; }
-                            r = Math.min(255, Math.max(0, Math.pow(r/255, 1/gamma)*255));
-                            g = Math.min(255, Math.max(0, Math.pow(g/255, 1/gamma)*255));
-                            b = Math.min(255, Math.max(0, Math.pow(b/255, 1/gamma)*255));
-                            pixelData[idx]=r; pixelData[idx+1]=g; pixelData[idx+2]=b;
-                            let v = (0.299*r + 0.587*g + 0.114*b)/255;
-                            if(v < thresh - 0.25) v = 0; else if(v > thresh + 0.25) v = 1;
-                            matLight[i] = v;
-                        }
-                    }
-
-                    if(dither && !edge) {
-                        for(let y=0; y<h; y++) {
-                            for(let x=0; x<w; x++) {
-                                let i = y*w+x; let oldV = matLight[i]; let newV = oldV>0.5?1:0;
-                                let err = oldV - newV; matLight[i] = newV;
-                                if(x+1<w) matLight[i+1] += err*7/16;
-                                if(y+1<h) {
-                                    if(x>0) matLight[(y+1)*w+x-1] += err*3/16;
-                                    matLight[(y+1)*w+x] += err*5/16;
-                                    if(x+1<w) matLight[(y+1)*w+x+1] += err*1/16;
-                                }
-                            }
-                        }
-                    }
-
-                    let outPre = el('canvasPre');
-                    if(activeStyle === 'color') {
-                        let html = '';
-                        for(let y=0; y<h; y++) {
-                            let runColor = ''; let textSpan = '';
-                            for(let x=0; x<w; x++) {
-                                let idx = (y*w+x)*4;
-                                let r=Math.round(pixelData[idx]/8)*8, g=Math.round(pixelData[idx+1]/8)*8, b=Math.round(pixelData[idx+2]/8)*8;
-                                let cStr = `rgb(${r},${g},${b})`;
-                                let isBlack = (r < 10 && g < 10 && b < 10);
-                                let charPrint = '█';
-                                let activeCstr = isBlack ? 'transparent' : cStr;
-                                if(activeCstr === runColor) { textSpan += charPrint; } 
-                                else {
-                                    if(textSpan) html += `<span style="color:${runColor}">${textSpan}</span>`;
-                                    runColor = activeCstr; textSpan = charPrint;
-                                }
-                            }
-                            if(textSpan) html += `<span style="color:${runColor}">${textSpan}</span>`;
-                            html += '\n';
-                        }
-                        outPre.innerHTML = html; el('viewport').classList.add('color-mode');
-                    } else if(activeStyle === 'braille') {
-                        let res = ''; const bw = Math.ceil(w/2), bh = Math.ceil(h/4);
-                        for(let by=0; by<bh; by++) {
-                            for(let bx=0; bx<bw; bx++) {
-                                let p = 0;
-                                for(let dy=0; dy<4; dy++) {
-                                    for(let dx=0; dx<2; dx++) {
-                                        let px = bx*2+dx, py = by*4+dy;
-                                        if(px<w && py<h && matLight[py*w+px]>0.45) {
-                                            let bit = (dx===0) ? (dy===3?6:dy) : (dy===3?7:dy+3); p |= (1<<bit);
-                                        }
-                                    }
-                                }
-                                res += String.fromCharCode(0x2800+p);
-                            }
-                            res += '\n';
-                        }
-                        outPre.textContent = res; el('viewport').classList.remove('color-mode');
-                    } else {
-                        let res = ''; let p = PALETTES[activeStyle];
-                        if(activeStyle === 'custom') {
-                            let cv = el('customCharsInput').value || NBSP; p = Array.from(cv);
-                            if(p.length === 0) p = [NBSP];
-                        }
-                        for(let y=0; y<h; y++) {
-                            for(let x=0; x<w; x++) {
-                                let v = matLight[y*w+x];
-                                let idx = Math.min(p.length-1, Math.max(0, Math.floor(v * p.length)));
-                                res += p[idx];
-                            }
-                            res += '\n';
-                        }
-                        outPre.textContent = res; el('viewport').classList.remove('color-mode');
-                    }
-
-                    outPre.style.display = 'block'; el('emptyNotice').style.display = 'none'; saveState();
-                } catch(renderErr) { console.error(renderErr); } 
-                finally { 
-                    el('vLoader').style.display = 'none'; 
-                    isProcessing = false; 
-                    if (renderQueued) { renderQueued = false; processArtEngine(); }
-                }
-            });
-        }
-
-        // ================================================================
-        // 5. UI EVENT BINDINGS
-        // ================================================================
-        el('renderTrigger').onclick = () => { 
-            if(currentImg) {
-                el('renderTrigger').style.transform = "scale(0.95)"; setTimeout(() => el('renderTrigger').style.transform = "", 180);
-                processArtEngine(); 
-            } else { alert('ابتدا تصویری انتخاب کنید.'); } 
-        };
-
-        document.querySelectorAll('.hub-btn').forEach(b => {
-            b.onclick = () => {
-                document.querySelectorAll('.hub-btn').forEach(x=>x.classList.remove('active'));
-                b.classList.add('active'); activeStyle = b.dataset.style; 
-                el('customCharsInput').style.display = (activeStyle === 'custom') ? 'block' : 'none';
-                processArtEngine();
-            };
-        });
-
-        el('customCharsInput').oninput = () => { if(activeStyle === 'custom') processArtEngine(); };
-        el('aspectToggle').onclick = () => { ratioLocked = !ratioLocked; el('aspectToggle').classList.toggle('active', ratioLocked); };
-        el('matrixW').oninput = () => { if(currentImg && ratioLocked) el('matrixH').value = Math.round(Math.min(600, Math.max(10, parseInt(el('matrixW').value)||10)) / imgAspectRatio); };
-        el('matrixH').oninput = () => { if(currentImg && ratioLocked) el('matrixW').value = Math.round(Math.min(600, Math.max(10, parseInt(el('matrixH').value)||10)) * imgAspectRatio); };
-
-        ['f_bright','f_contrast','f_gamma','f_threshold','f_rgb_shift','f_saturation'].forEach(id => {
-            el(id).oninput = () => { el(id.replace('f_','c_')).innerText = el(id).value; if(webcamStream || currentImg) processArtEngine(); };
-        });
-        ['c_invert','c_edge','c_dither','c_sharpen','c_noise','c_crt'].forEach(id => {
-            el(id).onchange = () => { if(currentImg) processArtEngine(); };
-        });
-
-        el('zoomIn').onclick = () => { fontScale += 1; el('canvasPre').style.setProperty('--output-font-size', fontScale+'px'); };
-        el('zoomOut').onclick = () => { if(fontScale>4) fontScale -= 1; el('canvasPre').style.setProperty('--output-font-size', fontScale+'px'); };
-        el('zoomReset').onclick = () => { fontScale = 10; el('canvasPre').style.setProperty('--output-font-size', '10px'); };
-
-        // ================================================================
-        // 6. EXPORT FUNCTIONS
-        // ================================================================
-        function copyTextToClipboard(text) {
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text).then(() => triggerCopySuccess(), () => fallbackCopyTextToClipboard(text));
-            } else {
-                fallbackCopyTextToClipboard(text);
-            }
-        }
-        function fallbackCopyTextToClipboard(text) {
-            var textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.top = "0"; textArea.style.left = "0"; textArea.style.position = "fixed";
-            document.body.appendChild(textArea);
-            textArea.focus(); textArea.select();
-            try { document.execCommand('copy'); triggerCopySuccess(); } catch (err) { alert("کپی ناموفق! لطفا متن را دستی انتخاب کنید."); }
-            document.body.removeChild(textArea);
-        }
-        function triggerCopySuccess() {
-            let orig = el('smartCopy').innerHTML; el('smartCopy').innerHTML = '<i class="fas fa-check"></i> کپی شد!';
-            setTimeout(() => el('smartCopy').innerHTML = orig, 1500);
-        }
-
-        el('smartCopy').onclick = () => {
-            if(!currentImg) return;
-            let data = (activeStyle === 'color') ? el('canvasPre').innerHTML : el('canvasPre').textContent;
-            copyTextToClipboard(data);
-        };
-
-        el('smartTxt').onclick = () => {
-            if(!currentImg) return;
-            try {
-                let text = el('canvasPre').textContent;
-                const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-                const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-                a.download = `DotArt_${Date.now()}.txt`; a.click();
-            } catch(e) {}
-        };
-
-        el('smartPng').onclick = () => {
-            if(!currentImg) return;
-            try {
-                const w = parseInt(el('matrixW').value), h = parseInt(el('matrixH').value);
-                const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
-                const cellW = 10; const cellH = 16;
-                canvas.width = w * cellW + 60; canvas.height = h * cellH + 60;
-                ctx.fillStyle = '#010103'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.font = 'bold 13px "Courier New", monospace';
-                ctx.textBaseline = 'top'; ctx.textAlign = 'left';
-
-                if(activeStyle === 'color') {
-                    let lines = el('canvasPre').innerHTML.split('\n');
-                    let tempDiv = document.createElement('div');
-                    for(let y=0; y<Math.min(h, lines.length); y++) {
-                        tempDiv.innerHTML = lines[y];
-                        let spans = tempDiv.childNodes;
-                        let xOff = 0;
-                        spans.forEach(node => {
-                            if(node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) {
-                                let txt = node.textContent || "";
-                                let cColor = (node.style && node.style.color) ? node.style.color : '#ffffff';
-                                ctx.fillStyle = cColor === 'transparent' ? '#010103' : cColor;
-                                for(let i=0; i<txt.length; i++) {
-                                    ctx.fillText('█', 30 + xOff * cellW, 30 + y * cellH);
-                                    xOff++;
-                                }
-                            }
-                        });
-                    }
-                } else {
-                    const lines = el('canvasPre').textContent.split('\n');
-                    ctx.fillStyle = '#ffffff';
-                    for(let y=0; y<Math.min(h, lines.length); y++) {
-                        const chars = Array.from(lines[y]);
-                        for(let x=0; x<Math.min(w, chars.length); x++) {
-                            ctx.fillText(chars[x], 30 + x * cellW, 30 + y * cellH);
-                        }
-                    }
-                }
-                const a = document.createElement('a'); a.download = `DotArt_${Date.now()}.png`;
-                a.href = canvas.toDataURL(); a.click();
-            } catch(pngErr) { alert("خطا در سیستم رسترایز تصویر."); }
-        };
-
-        el('smartHtml').onclick = () => {
-            if(!currentImg) return;
-            try {
-                let artContent = el('canvasPre').innerHTML;
-                let isColor = el('viewport').classList.contains('color-mode');
-                let standaloneHtml = `<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head><meta charset="UTF-8"><title>DotArt Studio - Premium Export</title>
-<style>body{background:#03010e;color:#f8fafc;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px;}.container{background:rgba(18,10,32,0.85);border:1px solid rgba(255,255,255,0.08);border-radius:28px;padding:32px;box-shadow:0 40px 80px -15px rgba(0,0,0,0.95);}pre{margin:0;font-family:'Courier New',monospace;font-size:10px;line-height:1.05;white-space:pre;background:#010103;padding:24px;border-radius:18px;direction:ltr;text-align:left;overflow:auto; ${isColor?'':'color:#e2e8f0;'}}</style>
-</head>
-<body><div class="container"><pre>${artContent}</pre></div></body>
-</html>`;
-                const blob = new Blob([standaloneHtml], { type: 'text/html;charset=utf-8' });
-                const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-                a.download = `DotArt_${Date.now()}.html`; a.click();
-            } catch(htmlErr) { console.error(htmlErr); }
-        };
-
-        el('aiExportBtn').onclick = () => {
-            if(!currentImg) { alert('لطفاً ابتدا تصویری آپلود کنید.'); return; }
-            let w = parseInt(el('matrixW').value) || 120; let h = parseInt(el('matrixH').value) || 60;
-            let orig = el('aiExportBtn').innerHTML;
-            if ((w * h) > 12000) {
-                el('aiExportBtn').innerHTML = '<i class="fas fa-magic"></i> AI: پیشنهاد TXT';
-                setTimeout(() => el('aiExportBtn').innerHTML = orig, 2000); el('smartTxt').click();
-            } else if (activeStyle === 'color') {
-                el('aiExportBtn').innerHTML = '<i class="fas fa-magic"></i> AI: پیشنهاد HTML';
-                setTimeout(() => el('aiExportBtn').innerHTML = orig, 2000); el('smartHtml').click();
-            } else {
-                el('aiExportBtn').innerHTML = '<i class="fas fa-magic"></i> AI: پیشنهاد PNG';
-                setTimeout(() => el('aiExportBtn').innerHTML = orig, 2000); el('smartPng').click();
-            }
-        };
-
-        // ================================================================
-        // 7. THEME TOGGLE
-        // ================================================================
-        el('themeBtn').onclick = () => {
-            document.body.classList.toggle('light-mode');
-            let icon = el('themeBtn').querySelector('i');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
-        };
-
-        // ================================================================
-        // 8. PARTICLE MODE (Overlay Canvas)
-        // ================================================================
-        let particleModeActive = false;
-        const particleCanvas = el('particleCanvas');
-        const pCtx = particleCanvas.getContext('2d');
-        let particles = [];
-        let isPointerDown = false;
-        let pMouse = { x: 0, y: 0 };
-
-        function initParticlesFromImage(imgData, w, h) {
-            particles = [];
-            const gap = 3;
-            for (let y = 0; y < h; y += gap) {
-                for (let x = 0; x < w; x += gap) {
-                    let idx = (y * w + x) * 4;
-                    let r = imgData[idx], g = imgData[idx+1], b = imgData[idx+2], a = imgData[idx+3];
-                    if (a > 128) {
-                        particles.push({
-                            x: x * 4, y: y * 4,
-                            baseX: x * 4, baseY: y * 4,
-                            r, g, b,
-                            size: 2.5,
-                            density: Math.random() * 20 + 10
-                        });
-                    }
-                }
-            }
-        }
-
-        function drawParticles() {
-            pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-            particles.forEach(p => {
-                if (isPointerDown) {
-                    const dx = pMouse.x - p.x;
-                    const dy = pMouse.y - p.y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 150) {
-                        const force = (150 - dist) / 150;
-                        p.x -= (dx/dist) * force * p.density * 0.3;
-                        p.y -= (dy/dist) * force * p.density * 0.3;
-                    }
-                } else {
-                    p.x += (p.baseX - p.x) / 12;
-                    p.y += (p.baseY - p.y) / 12;
-                }
-                pCtx.fillStyle = `rgb(${p.r},${p.g},${p.b})`;
-                pCtx.fillRect(p.x, p.y, p.size, p.size);
-            });
-            requestAnimationFrame(drawParticles);
-        }
-
-        el('particleToggleBtn').onclick = function() {
-            if (!currentImg) { alert('ابتدا تصویری بارگذاری کنید.'); return; }
-            particleModeActive = !particleModeActive;
-            const viewport = el('viewport');
-            if (particleModeActive) {
-                // Extract image data from current image
-                const w = parseInt(el('matrixW').value);
-                const h = parseInt(el('matrixH').value);
-                const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = w; tempCanvas.height = h;
-                const ctx = tempCanvas.getContext('2d');
-                ctx.drawImage(currentImg, 0, 0, w, h);
-                const imgData = ctx.getImageData(0, 0, w, h);
+        // Infinite Scroll: detect when a tab page is scrolled to its bottom
+        // and auto-switch to next tab
+        tabPages.forEach((page, index) => {
+            page.addEventListener('scroll', () => {
+                const scrollTop = page.scrollTop;
+                const scrollHeight = page.scrollHeight;
+                const clientHeight = page.clientHeight;
                 
-                particleCanvas.width = w * 4;
-                particleCanvas.height = h * 4;
-                initParticlesFromImage(imgData.data, w, h);
-                particleCanvas.style.display = 'block';
-                el('canvasPre').style.display = 'none';
-                el('emptyNotice').style.display = 'none';
-                this.innerHTML = '<i class="fas fa-times"></i><span>بستن پارتیکل</span>';
-                drawParticles();
-            } else {
-                particleCanvas.style.display = 'none';
-                el('canvasPre').style.display = 'block';
-                this.innerHTML = '<i class="fas fa-cubes"></i><span>پارتیکل</span>';
-                processArtEngine();
-            }
-        };
-
-        // Particle mouse/touch events
-        particleCanvas.addEventListener('mousedown', (e) => { isPointerDown = true; updatePMouse(e); });
-        particleCanvas.addEventListener('touchstart', (e) => { isPointerDown = true; updatePMouse(e); }, { passive: true });
-        particleCanvas.addEventListener('mouseup', () => isPointerDown = false);
-        particleCanvas.addEventListener('touchend', () => isPointerDown = false);
-        particleCanvas.addEventListener('mouseleave', () => isPointerDown = false);
-        particleCanvas.addEventListener('mousemove', updatePMouse);
-        particleCanvas.addEventListener('touchmove', updatePMouse, { passive: true });
-
-        function updatePMouse(e) {
-            const rect = particleCanvas.getBoundingClientRect();
-            const scaleX = particleCanvas.width / rect.width;
-            const scaleY = particleCanvas.height / rect.height;
-            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            if (clientX !== undefined) {
-                pMouse.x = (clientX - rect.left) * scaleX;
-                pMouse.y = (clientY - rect.top) * scaleY;
-            }
-        }
+                // If scrolled to bottom (with 30px threshold)
+                if (scrollTop + clientHeight >= scrollHeight - 30) {
+                    const currentTab = page.id.replace('-tab', '');
+                    const tabNames = Array.from(tabBtns).map(b => b.dataset.tab);
+                    const currentIndex = tabNames.indexOf(currentTab);
+                    
+                    // If not the last tab, switch to next
+                    if (currentIndex < tabNames.length - 1) {
+                        const nextTab = tabNames[currentIndex + 1];
+                        switchTab(nextTab);
+                        // Scroll next page to top
+                        const nextPage = document.getElementById(`${nextTab}-tab`);
+                        if (nextPage) nextPage.scrollTop = 0;
+                    }
+                }
+            });
+        });
 
         // ================================================================
-        // 9. CHAT WITH POLLINATIONS AI
+        // 4. PARTICLE DEMO (Blob URL)
         // ================================================================
-        const chatToggle = el('chatToggle');
-        const chatBox = el('chatBox');
-        chatToggle.onclick = () => chatBox.classList.toggle('active');
+        const particleCode = `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; touch-action: none; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let isDown = false;
+const mouse = { x: 0, y: 0, radius: 80 };
 
-        el('chatSend').onclick = async function() {
-            const input = el('chatInput');
-            const msg = input.value.trim();
-            if (!msg) return;
-            const messages = el('chatMessages');
-            messages.innerHTML += `<div class="bubble user">${msg}</div>`;
-            input.value = '';
-            messages.scrollTop = messages.scrollHeight;
+function resize() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  init();
+}
+
+function init() {
+  particles = [];
+  ctx.fillStyle = 'white';
+  const fontSize = Math.min(canvas.width * 0.15, 60);
+  ctx.font = 'bold ' + fontSize + 'px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('PARTICLE', canvas.width/2, canvas.height/2);
+  
+  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  for (let y = 0; y < img.height; y += 4) {
+    for (let x = 0; x < img.width; x += 4) {
+      if (img.data[(y*img.width+x)*4+3] > 128) {
+        particles.push({
+          x, y, baseX: x, baseY: y,
+          size: 1.5,
+          density: Math.random() * 20 + 10
+        });
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    if (isDown) {
+      const dx = mouse.x - p.x;
+      const dy = mouse.y - p.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < mouse.radius) {
+        const force = (mouse.radius - dist) / mouse.radius;
+        p.x -= (dx/dist) * force * p.density * 0.3;
+        p.y -= (dy/dist) * force * p.density * 0.3;
+      }
+    } else {
+      p.x += (p.baseX - p.x) / 10;
+      p.y += (p.baseY - p.y) / 10;
+    }
+    ctx.fillStyle = 'hsl(' + ((p.x+p.y)%360) + ', 80%, 60%)';
+    ctx.fillRect(p.x, p.y, p.size, p.size);
+  });
+  requestAnimationFrame(animate);
+}
+
+canvas.addEventListener('mousedown', () => isDown = true);
+canvas.addEventListener('touchstart', () => isDown = true, {passive:true});
+canvas.addEventListener('mouseup', () => isDown = false);
+canvas.addEventListener('mouseleave', () => isDown = false);
+canvas.addEventListener('touchend', () => isDown = false);
+canvas.addEventListener('mousemove', e => {
+  const r = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - r.left;
+  mouse.y = e.clientY - r.top;
+});
+canvas.addEventListener('touchmove', e => {
+  const r = canvas.getBoundingClientRect();
+  mouse.x = e.touches[0].clientX - r.left;
+  mouse.y = e.touches[0].clientY - r.top;
+}, {passive:true});
+
+resize();
+animate();
+window.addEventListener('resize', resize);
+<\/script>
+</body>
+</html>`;
+
+        const particleBlob = new Blob([particleCode], { type: 'text/html' });
+        document.getElementById('particleFrame').src = URL.createObjectURL(particleBlob);
+
+        // ================================================================
+        // 5. ASCII DEMO (Blob URL)
+        // ================================================================
+        const asciiCode = `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { 
+    margin: 0; 
+    background: #000; 
+    color: #ff8d00;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .ascii {
+    font-size: 10px;
+    line-height: 1;
+    white-space: pre;
+    text-align: center;
+    margin: 20px 0;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .ascii:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 20px #ff8d00;
+  }
+  .label {
+    color: #888;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="label">🎨 نمونه ASCII Art</div>
+  <div class="ascii">⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠉⠉⠉⠉⠉⠉⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⢀⣤⣾⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠀⠀⠚⠛⠛⠛⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣀⣀⣀⣀⣀⣀⣀⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⠉⠛⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⠤⠀⠉⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠉⢀⣀⣤⣶⣾⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠒⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣶⣶⠀⢰⣶⣶⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⡀⠙⠋⢀⡀⠈⠛⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⣶⡶⠿⣿⣿⠶⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣿⡇⠀⣿⣿⠀⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣿⣇⣀⣿⣿⠀⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠛⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣶⣶⣶⠀⣶⣶⣶⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⠿⠿⠀⠿⠿⠿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣤⣤⣤⣤⣤⣤⣤⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠋⢀⣿⠋⢀⡀⠙⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣇⠀⢿⡏⢀⣾⡿⠀⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣤⣀⣀⣼⣇⣀⣰⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿</div>
+  <div class="label">💡 این ASCII Art می‌تونه با Particle Mode تعاملی بشه</div>
+</body>
+</html>`;
+
+        const asciiBlob = new Blob([asciiCode], { type: 'text/html' });
+        document.getElementById('asciiFrame').src = URL.createObjectURL(asciiBlob);
+
+        // ================================================================
+        // 6. CHAT WITH POLLINATIONS AI
+        // ================================================================
+        const chatToggle = document.getElementById('chatToggle');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatClose = document.getElementById('chatClose');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+
+        chatToggle.addEventListener('click', () => {
+            chatContainer.classList.toggle('active');
+            if (chatContainer.classList.contains('active')) {
+                chatInput.focus();
+            }
+        });
+        chatClose.addEventListener('click', () => chatContainer.classList.remove('active'));
+
+        let chatHistory = [
+            { 
+                role: 'system', 
+                content: 'تو دستیار فنی برای پکیج DotArt Overhauled هستی. به سوالات درباره ارتقای DotArt Studio، Floating Panel، Particle Mode، و ادغام AI پاسخ بده. به زبان فارسی پاسخ بده. لحن مستقیم و تخصصی داشته باش.' 
+            }
+        ];
+
+        async function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            // Add user message
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble user';
+            userBubble.textContent = text;
+            chatMessages.appendChild(userBubble);
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            chatHistory.push({ role: 'user', content: text });
+
+            // Loading indicator
+            const loadingBubble = document.createElement('div');
+            loadingBubble.className = 'chat-bubble ai';
+            loadingBubble.textContent = 'در حال تایپ...';
+            loadingBubble.style.color = '#888';
+            chatMessages.appendChild(loadingBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
             try {
-                const res = await fetch('https://text.pollinations.ai/openai', {
+                const response = await fetch('https://text.pollinations.ai/openai', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ model: 'openai', messages: [{ role: 'user', content: msg }] })
+                    body: JSON.stringify({
+                        model: 'openai',
+                        messages: chatHistory
+                    })
                 });
-                const data = await res.json();
-                const reply = data.choices[0].message.content;
-                messages.innerHTML += `<div class="bubble ai">${reply}</div>`;
-                messages.scrollTop = messages.scrollHeight;
-            } catch(e) {
-                messages.innerHTML += `<div class="bubble ai">خطا در ارتباط با سرور</div>`;
+                const data = await response.json();
+                const aiText = data.choices[0].message.content;
+                
+                chatHistory.push({ role: 'assistant', content: aiText });
+                
+                loadingBubble.remove();
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'chat-bubble ai';
+                aiBubble.textContent = aiText;
+                chatMessages.appendChild(aiBubble);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                loadingBubble.remove();
+                const errorBubble = document.createElement('div');
+                errorBubble.className = 'chat-bubble ai';
+                errorBubble.textContent = '⚠️ خطا در ارتباط با AI. لطفاً دوباره تلاش کنید.';
+                errorBubble.style.color = '#ef4444';
+                chatMessages.appendChild(errorBubble);
             }
-        };
+        }
 
-        el('chatInput').addEventListener('keydown', (e) => {
+        chatSend.addEventListener('click', sendChatMessage);
+        chatInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                el('chatSend').click();
+                sendChatMessage();
             }
         });
 
-        // ================================================================
-        // 10. INITIAL RENDER
-        // ================================================================
-        // Load sample on first visit if no image
-        setTimeout(() => {
-            if (!currentImg) el('sampleBtn').click();
-        }, 500);
+        // Auto-resize textarea
+        chatInput.addEventListener('input', () => {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
+        });
 
-    })();
-</script>
+        // ================================================================
+        // 7. KEYBOARD SHORTCUTS
+        // ================================================================
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Shift+C to toggle chat
+            if (e.ctrlKey && e.shiftKey && (e.key === 'c' || e.key === 'C')) {
+                e.preventDefault();
+                chatContainer.classList.toggle('active');
+                if (chatContainer.classList.contains('active')) {
+                    chatInput.focus();
+                }
+            }
+        });
+
+        console.log('🚀 DotArt Overhauled | سند راهنمای ارتقا');
+        console.log('📌 برای چت: Ctrl+Shift+C');
+        console.log('📌 اسکرول به پایین هر تب برای حرکت به تب بعدی');
+    </script>
 </body>
 </html>
