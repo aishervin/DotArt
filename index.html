@@ -1021,12 +1021,13 @@ tabBtns.forEach(btn => {
     });
 });
 
-        // ================================================================
-        // 4. PARTICLE DEMO (Blob URL)
+                // ================================================================
+        // 4. PARTICLE DEMO (ASCII Art Interactive + srcdoc)
         // ================================================================
         const particleCode = `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <style>
   body { margin: 0; background: #000; overflow: hidden; }
   canvas { display: block; touch-action: none; cursor: pointer; }
@@ -1041,29 +1042,73 @@ let particles = [];
 let isDown = false;
 const mouse = { x: 0, y: 0, radius: 80 };
 
+// متن اسکی آرت شما
+const asciiText = \`⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠉⠉⠉⠉⠉⠉⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⢀⣤⣾⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠀⠀⠚⠛⠛⠛⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣀⣀⣀⣀⣀⣀⣀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⠉⠛⠿⠿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⠤⠀⠉⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠉⠉⢀⣀⣤⣶⣾⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠒⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣶⣶⠀⢰⣶⣶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⡀⠙⠋⢀⡀⠈⠛⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⣶⡶⠿⣿⣿⠶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣿⡇⠀⣿⣿⠀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠀⣿⣇⣀⣿⣿⠀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠛⠛⠛⠛⠛⠛⠛⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣶⣶⣶⠀⣶⣶⣶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⠿⠿⠀⠿⠿⠿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣤⣤⣤⣤⣤⣤⣤⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠋⢀⣿⠋⢀⡀⠙⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣇⠀⢿⡏⢀⣾⡿⠀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣤⣀⣀⣼⣇⣀⣰⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\`;
+
 function resize() {
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
+  canvas.width = canvas.offsetWidth || window.innerWidth;
+  canvas.height = canvas.offsetHeight || window.innerHeight;
   init();
 }
 
 function init() {
   particles = [];
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // سایز و فونت مخصوص برای رندر دقیق اسکی آرت
+  const fontSize = Math.min(canvas.width / 22, 16); 
+  ctx.font = fontSize + "px 'Segoe UI Symbol', 'Apple Braille', 'DejaVu Sans', sans-serif";
   ctx.fillStyle = 'white';
-  const fontSize = Math.min(canvas.width * 0.15, 60);
-  ctx.font = 'bold ' + fontSize + 'px Arial';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('THE SAZ', canvas.width/2, canvas.height/2);
   
-  const img = ctx.getImageshξяvin 0, canvas.width, canvas.height);
-  for (let y = 0; y < img.height; y += 4) {
-    for (let x = 0; x < img.width; x += 4) {
+  // رسم متن به صورت چندخطی
+  const lines = asciiText.split('\\n');
+  const lineHeight = fontSize * 0.95; // فشردگی خطوط
+  const totalHeight = lines.length * lineHeight;
+  const startY = (canvas.height - totalHeight) / 2;
+  
+  lines.forEach((line, index) => {
+    ctx.fillText(line, canvas.width/2, startY + (index * lineHeight));
+  });
+  
+  // استخراج پیکسل‌های بوم (تابع اصلاح شده!)
+  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // پاک کردن متن اولیه
+  
+  // تبدیل پیکسل‌ها به پارتیکل (گام ۲ برای تراکم بیشتر)
+  for (let y = 0; y < img.height; y += 2) {
+    for (let x = 0; x < img.width; x += 2) {
       if (img.data[(y*img.width+x)*4+3] > 128) {
         particles.push({
-          x, y, baseX: x, baseY: y,
-          size: 1.5,
-          density: Math.random() * 20 + 10
+          x: x + (Math.random() - 0.5) * 20, // پخش شدن اولیه موقع لود
+          y: y + (Math.random() - 0.5) * 20,
+          baseX: x, 
+          baseY: y,
+          size: 1.2,
+          density: Math.random() * 15 + 5
         });
       }
     }
@@ -1079,24 +1124,30 @@ function animate() {
       const dist = Math.sqrt(dx*dx + dy*dy);
       if (dist < mouse.radius) {
         const force = (mouse.radius - dist) / mouse.radius;
-        p.x -= (dx/dist) * force * p.density * 0.3;
-        p.y -= (dy/dist) * force * p.density * 0.3;
+        // قدرت پخش شدن ذرات با لمس
+        p.x -= (dx/dist) * force * p.density;
+        p.y -= (dy/dist) * force * p.density;
       }
     } else {
+      // برگشتن ذرات به سر جای اصلی
       p.x += (p.baseX - p.x) / 10;
       p.y += (p.baseY - p.y) / 10;
     }
-    ctx.fillStyle = 'hsl(' + ((p.x+p.y)%360) + ', 80%, 60%)';
+    
+    // تم رنگی نارنجی متناسب با UI شما
+    ctx.fillStyle = 'hsl(' + (25 + (p.y / canvas.height) * 20) + ', 100%, 55%)';
     ctx.fillRect(p.x, p.y, p.size, p.size);
   });
   requestAnimationFrame(animate);
 }
 
+// مدیریت رویدادهای ماوس و لمس
 canvas.addEventListener('mousedown', () => isDown = true);
 canvas.addEventListener('touchstart', () => isDown = true, {passive:true});
 canvas.addEventListener('mouseup', () => isDown = false);
 canvas.addEventListener('mouseleave', () => isDown = false);
 canvas.addEventListener('touchend', () => isDown = false);
+
 canvas.addEventListener('mousemove', e => {
   const r = canvas.getBoundingClientRect();
   mouse.x = e.clientX - r.left;
@@ -1108,15 +1159,19 @@ canvas.addEventListener('touchmove', e => {
   mouse.y = e.touches[0].clientY - r.top;
 }, {passive:true});
 
-resize();
+// راه‌اندازی
+setTimeout(resize, 100); // تاخیر کوتاه برای اطمینان از لود شدن ابعاد
 animate();
 window.addEventListener('resize', resize);
 <\/script>
 </body>
 </html>`;
 
-        const particleBlob = new Blob([particleCode], { type: 'text/html' });
-        document.getElementById('particleFrame').src = URL.createObjectURL(particleBlob);
+        // تزریق مستقیم به فریم به جای Blob برای رندر امن‌تر
+        const particleFrame = document.getElementById('particleFrame');
+        if(particleFrame) {
+            particleFrame.srcdoc = particleCode;
+        }
 
         // ================================================================
                 // ================================================================
